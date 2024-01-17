@@ -1,6 +1,8 @@
+@import "../../public/fonts/Suisse_Intl/stylesheet.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 iframe {
   width: 100%;
