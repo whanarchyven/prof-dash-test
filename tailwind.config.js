@@ -249,8 +249,8 @@ module.exports = {
       normal: '1.5',
     },
     fontFamily: {
-      base: ["Suisse Intl"],
-      secondary: ["Suisse Intl Book"],
+      base: 'var(--base-font)',
+      secondary: 'var(--secondary-font)',
     },
     aspectRatio: {
       auto: 'auto',
