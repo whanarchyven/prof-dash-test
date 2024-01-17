@@ -5,7 +5,7 @@ export default function Home() {
     <>
       <main>
         <h1>Next.js Project home page</h1>
-        <Button href={'/another-page'}>Go to another page</Button>
+        <Button href={'/dashboard'}>Go to another page</Button>
       </main>
     </>
   );
