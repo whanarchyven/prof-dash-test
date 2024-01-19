@@ -3,6 +3,8 @@ import { FC } from 'react';
 
 interface Props extends VariantProps<typeof cvaCategory> {}
 
+export interface categoryName extends Props {}
+
 export const categoriesTitle = () => {
   const categories: Map<Props['category'], string> = new Map();
   categories.set('development', 'Разработка сайта');

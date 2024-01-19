@@ -1,6 +1,7 @@
 import TaskTimer from '@/shared/ui/task-timer/ui';
 import Search from '@/shared/ui/search/ui';
 import Category from '@/shared/ui/category/ui/Category';
+import StageProgressCountdown from '@/shared/ui/stage-progress-countdown/ui/StageProgressCountdown';
 
 export default function Home() {
   return (
@@ -65,6 +66,31 @@ export default function Home() {
           <Category category={'tm'}></Category>
           <Category category={'seo'}></Category>
           <Category category={'hours'}></Category>
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>Stage Progress</h1>
+        <div className={'mt-2 ml-2 flex items-center gap-1 py-5 gap-2 w-1/2'}>
+          <StageProgressCountdown dayRemains={-1}>
+            1 день назад
+          </StageProgressCountdown>
+          <StageProgressCountdown dayRemains={2}>2 дня</StageProgressCountdown>
+          <StageProgressCountdown dayRemains={5}>5 дней</StageProgressCountdown>
+          <StageProgressCountdown dayRemains={7}>7 дней</StageProgressCountdown>
+          <StageProgressCountdown dayRemains={10}>
+            10 дней
+          </StageProgressCountdown>
+          <StageProgressCountdown dayRemains={15}>
+            15 дней
+          </StageProgressCountdown>
+          <StageProgressCountdown dayRemains={20}>
+            20 дней
+          </StageProgressCountdown>
+          <StageProgressCountdown dayRemains={25}>
+            25 дней
+          </StageProgressCountdown>
+          <StageProgressCountdown dayRemains={34}>
+            34 дня
+          </StageProgressCountdown>
         </div>
       </main>
     </>
