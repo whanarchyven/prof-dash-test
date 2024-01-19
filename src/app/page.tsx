@@ -1,5 +1,6 @@
 import TaskTimer from '@/shared/ui/task-timer/ui';
 import Search from '@/shared/ui/search/ui';
+import Category from '@/shared/ui/category/ui/Category';
 
 export default function Home() {
   return (
@@ -55,6 +56,15 @@ export default function Home() {
         <div
           className={'mt-2 ml-2 grid grid-cols-2 py-5 bg-gray-100 gap-2 w-1/2'}>
           <Search placeholder={'Введите значение'} state={'default'} />
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>Category</h1>
+        <div className={'mt-2 ml-2 flex items-center gap-1 py-5 gap-2 w-1/2'}>
+          <Category category={'development'}></Category>
+          <Category category={'oneTimeWorks'}></Category>
+          <Category category={'tm'}></Category>
+          <Category category={'seo'}></Category>
+          <Category category={'hours'}></Category>
         </div>
       </main>
     </>
