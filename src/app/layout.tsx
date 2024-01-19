@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import ReduxProvider from '@/shared/store/ReduxProvider';
 import SmoothScroll from '@/shared/ui/smooth-scroll';
 import localFont from 'next/font/local';
-import clsx from "clsx";
+import clsx from 'clsx';
 
 // import 'swiper/css';
 // import 'swiper/css/navigation';
@@ -36,25 +36,25 @@ interface RootLayoutProps {
 }
 
 const SuisseIntl = localFont({
-    src: [
-        {
-            path: '../../public/fonts/Suisse_Intl/SuisseIntl-Medium.woff2',
-            weight: '400',
-            style: 'normal',
-        },
-    ],
-    display: 'swap',
-    variable: '--base-font',
+  src: [
+    {
+      path: '../../public/fonts/Suisse_Intl/SuisseIntl-Medium.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--base-font',
 });
 
 const SuisseIntlBook = localFont({
-    src: [
-        {
-            path: '../../public/fonts/Suisse_Intl/SuisseIntl-Book.woff2',
-        },
-    ],
-    display: 'swap',
-    variable: '--secondary-font',
+  src: [
+    {
+      path: '../../public/fonts/Suisse_Intl/SuisseIntl-Book.woff2',
+    },
+  ],
+  display: 'swap',
+  variable: '--secondary-font',
 });
 
 export default function RootLayout({ children, ...rest }: RootLayoutProps) {
@@ -103,7 +103,7 @@ export default function RootLayout({ children, ...rest }: RootLayoutProps) {
           `,
           }}></script>
       </head>
-      <body className={clsx(SuisseIntl.variable,SuisseIntlBook.variable)}>
+      <body className={clsx(SuisseIntl.variable, SuisseIntlBook.variable)}>
         <ReduxProvider {...rest}>
           <SmoothScroll>
             <div id="app">{children}</div>

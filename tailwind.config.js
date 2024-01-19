@@ -14,11 +14,11 @@ module.exports = {
       colors: {
         cBlack: '#070707',
         cWhite: '#fff',
-        cGreen:'#01BF64',
-        cOrange:'#F8AE00',
-        cRed:'#FF5757',
-        cGray:'#3E3E3E',
-        cGrayLight:'#EAEAEA'
+        cGreen: '#01BF64',
+        cOrange: '#F8AE00',
+        cRed: '#FF5757',
+        cGray: '#3E3E3E',
+        cGrayLight: '#EAEAEA',
       },
       minHeight: {},
       boxShadow: {},
