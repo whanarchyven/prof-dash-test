@@ -3,6 +3,7 @@ import Search from '@/shared/ui/search/ui';
 import Category from '@/shared/ui/category/ui/Category';
 import StageProgressCountdown from '@/shared/ui/stage-progress-countdown/ui/StageProgressCountdown';
 import InvoiceProgress from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
+import DropdownItem from '@/shared/ui/dropdown-item/ui/DropdownItem';
 
 export default function Home() {
   return (
@@ -102,6 +103,259 @@ export default function Home() {
           <InvoiceProgress status={'sended'}>220 000 ₽</InvoiceProgress>
           <InvoiceProgress status={'closed'}>220 000 ₽</InvoiceProgress>
           <InvoiceProgress status={'transit'}>220 000 ₽</InvoiceProgress>
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>Dropdown Items</h1>
+        <div className={'mt-2 ml-2 grid grid-cols-4 gap-5 py-5  '}>
+          <div className={'flex flex-col gap-1'}>
+            <DropdownItem
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'development' }]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'development' }]}
+            />
+            <DropdownItem
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'oneTimeWorks' }]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'oneTimeWorks' }]}
+            />
+            <DropdownItem
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'seo' }]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'seo' }]}
+            />
+            <DropdownItem
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'hours' }]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'hours' }]}
+            />
+            <DropdownItem
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'tm' }]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'category'}
+              dropdownItems={[{ category: 'tm' }]}
+            />
+          </div>
+
+          <div className={'flex flex-col gap-1'}>
+            <DropdownItem
+              isAllItems={false}
+              category={'pay'}
+              dropdownItems={[{ status: 'nextWeek' }]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'pay'}
+              dropdownItems={[{ status: 'nextWeek' }]}
+            />
+            <DropdownItem
+              isAllItems={false}
+              category={'pay'}
+              dropdownItems={[{ status: 'thisWeek' }]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'pay'}
+              dropdownItems={[{ status: 'thisWeek' }]}
+            />
+            <DropdownItem
+              isAllItems={false}
+              category={'pay'}
+              dropdownItems={[{ status: 'expired' }]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'pay'}
+              dropdownItems={[{ status: 'expired' }]}
+            />
+          </div>
+
+          <div className={'flex flex-col gap-1'}>
+            <DropdownItem
+              isAllItems={false}
+              category={'manager'}
+              dropdownItems={[
+                {
+                  name: 'Елизавета Которова',
+                  avatar: '/images/employees_temp/1.png',
+                },
+              ]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'manager'}
+              dropdownItems={[
+                {
+                  name: 'Елизавета Которова',
+                  avatar: '/images/employees_temp/1.png',
+                },
+              ]}
+            />
+            <DropdownItem
+              isAllItems={false}
+              category={'manager'}
+              dropdownItems={[
+                {
+                  name: 'Дмитрий Голиков',
+                  avatar: '/images/employees_temp/2.png',
+                },
+              ]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'manager'}
+              dropdownItems={[
+                {
+                  name: 'Дмитрий Голиков',
+                  avatar: '/images/employees_temp/2.png',
+                },
+              ]}
+            />
+            <DropdownItem
+              isAllItems={false}
+              category={'manager'}
+              dropdownItems={[
+                {
+                  name: 'Ксения Гривская',
+                  avatar: '/images/employees_temp/3.png',
+                },
+              ]}
+            />
+            <DropdownItem
+              checked
+              isAllItems={false}
+              category={'manager'}
+              dropdownItems={[
+                {
+                  name: 'Ксения Гривская',
+                  avatar: '/images/employees_temp/3.png',
+                },
+              ]}
+            />
+          </div>
+        </div>
+
+        <div className={'mt-2 ml-2 grid grid-cols-4 gap-5 py-5  '}>
+          <div className={'flex flex-col gap-1'}>
+            <DropdownItem
+              isAllItems={true}
+              category={'category'}
+              dropdownItems={[
+                { category: 'development' },
+                { category: 'oneTimeWorks' },
+                { category: 'seo' },
+                { category: 'hours' },
+                { category: 'tm' },
+              ]}
+            />
+            <DropdownItem
+              isAllItems={true}
+              checked
+              category={'category'}
+              dropdownItems={[
+                { category: 'development' },
+                { category: 'oneTimeWorks' },
+                { category: 'seo' },
+                { category: 'hours' },
+                { category: 'tm' },
+              ]}
+            />
+          </div>
+
+          <div className={'flex flex-col gap-1'}>
+            <DropdownItem
+              isAllItems={true}
+              category={'pay'}
+              dropdownItems={[
+                { status: 'nextWeek' },
+                { status: 'thisWeek' },
+                { status: 'expired' },
+              ]}
+            />
+            <DropdownItem
+              isAllItems={true}
+              checked
+              category={'pay'}
+              dropdownItems={[
+                { status: 'nextWeek' },
+                { status: 'thisWeek' },
+                { status: 'expired' },
+              ]}
+            />
+          </div>
+
+          <div className={'flex flex-col gap-1'}>
+            <DropdownItem
+              isAllItems={true}
+              category={'manager'}
+              dropdownItems={[
+                {
+                  name: 'Елизавета Которова',
+                  avatar: '/images/employees_temp/1.png',
+                },
+                {
+                  name: 'Дмитрий Голиков',
+                  avatar: '/images/employees_temp/2.png',
+                },
+                {
+                  name: 'Ксения Гривская',
+                  avatar: '/images/employees_temp/3.png',
+                },
+              ]}
+            />
+            <DropdownItem
+              isAllItems={true}
+              checked
+              category={'manager'}
+              dropdownItems={[
+                {
+                  name: 'Елизавета Которова',
+                  avatar: '/images/employees_temp/1.png',
+                },
+                {
+                  name: 'Дмитрий Голиков',
+                  avatar: '/images/employees_temp/2.png',
+                },
+                {
+                  name: 'Ксения Гривская',
+                  avatar: '/images/employees_temp/3.png',
+                },
+              ]}
+            />
+          </div>
         </div>
       </main>
     </>

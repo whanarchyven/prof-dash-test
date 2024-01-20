@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 interface Props extends VariantProps<typeof cvaCategory> {}
 
-export interface categoryName extends Props {}
+export type categoryName = Props['category'];
 
 export const categoriesTitle = () => {
   const categories: Map<Props['category'], string> = new Map();
@@ -17,11 +17,11 @@ export const categoriesTitle = () => {
 
 export const categoriesColor = () => {
   const categories: Map<Props['category'], string> = new Map();
-  categories.set('development', 'cPurple');
-  categories.set('oneTimeWorks', 'cGreenAccent');
-  categories.set('tm', 'cRedAccent');
-  categories.set('hours', 'cBlue');
-  categories.set('seo', 'cPinkAccent');
+  categories.set('development', 'text-cPurple bg-cPurple');
+  categories.set('oneTimeWorks', 'text-cGreenAccent bg-cGreenAccent');
+  categories.set('tm', 'text-cRedAccent bg-cRedAccent');
+  categories.set('hours', 'text-cBlue bg-cBlue');
+  categories.set('seo', 'text-cPinkAccent bg-cPinkAccent');
   return categories;
 };
 

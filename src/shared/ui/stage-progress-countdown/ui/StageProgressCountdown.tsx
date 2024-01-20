@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 interface Props {
   dayRemains: number;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 interface stageProgressColor
@@ -74,7 +74,7 @@ const StageProgressCountdown: FC<Props> = ({ dayRemains, children }) => {
           colorsTime={[1, 0]}
         />
       )}
-      {children}
+      {children ? children : null}
     </div>
   );
 };
