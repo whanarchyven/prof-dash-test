@@ -22,7 +22,7 @@ interface paymentDropDown {
 interface Props extends VariantProps<typeof cvaDropDownItemBody> {
   checked?: boolean;
   isAllItems?: boolean;
-  check: () => any;
+  check?: () => any;
   dropdownItems: Array<categoryDropDown | employeeDropDown | paymentDropDown>;
 }
 
