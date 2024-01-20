@@ -1,21 +1,21 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { categoryName, getCategory } from '@/shared/ui/category/ui/Category';
 import StageProgressCountdown from '@/shared/ui/stage-progress-countdown/ui/StageProgressCountdown';
 import CompletedIcon from '/public/icons/complete.svg';
 import { motion } from 'framer-motion';
 
-interface employeeDropDown {
+export interface employeeDropDown {
   name: string;
   avatar: string;
 }
 
-interface categoryDropDown {
+export interface categoryDropDown {
   category: categoryName;
 }
 
-interface paymentDropDown {
+export interface paymentDropDown {
   status: 'expired' | 'thisWeek' | 'nextWeek';
 }
 
@@ -23,8 +23,11 @@ interface Props extends VariantProps<typeof cvaDropDownItemBody> {
   checked?: boolean;
   isAllItems?: boolean;
   check?: () => any;
+  uncheck?: () => any;
   dropdownItems: Array<categoryDropDown | employeeDropDown | paymentDropDown>;
 }
+
+export type dropDownCategory = Props['category'];
 
 const cvaDropDownItemRoot = cva([
   'flex items-center justify-between cursor-pointer whitespace-nowrap text-sm gap-1',
@@ -33,9 +36,9 @@ const cvaDropDownItemTitle = cva(['flex items-center gap-1']);
 const cvaDropDownItemBody = cva(['flex items-center'], {
   variants: {
     category: {
-      category: 'gap-1',
-      manager: 'gap-[-1rem]',
-      pay: 'gap-1',
+      category: 'gap-0.5',
+      manager: 'gap-[-0.5rem]',
+      pay: 'gap-0.5',
     },
   },
 });
@@ -73,7 +76,7 @@ const titleAnimationVariants = {
   closed: { opacity: 1, x: -20 },
 };
 
-const tranSlateDropDownItem = (item: Props['dropdownItems'][0]) => {
+export const tranSlateDropDownItem = (item: Props['dropdownItems'][0]) => {
   if ('name' in item && 'avatar' in item) {
     return {
       title: item.name,
@@ -107,7 +110,9 @@ const DropdownItem: FC<Props> = ({
   check,
 }) => {
   const [isChecked, setIsChecked] = useState<boolean>(checked ?? false);
-
+  useEffect(() => {
+    setIsChecked(checked ?? false);
+  }, [checked]);
   return (
     <div
       onClick={() => {
@@ -126,7 +131,7 @@ const DropdownItem: FC<Props> = ({
             animate={isChecked ? 'open' : 'closed'}
             variants={titleAnimationVariants}
             transition={{ delay: isChecked ? 0 : 0.2 }}>
-            Все <span>(default)</span>
+            Все <span className={'opacity-50'}>(default)</span>
           </motion.p>
         ) : (
           <motion.p

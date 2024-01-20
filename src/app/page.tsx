@@ -4,6 +4,7 @@ import Category from '@/shared/ui/category/ui/Category';
 import StageProgressCountdown from '@/shared/ui/stage-progress-countdown/ui/StageProgressCountdown';
 import InvoiceProgress from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
 import DropdownItem from '@/shared/ui/dropdown-item/ui/DropdownItem';
+import SortDropdown from '@/shared/ui/sort-dropdown/ui';
 
 export default function Home() {
   return (
@@ -356,6 +357,15 @@ export default function Home() {
               ]}
             />
           </div>
+        </div>
+        <h1 className={'mt-4  ml-2'}>Sort Dropdown</h1>
+        <div
+          className={
+            'mt-2 bg-gray-100 ml-2 grid grid-cols-3 items-center gap-1 py-5 gap-2'
+          }>
+          <SortDropdown state={'default'} category={'category'}></SortDropdown>
+          <SortDropdown state={'default'} category={'manager'}></SortDropdown>
+          <SortDropdown state={'default'} category={'pay'}></SortDropdown>
         </div>
       </main>
     </>

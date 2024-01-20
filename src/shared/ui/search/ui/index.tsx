@@ -32,7 +32,8 @@ const cvaSearchContainer = cva(
 const cvaSearchInput = cva([
   'border-transparent',
   'focus:outline-none',
-  'p-1',
+  'py-0.5',
+  'px-0.5',
   'bg-transparent',
   'w-full',
   'text-sm',
