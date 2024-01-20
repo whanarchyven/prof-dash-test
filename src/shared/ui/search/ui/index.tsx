@@ -1,6 +1,7 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useState } from 'react';
+import ArrowRightIcon from '/public/icons/arrow_right_white.svg';
 
 interface Props extends VariantProps<typeof cvaSearchContainer> {
   placeholder?: string;
@@ -48,7 +49,7 @@ const cvaSearchButton = cva([
 
 const Search: FC<Props> = ({ placeholder, mutateFunc, searchFunc, state }) => {
   const [searchState, setSearchState] = useState<typeof state>(state);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState<string>('');
 
   return (
     <div className={cvaSearchContainer({ state: searchState })}>
@@ -70,7 +71,7 @@ const Search: FC<Props> = ({ placeholder, mutateFunc, searchFunc, state }) => {
         }}
         onKeyDown={(event) => {
           if (event.key == 'Enter') {
-            searchFunc ? searchFunc(query) : alert('Значение инпута: ' + query);
+            searchFunc ? searchFunc(query) : null;
           }
         }}
         className={cvaSearchInput()}
@@ -78,10 +79,10 @@ const Search: FC<Props> = ({ placeholder, mutateFunc, searchFunc, state }) => {
       {query ? (
         <div
           onClick={() => {
-            searchFunc ? searchFunc(query) : alert('Значение инпута: ' + query);
+            searchFunc ? searchFunc(query) : null;
           }}
           className={cvaSearchButton()}>
-          <img src={'/icons/arrow_right_white.svg'} />
+          <ArrowRightIcon></ArrowRightIcon>
         </div>
       ) : null}
     </div>
