@@ -124,7 +124,8 @@ const DropdownItem: FC<Props> = ({
         {isAllItems ? (
           <motion.p
             animate={isChecked ? 'open' : 'closed'}
-            variants={titleAnimationVariants}>
+            variants={titleAnimationVariants}
+            transition={{ delay: isChecked ? 0 : 0.2 }}>
             Все <span>(default)</span>
           </motion.p>
         ) : (
