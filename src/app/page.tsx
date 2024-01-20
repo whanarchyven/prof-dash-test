@@ -2,6 +2,7 @@ import TaskTimer from '@/shared/ui/task-timer/ui';
 import Search from '@/shared/ui/search/ui';
 import Category from '@/shared/ui/category/ui/Category';
 import StageProgressCountdown from '@/shared/ui/stage-progress-countdown/ui/StageProgressCountdown';
+import InvoiceProgress from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
 
 export default function Home() {
   return (
@@ -91,6 +92,16 @@ export default function Home() {
           <StageProgressCountdown dayRemains={34}>
             34 дня
           </StageProgressCountdown>
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>Invoice Progress</h1>
+        <div className={'mt-2 ml-2 flex items-center gap-1 py-5 gap-2 w-1/2'}>
+          <InvoiceProgress status={'planning'}>220 000 ₽</InvoiceProgress>
+          <InvoiceProgress status={'setting'}>220 000 ₽</InvoiceProgress>
+          <InvoiceProgress status={'ready'}>220 000 ₽</InvoiceProgress>
+          <InvoiceProgress status={'sended'}>220 000 ₽</InvoiceProgress>
+          <InvoiceProgress status={'closed'}>220 000 ₽</InvoiceProgress>
+          <InvoiceProgress status={'transit'}>220 000 ₽</InvoiceProgress>
         </div>
       </main>
     </>
