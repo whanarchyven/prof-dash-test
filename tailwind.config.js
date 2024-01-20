@@ -19,6 +19,7 @@ module.exports = {
         cRed: '#FF5757',
         cGray: '#3E3E3E',
         cGrayLight: '#EAEAEA',
+        cGrayAccent: '#E4E4E4',
       },
       minHeight: {},
       boxShadow: {},
