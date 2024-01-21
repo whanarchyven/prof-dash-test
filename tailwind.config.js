@@ -16,6 +16,7 @@ module.exports = {
         cWhite: '#fff',
         cGreen: '#01BF64',
         cOrange: '#F8AE00',
+        cYellow: '#FFDB6C',
         cRed: '#FF5757',
         cGray: '#3E3E3E',
         cGrayLight: '#EAEAEA',

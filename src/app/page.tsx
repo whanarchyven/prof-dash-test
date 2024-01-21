@@ -5,6 +5,7 @@ import StageProgressCountdown from '@/shared/ui/stage-progress-countdown/ui/Stag
 import InvoiceProgress from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
 import DropdownItem from '@/shared/ui/dropdown-item/ui/DropdownItem';
 import SortDropdown from '@/shared/ui/sort-dropdown/ui';
+import TaskProgress from '@/shared/ui/task-progress/ui';
 
 export default function Home() {
   return (
@@ -366,6 +367,22 @@ export default function Home() {
           <SortDropdown state={'default'} category={'category'}></SortDropdown>
           <SortDropdown state={'default'} category={'manager'}></SortDropdown>
           <SortDropdown state={'default'} category={'pay'}></SortDropdown>
+        </div>
+        <h1 className={'mt-4  ml-2'}>TaskProgress</h1>
+        {/*<Button href={'/another-page'}>Go to another page</Button>*/}
+        <div className={'mt-2 px-2 grid grid-cols-4 gap-2 '}>
+          <TaskProgress
+            task={'Программирование'}
+            completePercent={25}
+            status={'pending'}
+          />
+          <TaskProgress task={'Дизайн'} status={'completed'} />
+          <TaskProgress
+            task={'SEO стратегия'}
+            completePercent={75}
+            status={'pending'}
+          />
+          <TaskProgress task={'Рекламная кампания'} status={'pending'} />
         </div>
       </main>
     </>
