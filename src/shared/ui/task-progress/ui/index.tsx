@@ -1,28 +1,41 @@
+'use client';
 import { cva, VariantProps } from 'class-variance-authority';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 interface Props extends VariantProps<typeof cvaProgress> {
   task: string;
   completePercent?: number;
+  isShort?: boolean;
 }
 
 const cvaRoot = cva(
-  [
-    'rounded-3xl p-1.2 relative bg-cBlack w-full bg-opacity-[0.03] overflow-hidden',
-  ],
+  ['p-1.2 relative bg-cBlack w-full bg-opacity-[0.03] overflow-hidden'],
   {
     variants: {
       height: {
-        sm: ['h-10'],
+        xl: ['h-10'],
+        lg: ['h-8'],
+        md: ['h-6'],
+        sm: ['h-4'],
+        xs: ['h-2'],
+      },
+      isShort: {
+        true: 'w-1.2 rounded-xl',
+        false: 'w-full rounded-3xl',
       },
     },
   }
 );
-const cvaProgress = cva(['absolute z-[-1] left-0 top-0 rounded-3xl h-full'], {
+const cvaProgress = cva(['absolute z-[-1] left-0 top-0 h-full'], {
   variants: {
     status: {
       completed: ['bg-cGreen w-full'],
       pending: ['bg-cYellow w-full'],
+      default: ['bg-transparent'],
+    },
+    isShort: {
+      true: 'rounded-xl',
+      false: 'rounded-3xl',
     },
   },
 });
@@ -31,6 +44,7 @@ const cvaTextBlock = cva(['flex w-full justify-between gap-1 items-end'], {
     status: {
       completed: ['text-cWhite'],
       pending: ['text-cGray'],
+      default: ['text-cGray'],
     },
   },
 });
@@ -51,7 +65,12 @@ const cvaTitle = cva(['font-base text-lg'], {
   },
 });
 
-const TaskProgress: FC<Props> = ({ task, status, completePercent }) => {
+const TaskProgress: FC<Props> = ({
+  task,
+  status,
+  completePercent,
+  isShort = false,
+}) => {
   const calculateCompletePercent = (
     taskStatus: typeof status,
     taskPercent: typeof completePercent
@@ -68,19 +87,30 @@ const TaskProgress: FC<Props> = ({ task, status, completePercent }) => {
     completePercent
   );
 
+  const [shortDisplay, setShortDisplay] = useState(isShort);
+
   return (
-    <div className={cvaRoot()}>
+    <div
+      onMouseEnter={() => {
+        isShort ? setShortDisplay(false) : null;
+      }}
+      onMouseLeave={() => {
+        isShort ? setShortDisplay(true) : null;
+      }}
+      className={cvaRoot({ isShort: shortDisplay, height: 'sm' })}>
       <div
-        style={{ width: `${taskCompletePercentStatus}%` }}
-        className={cvaProgress({ status })}></div>
-      <div className={cvaTextBlock({ status })}>
-        <div className={cvaTextSection({ align: 'left' })}>
-          <p className={cvaTitle({ align: 'left' })}>{task}</p>
+        style={{ width: `${shortDisplay ? 100 : taskCompletePercentStatus}%` }}
+        className={cvaProgress({ status, isShort: shortDisplay })}></div>
+      {!shortDisplay ? (
+        <div className={cvaTextBlock({ status })}>
+          <div className={cvaTextSection({ align: 'left' })}>
+            <p className={cvaTitle({ align: 'left' })}>{task}</p>
+          </div>
+          <div className={cvaTextSection({ align: 'right' })}>
+            <p className={cvaTitle({ align: 'right' })}>100%</p>
+          </div>
         </div>
-        <div className={cvaTextSection({ align: 'right' })}>
-          <p className={cvaTitle({ align: 'right' })}>100%</p>
-        </div>
-      </div>
+      ) : null}
     </div>
   );
 };

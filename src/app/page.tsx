@@ -384,6 +384,26 @@ export default function Home() {
           />
           <TaskProgress task={'Рекламная кампания'} status={'pending'} />
         </div>
+        <div className={'mt-2 mb-5 px-2 grid grid-cols-4 gap-2 '}>
+          <TaskProgress
+            isShort
+            task={'Программирование'}
+            completePercent={25}
+            status={'pending'}
+          />
+          <TaskProgress isShort task={'Дизайн'} status={'completed'} />
+          <TaskProgress
+            isShort
+            task={'SEO стратегия'}
+            completePercent={75}
+            status={'pending'}
+          />
+          <TaskProgress
+            isShort
+            task={'Рекламная кампания'}
+            status={'default'}
+          />
+        </div>
       </main>
     </>
   );

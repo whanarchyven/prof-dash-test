@@ -9,7 +9,7 @@ import DropdownItem, {
   paymentDropDown,
   tranSlateDropDownItem,
 } from '@/shared/ui/dropdown-item/ui/DropdownItem';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface Props
   extends VariantProps<typeof cvaSortContainer>,
@@ -88,7 +88,7 @@ const cvaTitleDropDownBlock = cva([
 ]);
 
 const cvaDropdownPopup = cva([
-  'absolute right-0 top-4 flex flex-col gap-2 rounded-3xl shadow-xl w-[32rem] bg-white p-2',
+  'absolute right-0 z-50 top-4 flex flex-col gap-2 rounded-3xl shadow-xl w-[32rem] bg-white p-2',
 ]);
 
 const dropdownPopupAnimationVariants = {
@@ -207,43 +207,49 @@ const SortDropdown: FC<Props> = ({ category, state }) => {
             <ArrowDownIcon></ArrowDownIcon>
           </div>
         </div>
-        <motion.div
-          variants={dropdownPopupAnimationVariants}
-          animate={dropdownOpen ? 'open' : 'closed'}
-          className={cvaDropdownPopup()}>
-          <DropdownItem
-            check={() => {
-              setDropDownItems([]);
-            }}
-            dropdownItems={allDropdownItems}
-            checked={isAll}
-            category={category}
-            isAllItems={true}></DropdownItem>
-          {allDropdownItems.map(
-            (
-              item: employeeDropDown | paymentDropDown | categoryDropDown,
-              counter: number
-            ) => {
-              return (
-                <DropdownItem
-                  key={counter}
-                  checked={
-                    !!dropdownItems.find(
-                      (dropdown) =>
-                        tranSlateDropDownItem(dropdown).title ==
-                        tranSlateDropDownItem(item).title
-                    )
-                  }
-                  check={() => {
-                    checkDropdown(item);
-                    setIsAll(false);
-                  }}
-                  category={category}
-                  dropdownItems={[item]}></DropdownItem>
-              );
-            }
+        <AnimatePresence>
+          {dropdownOpen && (
+            <motion.div
+              variants={dropdownPopupAnimationVariants}
+              initial={'closed'}
+              animate={'open'}
+              exit={'closed'}
+              className={cvaDropdownPopup()}>
+              <DropdownItem
+                check={() => {
+                  setDropDownItems([]);
+                }}
+                dropdownItems={allDropdownItems}
+                checked={isAll}
+                category={category}
+                isAllItems={true}></DropdownItem>
+              {allDropdownItems.map(
+                (
+                  item: employeeDropDown | paymentDropDown | categoryDropDown,
+                  counter: number
+                ) => {
+                  return (
+                    <DropdownItem
+                      key={counter}
+                      checked={
+                        !!dropdownItems.find(
+                          (dropdown) =>
+                            tranSlateDropDownItem(dropdown).title ==
+                            tranSlateDropDownItem(item).title
+                        )
+                      }
+                      check={() => {
+                        checkDropdown(item);
+                        setIsAll(false);
+                      }}
+                      category={category}
+                      dropdownItems={[item]}></DropdownItem>
+                  );
+                }
+              )}
+            </motion.div>
           )}
-        </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
