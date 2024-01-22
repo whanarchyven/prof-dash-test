@@ -4,7 +4,8 @@ import { FC, ReactNode } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import CompletedIcon from '/public/icons/complete.svg';
 
-interface Props extends VariantProps<typeof cvaStageProgressContainer> {
+export interface InvoiceProgressProps
+  extends VariantProps<typeof cvaStageProgressContainer> {
   children: ReactNode;
 }
 
@@ -25,7 +26,7 @@ const cvaStageProgressContainer = cva(
 );
 
 const cvaTransitPostfix = cva(['text-cOrange']);
-const InvoiceProgress: FC<Props> = ({ status, children }) => {
+const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, children }) => {
   const translateInvoiceProgressByStatus = (invoiceStatus: typeof status) => {
     const statusMap: Map<typeof invoiceStatus, number> = new Map();
     statusMap.set('planning', 0);

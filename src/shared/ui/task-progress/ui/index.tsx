@@ -1,15 +1,15 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
-interface Props extends VariantProps<typeof cvaProgress> {
+export interface TaskProgressProps extends VariantProps<typeof cvaProgress> {
   task: string;
   completePercent?: number;
   isShort?: boolean;
 }
 
 const cvaRoot = cva(
-  ['p-1.2 relative bg-cBlack w-full bg-opacity-[0.03] overflow-hidden'],
+  ['p-1.2 relative bg-cBlack cursor-pointer bg-opacity-[0.03] overflow-hidden'],
   {
     variants: {
       height: {
@@ -65,7 +65,7 @@ const cvaTitle = cva(['font-base text-lg'], {
   },
 });
 
-const TaskProgress: FC<Props> = ({
+const TaskProgress: FC<TaskProgressProps> = ({
   task,
   status,
   completePercent,
@@ -89,14 +89,18 @@ const TaskProgress: FC<Props> = ({
 
   const [shortDisplay, setShortDisplay] = useState(isShort);
 
+  useEffect(() => {
+    setShortDisplay(isShort);
+  }, [isShort]);
+
   return (
     <div
-      onMouseEnter={() => {
-        isShort ? setShortDisplay(false) : null;
-      }}
-      onMouseLeave={() => {
-        isShort ? setShortDisplay(true) : null;
-      }}
+      // onMouseEnter={() => {
+      //   isShort ? setShortDisplay(false) : null;
+      // }}
+      // onMouseLeave={() => {
+      //   isShort ? setShortDisplay(true) : null;
+      // }}
       className={cvaRoot({ isShort: shortDisplay, height: 'sm' })}>
       <div
         style={{ width: `${shortDisplay ? 100 : taskCompletePercentStatus}%` }}
