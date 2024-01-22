@@ -1,6 +1,7 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export interface TaskProgressProps extends VariantProps<typeof cvaProgress> {
   task: string;
@@ -56,7 +57,7 @@ const cvaTextSection = cva(['flex w-1/2 flex-col gap-0.3'], {
     },
   },
 });
-const cvaTitle = cva(['font-base text-lg'], {
+const cvaTitle = cva(['font-base text-lg', 'whitespace-nowrap'], {
   variants: {
     align: {
       left: 'text-sm truncate text-left',
@@ -89,12 +90,20 @@ const TaskProgress: FC<TaskProgressProps> = ({
 
   const [shortDisplay, setShortDisplay] = useState(isShort);
 
+  const animateTaskProgressVariants = {
+    open: { width: '100%' },
+    closed: { width: '5%' },
+  };
+
   useEffect(() => {
     setShortDisplay(isShort);
   }, [isShort]);
 
   return (
-    <div
+    <motion.div
+      transition={{ duration: 0.2 }}
+      variants={animateTaskProgressVariants}
+      animate={shortDisplay ? 'closed' : 'open'}
       // onMouseEnter={() => {
       //   isShort ? setShortDisplay(false) : null;
       // }}
@@ -115,7 +124,7 @@ const TaskProgress: FC<TaskProgressProps> = ({
           </div>
         </div>
       ) : null}
-    </div>
+    </motion.div>
   );
 };
 

@@ -7,6 +7,7 @@ import DropdownItem from '@/shared/ui/dropdown-item/ui/DropdownItem';
 import SortDropdown from '@/shared/ui/sort-dropdown/ui';
 import TaskProgress from '@/shared/ui/task-progress/ui';
 import StageItem from '@/entities/ui/stage-item/ui';
+import CardHeader from '@/shared/ui/card-header/ui';
 
 export default function Home() {
   return (
@@ -475,9 +476,9 @@ export default function Home() {
         </div>
 
         <h1 className={'mt-4  ml-2'}>StageItem</h1>
-        {/*<Button href={'/another-page'}>Go to another page</Button>*/}
         <div className={'my-2 px-2 grid grid-cols-4 gap-2 '}>
           <StageItem
+            height={'lg'}
             taskProgressStatus={'default'}
             taskProgressCompletePercent={25}
             payment={{ status: 'planning', children: '400 000 P' }}
@@ -486,6 +487,7 @@ export default function Home() {
             fact={0}
             plan={78}></StageItem>
           <StageItem
+            height={'lg'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={10}
             payment={{ status: 'planning', children: '400 000 P' }}
@@ -494,6 +496,7 @@ export default function Home() {
             fact={10}
             plan={78}></StageItem>
           <StageItem
+            height={'lg'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={75}
             prepayment={{ status: 'closed', children: '120 000 P' }}
@@ -503,6 +506,7 @@ export default function Home() {
             fact={10}
             plan={78}></StageItem>
           <StageItem
+            height={'lg'}
             taskProgressStatus={'completed'}
             taskProgressCompletePercent={75}
             payment={{ status: 'closed', children: '10 000 P' }}
@@ -513,6 +517,7 @@ export default function Home() {
         </div>
         <div className={'my-2 px-2 grid grid-cols-4 gap-2 '}>
           <StageItem
+            height={'lg'}
             taskProgressStatus={'default'}
             taskProgressCompletePercent={25}
             payment={{ status: 'planning', children: '400 000 P' }}
@@ -522,6 +527,7 @@ export default function Home() {
             fact={0}
             plan={78}></StageItem>
           <StageItem
+            height={'lg'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={10}
             payment={{ status: 'planning', children: '400 000 P' }}
@@ -531,6 +537,7 @@ export default function Home() {
             fact={10}
             plan={78}></StageItem>
           <StageItem
+            height={'lg'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={75}
             prepayment={{ status: 'closed', children: '120 000 P' }}
@@ -541,6 +548,7 @@ export default function Home() {
             fact={10}
             plan={78}></StageItem>
           <StageItem
+            height={'lg'}
             taskProgressStatus={'completed'}
             taskProgressCompletePercent={75}
             payment={{ status: 'closed', children: '10 000 P' }}
@@ -549,6 +557,19 @@ export default function Home() {
             status={'completed'}
             fact={56}
             plan={78}></StageItem>
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>CardHeader</h1>
+        <div className={'my-2 py-2 bg-gray-500 px-2 grid grid-cols-3 gap-2 '}>
+          <CardHeader
+            customer={'HyperPC'}
+            dateStart={new Date('2023-12-17')}
+            dateEnd={new Date('2024-1-17')}
+            category={'development'}
+            manager={{
+              name: 'Елизавета Которова',
+              avatar: '/images/employees_temp/1.png',
+            }}></CardHeader>
         </div>
       </main>
     </>

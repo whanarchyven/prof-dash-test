@@ -1,6 +1,7 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export interface TaskTimerProps
   extends VariantProps<typeof cvaProgress>,
@@ -55,7 +56,7 @@ const cvaTextBlock = cva(['flex w-full justify-between items-end'], {
   },
 });
 const cvaTextSection = cva(['flex flex-col gap-0.3']);
-const cvaTitle = cva(['font-base text-lg'], {
+const cvaTitle = cva(['font-base text-lg', 'whitespace-nowrap'], {
   variants: {
     align: {
       left: 'text-lg',
@@ -100,8 +101,16 @@ const TaskTimer: FC<TaskTimerProps> = ({
 
   const taskProgress = calculateProgressPercent(status, shortDisplay ?? false);
 
+  const animateTaskTimerVariants = {
+    open: { width: '100%' },
+    closed: { width: '5%' },
+  };
+
   return (
-    <div
+    <motion.div
+      transition={{ duration: 0.2 }}
+      variants={animateTaskTimerVariants}
+      animate={shortDisplay ? 'closed' : 'open'}
       //     onMouseEnter={() => {
       //     isShort ? setShortDisplay(false) : null;
       // }}
@@ -136,7 +145,7 @@ const TaskTimer: FC<TaskTimerProps> = ({
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 
