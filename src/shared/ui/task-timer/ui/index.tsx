@@ -31,7 +31,7 @@ const cvaRoot = cva(
     },
   }
 );
-const cvaProgress = cva(['absolute z-[-1] left-0 top-0 rounded-3xl h-full'], {
+const cvaProgress = cva(['absolute z-[1] left-0 top-0 rounded-3xl h-full'], {
   variants: {
     status: {
       default: ['bg-cGrayLight'],
@@ -45,16 +45,19 @@ const cvaProgress = cva(['absolute z-[-1] left-0 top-0 rounded-3xl h-full'], {
     },
   },
 });
-const cvaTextBlock = cva(['flex w-full justify-between items-end'], {
-  variants: {
-    status: {
-      default: ['text-cGray'],
-      completed: ['text-cWhite'],
-      failed: ['text-cWhite'],
-      pending: ['text-cGray'],
+const cvaTextBlock = cva(
+  ['flex w-full relative z-[2] justify-between items-end'],
+  {
+    variants: {
+      status: {
+        default: ['text-cGray'],
+        completed: ['text-cWhite'],
+        failed: ['text-cWhite'],
+        pending: ['text-cGray'],
+      },
     },
-  },
-});
+  }
+);
 const cvaTextSection = cva(['flex flex-col gap-0.3']);
 const cvaTitle = cva(['font-base text-lg', 'whitespace-nowrap'], {
   variants: {

@@ -8,7 +8,7 @@ import PinIcon from '../../../../../public/icons/PinIcon';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 
-interface Props
+export interface CardHeaderProps
   extends VariantProps<typeof cvaRoot>,
     VariantProps<typeof cvaPinButton> {
   customer: string;
@@ -92,7 +92,7 @@ const getDateTitle = (dateStart: Date, dateEnd: Date) => {
     );
   }
 };
-const CardHeader: FC<Props> = ({
+const CardHeader: FC<CardHeaderProps> = ({
   category,
   customer,
   dateStart,

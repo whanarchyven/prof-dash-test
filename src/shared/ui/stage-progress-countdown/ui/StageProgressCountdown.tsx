@@ -2,7 +2,7 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC, ReactNode } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
-interface Props {
+export interface StageProgressProps {
   dayRemains: number;
   children?: ReactNode;
 }
@@ -26,7 +26,7 @@ export const getStageProgressColor: (
 };
 
 const cvaStageProgressContainer = cva(
-  ['flex items-center w-fit whitespace-nowrap text-sm gap-1'],
+  ['flex items-center w-fit h-fit whitespace-nowrap text-sm gap-1'],
   {
     variants: {
       remain: {
@@ -38,7 +38,10 @@ const cvaStageProgressContainer = cva(
   }
 );
 
-const StageProgressCountdown: FC<Props> = ({ dayRemains, children }) => {
+const StageProgressCountdown: FC<StageProgressProps> = ({
+  dayRemains,
+  children,
+}) => {
   const dayToSecCoef = 24 * 60 * 60;
   const stageProgressColor = getStageProgressColor(dayRemains);
   return (
@@ -74,7 +77,7 @@ const StageProgressCountdown: FC<Props> = ({ dayRemains, children }) => {
           colorsTime={[1, 0]}
         />
       )}
-      {children ? children : null}
+      {children ? children : dayRemains.toString().concat(' ', 'дней')}
     </div>
   );
 };

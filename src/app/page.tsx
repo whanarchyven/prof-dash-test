@@ -8,6 +8,7 @@ import SortDropdown from '@/shared/ui/sort-dropdown/ui';
 import TaskProgress from '@/shared/ui/task-progress/ui';
 import StageItem from '@/entities/ui/stage-item/ui';
 import CardHeader from '@/shared/ui/card-header/ui';
+import CardItem from '@/entities/ui/card-item/ui';
 
 export default function Home() {
   return (
@@ -570,6 +571,30 @@ export default function Home() {
               name: 'Елизавета Которова',
               avatar: '/images/employees_temp/1.png',
             }}></CardHeader>
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>CardItem</h1>
+        <div className={'my-2 py-2 bg-gray-500 px-2 grid grid-cols-3 gap-2 '}>
+          <CardItem
+            totalCheck={139000}
+            prepayment={20000}
+            time={{ fact: 56, plan: 72, category: 'time', status: 'default' }}
+            profit={{
+              fact: 20,
+              plan: 10,
+              category: 'profit',
+              status: 'completed',
+            }}
+            stageProgress={{ dayRemains: 20 }}
+            customer={'HyperPC'}
+            dateStart={new Date('2023-12-17')}
+            dateEnd={new Date('2024-1-17')}
+            category={'hours'}
+            manager={{
+              name: 'Елизавета Которова',
+              avatar: '/images/employees_temp/1.png',
+            }}
+          />
         </div>
       </main>
     </>
