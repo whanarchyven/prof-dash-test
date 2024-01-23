@@ -44,8 +44,8 @@ const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, children }) => {
       ) : (
         <div style={{ transform: 'scale(-1,1)' }}>
           <CountdownCircleTimer
-            size={24}
-            strokeWidth={4}
+            size={18}
+            strokeWidth={3}
             isSmoothColorTransition={false}
             duration={100}
             initialRemainingTime={translateInvoiceProgressByStatus(status)}

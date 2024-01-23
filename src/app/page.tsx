@@ -6,9 +6,10 @@ import InvoiceProgress from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
 import DropdownItem from '@/shared/ui/dropdown-item/ui/DropdownItem';
 import SortDropdown from '@/shared/ui/sort-dropdown/ui';
 import TaskProgress from '@/shared/ui/task-progress/ui';
-import StageItem from '@/entities/ui/stage-item/ui';
+import StageItem from '@/entities/stage-item/ui';
 import CardHeader from '@/shared/ui/card-header/ui';
-import CardItem from '@/entities/ui/card-item/ui';
+import CardItem from '@/entities/card-item/ui';
+import TimeLine from '@/features/timeline';
 
 export default function Home() {
   return (
@@ -595,6 +596,11 @@ export default function Home() {
               avatar: '/images/employees_temp/1.png',
             }}
           />
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>TimeLine</h1>
+        <div className={'my-2 bg-cGray py-2 px-2 w-full h-[500px]'}>
+          <TimeLine />
         </div>
       </main>
     </>

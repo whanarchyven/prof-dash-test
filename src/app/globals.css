@@ -101,6 +101,14 @@ strong {
   font-weight: 700;
 }
 
+.arrow-right-white > path {
+  stroke: white;
+}
+
+.arrow-right-black > path {
+  stroke: #3e3e3e;
+}
+
 @supports (font: -apple-system-body) and (-webkit-appearance: none) {
   img[loading='lazy'] {
     clip-path: inset(0.06rem);

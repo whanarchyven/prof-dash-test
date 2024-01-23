@@ -1,7 +1,7 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useState } from 'react';
-import ArrowRightIcon from '../../../../../public/icons/ArrowRightIcon';
+import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
 
 interface Props extends VariantProps<typeof cvaSearchContainer> {
   placeholder?: string;
@@ -83,7 +83,7 @@ const Search: FC<Props> = ({ placeholder, mutateFunc, searchFunc, state }) => {
             searchFunc ? searchFunc(query) : null;
           }}
           className={cvaSearchButton()}>
-          <ArrowRightIcon color={'white'} />
+          <ArrowRightIcon className={'arrow-right-white'} />
         </div>
       ) : null}
     </div>

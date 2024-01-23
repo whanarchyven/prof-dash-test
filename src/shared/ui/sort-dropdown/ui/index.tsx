@@ -88,7 +88,7 @@ const cvaTitleDropDownBlock = cva([
 ]);
 
 const cvaDropdownPopup = cva([
-  'absolute right-0 z-50 top-4 flex flex-col gap-2 rounded-3xl shadow-xl w-[32rem] bg-white p-2',
+  'absolute right-0 z-50 top-4 flex flex-col gap-2 rounded-3xl shadow-xl w-fit min-w-[32rem] bg-white p-2',
 ]);
 
 const dropdownPopupAnimationVariants = {

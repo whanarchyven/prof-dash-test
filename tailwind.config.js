@@ -20,6 +20,7 @@ module.exports = {
         cRed: '#FF5757',
         cGray: '#3E3E3E',
         cGrayLight: '#EAEAEA',
+        cGrayUltraLight: '#F9F9F9',
         cGrayAccent: '#E4E4E4',
         cPurple: '#7B5BF0',
         cGreenAccent: '#17B2A9',

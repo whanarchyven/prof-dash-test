@@ -48,8 +48,8 @@ const StageProgressCountdown: FC<StageProgressProps> = ({
     <div className={cvaStageProgressContainer({ remain: stageProgressColor })}>
       {dayRemains >= 0 ? (
         <CountdownCircleTimer
-          size={24}
-          strokeWidth={4}
+          size={18}
+          strokeWidth={3}
           isSmoothColorTransition={false}
           isPlaying
           duration={dayToSecCoef * 32}
@@ -68,8 +68,8 @@ const StageProgressCountdown: FC<StageProgressProps> = ({
         />
       ) : (
         <CountdownCircleTimer
-          size={24}
-          strokeWidth={4}
+          size={18}
+          strokeWidth={3}
           isSmoothColorTransition={false}
           duration={1}
           trailColor={'rgba(7,7,7,0.08)'}

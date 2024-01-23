@@ -3,7 +3,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useState } from 'react';
 import Category, { categoryName } from '@/shared/ui/category/ui/Category';
 import { employeeDropDown } from '@/shared/ui/dropdown-item/ui/DropdownItem';
-import ArrowRightIcon from '../../../../../public/icons/ArrowRightIcon';
+import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
 import PinIcon from '../../../../../public/icons/PinIcon';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
@@ -106,7 +106,7 @@ const CardHeader: FC<CardHeaderProps> = ({
 
   const pinButtonAnimateVariants = {
     open: { opacity: 1, y: 0 },
-    closed: { opacity: 0, y: '-100%' },
+    closed: { opacity: 0, y: '-40%' },
   };
 
   const headerAnimateVariants = {
@@ -157,7 +157,7 @@ const CardHeader: FC<CardHeaderProps> = ({
           className={cvaTextBlock()}>
           <div className={cvaCustomerBlock()}>
             <p className={cvaCustomerTitle()}>{customer}</p>
-            <ArrowRightIcon color={'#3e3e3e'} />
+            <ArrowRightIcon className={'arrow-right-black'} />
           </div>
           <div className={cvaDateCategoryBlock()}>
             {getDateTitle(dateStart, dateEnd)}
