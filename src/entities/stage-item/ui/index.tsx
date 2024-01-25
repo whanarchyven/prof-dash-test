@@ -7,16 +7,16 @@ import InvoiceProgress, {
   InvoiceProgressProps,
 } from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
 
-interface Props extends TaskTimerProps {
+export interface StageItemProps extends TaskTimerProps {
   taskProgressStatus: TaskProgressProps['status'];
   taskProgressCompletePercent: TaskProgressProps['completePercent'];
   prepayment?: InvoiceProgressProps;
   payment: InvoiceProgressProps;
 }
 
-const cvaRoot = cva(['flex flex-col gap-1'], { variants: {} });
+const cvaRoot = cva(['flex w-full flex-col gap-0.4'], { variants: {} });
 const cvaInvoiceBlock = cva(['flex justify-between gap-2']);
-const StageItem: FC<Props> = ({
+const StageItem: FC<StageItemProps> = ({
   category,
   plan,
   fact,
@@ -54,11 +54,15 @@ const StageItem: FC<Props> = ({
         status={taskProgressStatus}></TaskProgress>
       <div className={cvaInvoiceBlock()}>
         {prepayment ? (
-          <InvoiceProgress {...prepayment}>220 000 ₽</InvoiceProgress>
+          <InvoiceProgress {...prepayment}>
+            {prepayment.children && prepayment.children.toLocaleString()} ₽
+          </InvoiceProgress>
         ) : (
           <div></div>
         )}
-        <InvoiceProgress {...payment}>220 000 ₽</InvoiceProgress>
+        <InvoiceProgress {...payment}>
+          {payment.children && payment.children.toLocaleString()} ₽
+        </InvoiceProgress>
       </div>
     </div>
   );

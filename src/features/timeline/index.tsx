@@ -1,66 +1,59 @@
 'use client';
 import { cva } from 'class-variance-authority';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import DaySection from '@/shared/ui/day-section/ui';
-import { ScrollContainer } from 'react-indiana-drag-scroll';
-import 'react-indiana-drag-scroll/dist/style.css';
+import {
+  subMonths,
+  addMonths,
+  lastDayOfMonth,
+  differenceInDays,
+  areIntervalsOverlapping,
+} from 'date-fns';
+import StageItem, { StageItemProps } from '@/entities/stage-item/ui';
 
-interface TimeLineProps {}
+export interface TimeLineProps {
+  stages: {
+    level?: number;
+    dateStart: Date;
+    dateEnd: Date;
+    stageInfo: StageItemProps;
+  }[];
+}
 
-const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-const monthDaysV = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const getPrevMonthDays = () => {
-  let today = new Date();
-  const year =
-    today.getMonth() == 0 ? today.getFullYear() - 1 : today.getFullYear();
-  const prev_month = today.getMonth() == 0 ? 11 : today.getMonth() - 1;
+  const prevMonth = subMonths(new Date(), 1);
 
-  if (!(year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
-    //невисокосный год
-    today = new Date(year, prev_month, monthDays[prev_month]);
-  } else {
-    //високосный год
-    today = new Date(year, prev_month, monthDaysV[prev_month]);
-  }
-  return today;
+  return lastDayOfMonth(prevMonth);
 };
 
 const getNextMonthDays = () => {
-  //кол-во дней в месяцах високосного года
-  let today = new Date();
-  const year =
-    today.getMonth() == 11 ? today.getFullYear() + 1 : today.getFullYear();
-  const next_month = today.getMonth() == 11 ? 0 : today.getMonth() + 1;
-
-  if (!(year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
-    //невисокосный год
-    today = new Date(year, next_month, monthDays[next_month]);
-  } else {
-    //високосный год
-    today = new Date(year, next_month, monthDaysV[next_month]);
-  }
-  return today;
+  const nextMonth = addMonths(new Date(), 1);
+  return lastDayOfMonth(nextMonth);
 };
 
 const getThisMonthDays = () => {
-  let today = new Date();
-  const year = today.getFullYear();
-
-  if (!(year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
-    //невисокосный год
-    today = new Date(year, today.getMonth(), monthDays[today.getMonth()]);
-  } else {
-    //високосный год
-    today = new Date(year, today.getMonth(), monthDaysV[today.getMonth()]);
-  }
-  return today;
+  return lastDayOfMonth(new Date());
 };
 
 const cvaTimeLineRoot = cva([
   'w-fit max-w-full bg-white h-full rounded-xl',
   'overflow-x-scroll',
 ]);
-const cvaTimeLine = cva(['flex w-fit h-full']);
+const cvaTimeLine = cva(['flex w-fit relative h-fit']);
+
+const cvaStage = cva(['absolute z-[9999]']);
+
+const calculateStageWith = (start: Date, end: Date) => {
+  const dayWidth = 30;
+  const difference = differenceInDays(end, start);
+  return difference * dayWidth;
+};
+
+const calculateStageMargin = (startPeriod: Date, startDate: Date) => {
+  const dayWidth = 30;
+  const difference = differenceInDays(startDate, startPeriod);
+  return 15 + difference * dayWidth;
+};
 
 const getMonthDays = (date: Date) => {
   const dates = [];
@@ -69,13 +62,48 @@ const getMonthDays = (date: Date) => {
   }
   return dates;
 };
-const TimeLine: FC<TimeLineProps> = () => {
+const TimeLine: FC<TimeLineProps> = ({ stages }) => {
   const prevMonthDays = getMonthDays(getPrevMonthDays());
   const thisMonthDays = getMonthDays(getThisMonthDays());
   const nextMonthDays = getMonthDays(getNextMonthDays());
+
+  const [fitleredStages, setFilteredStages] = useState([...stages]);
+
+  useEffect(() => {
+    const temp = [...fitleredStages];
+    let level = 0;
+    temp.map((stage, counter) => {
+      if (counter != 0) {
+        if (
+          areIntervalsOverlapping(
+            {
+              start: temp[counter - 1].dateStart,
+              end: temp[counter - 1].dateEnd,
+            },
+            { start: temp[counter].dateStart, end: temp[counter].dateEnd }
+          )
+        ) {
+          level++;
+          stage.level = level;
+        } else {
+          level = 0;
+          stage.level = level;
+        }
+      }
+    });
+    setFilteredStages([...temp]);
+  }, []);
+
+  console.log(
+    calculateStageWith(new Date('2024-01-25'), new Date('2024-01-28'))
+  );
+
   return (
     <div className={cvaTimeLineRoot()}>
-      <ScrollContainer className={cvaTimeLine()} mouseScroll={true}>
+      {/*<div className={cvaTimeLine()}>*/}
+      {/*    */}
+      {/*</div>*/}
+      <div className={cvaTimeLine()}>
         {prevMonthDays.map((day, counter) => {
           return <DaySection key={counter} date={day} />;
         })}
@@ -85,10 +113,23 @@ const TimeLine: FC<TimeLineProps> = () => {
         {nextMonthDays.map((day, counter) => {
           return <DaySection key={counter} date={day} />;
         })}
-      </ScrollContainer>
-      {/*<div className={cvaTimeLine()}>*/}
-      {/*    */}
-      {/*</div>*/}
+        {stages.map((item, counter) => {
+          const width = calculateStageWith(item.dateStart, item.dateEnd);
+          const marginLeft = calculateStageMargin(
+            prevMonthDays[0],
+            item.dateStart
+          );
+          const marginTop = 10 + (item.level ?? 0) * 170;
+          return (
+            <div
+              key={counter}
+              style={{ width: width, left: marginLeft, top: marginTop }}
+              className={cvaStage()}>
+              <StageItem {...item.stageInfo} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

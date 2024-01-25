@@ -8,7 +8,7 @@ import StageProgressCountdown, {
 } from '@/shared/ui/stage-progress-countdown/ui/StageProgressCountdown';
 import InvoiceProgress from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
 
-interface CardItemProps extends CardHeaderProps {
+export interface CardItemProps extends CardHeaderProps {
   totalCheck: number;
   prepayment: number;
   time: TaskTimerProps;
@@ -19,7 +19,7 @@ interface CardItemProps extends CardHeaderProps {
 const cvaCardItemRoot = cva(['flex flex-col gap-1', 'w-full']);
 const cvaCardBodyBlock = cva([
   'grid grid-cols-2 gap-2',
-  'p-1',
+  'p-1.5',
   'rounded-2xl',
   'bg-white',
 ]);

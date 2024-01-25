@@ -15,7 +15,7 @@ const cvaDaySectionMark = cva(['h-full w-[1px]'], {
   },
 });
 
-const DaySection: FC<DaySectionProps> = ({ date }) => {
+const DaySection: FC<DaySectionProps> = () => {
   const [hover, setHover] = useState(false);
   return (
     <div
@@ -26,11 +26,7 @@ const DaySection: FC<DaySectionProps> = ({ date }) => {
         setHover(false);
       }}
       className={cvaDaySectionRoot()}>
-      <div className={cvaDaySectionMark({ state: hover })}>
-        <p className={'-rotate-90 text-[12px] mt-10'}>
-          {date.toLocaleDateString()}
-        </p>
-      </div>
+      <div className={cvaDaySectionMark({ state: hover })}></div>
     </div>
   );
 };

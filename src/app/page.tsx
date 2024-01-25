@@ -10,6 +10,7 @@ import StageItem from '@/entities/stage-item/ui';
 import CardHeader from '@/shared/ui/card-header/ui';
 import CardItem from '@/entities/card-item/ui';
 import TimeLine from '@/features/timeline';
+import StageCard from '@/features/stage-card';
 
 export default function Home() {
   return (
@@ -483,7 +484,7 @@ export default function Home() {
             height={'lg'}
             taskProgressStatus={'default'}
             taskProgressCompletePercent={25}
-            payment={{ status: 'planning', children: '400 000 P' }}
+            payment={{ status: 'planning', children: '400 000' }}
             category={'time'}
             status={'default'}
             fact={0}
@@ -492,7 +493,7 @@ export default function Home() {
             height={'lg'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={10}
-            payment={{ status: 'planning', children: '400 000 P' }}
+            payment={{ status: 'planning', children: '400 000' }}
             category={'time'}
             status={'pending'}
             fact={10}
@@ -501,8 +502,8 @@ export default function Home() {
             height={'lg'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={75}
-            prepayment={{ status: 'closed', children: '120 000 P' }}
-            payment={{ status: 'planning', children: '400 000 P' }}
+            prepayment={{ status: 'closed', children: '120 000' }}
+            payment={{ status: 'planning', children: '400 000' }}
             category={'time'}
             status={'failed'}
             fact={10}
@@ -511,7 +512,7 @@ export default function Home() {
             height={'lg'}
             taskProgressStatus={'completed'}
             taskProgressCompletePercent={75}
-            payment={{ status: 'closed', children: '10 000 P' }}
+            payment={{ status: 'closed', children: '10 000' }}
             category={'time'}
             status={'completed'}
             fact={56}
@@ -522,7 +523,7 @@ export default function Home() {
             height={'lg'}
             taskProgressStatus={'default'}
             taskProgressCompletePercent={25}
-            payment={{ status: 'planning', children: '400 000 P' }}
+            payment={{ status: 'planning', children: '400 000' }}
             category={'time'}
             isShort={true}
             status={'default'}
@@ -532,7 +533,7 @@ export default function Home() {
             height={'lg'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={10}
-            payment={{ status: 'planning', children: '400 000 P' }}
+            payment={{ status: 'planning', children: '400 000' }}
             category={'time'}
             isShort={true}
             status={'pending'}
@@ -542,8 +543,8 @@ export default function Home() {
             height={'lg'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={75}
-            prepayment={{ status: 'closed', children: '120 000 P' }}
-            payment={{ status: 'planning', children: '400 000 P' }}
+            prepayment={{ status: 'closed', children: '120 000' }}
+            payment={{ status: 'planning', children: '400 000' }}
             category={'time'}
             isShort={true}
             status={'failed'}
@@ -553,7 +554,7 @@ export default function Home() {
             height={'lg'}
             taskProgressStatus={'completed'}
             taskProgressCompletePercent={75}
-            payment={{ status: 'closed', children: '10 000 P' }}
+            payment={{ status: 'closed', children: '10 000' }}
             category={'time'}
             isShort={true}
             status={'completed'}
@@ -599,8 +600,128 @@ export default function Home() {
         </div>
 
         <h1 className={'mt-4  ml-2'}>TimeLine</h1>
-        <div className={'my-2 bg-cGray py-2 px-2 w-full h-[500px]'}>
-          <TimeLine />
+        <div className={'my-2 bg-cGray py-2 px-2 w-full h-[700px]'}>
+          <TimeLine
+            stages={[
+              {
+                dateStart: new Date('2023-12-15'),
+                dateEnd: new Date('2023-12-31'),
+                stageInfo: {
+                  height: 'md',
+                  taskProgressStatus: 'completed',
+                  taskProgressCompletePercent: 75,
+                  payment: { status: 'closed', children: '10 000' },
+                  category: 'time',
+                  status: 'completed',
+                  fact: 56,
+                  plan: 78,
+                },
+              },
+              {
+                dateStart: new Date('2023-12-22'),
+                dateEnd: new Date('2024-01-02'),
+                stageInfo: {
+                  height: 'md',
+                  taskProgressStatus: 'pending',
+                  taskProgressCompletePercent: 30,
+                  prepayment: { status: 'closed', children: '10 000' },
+                  payment: { status: 'closed', children: '10 000' },
+                  category: 'time',
+                  status: 'failed',
+                  fact: 32,
+                  plan: 78,
+                },
+              },
+              {
+                dateStart: new Date('2024-01-05'),
+                dateEnd: new Date('2024-01-19'),
+                stageInfo: {
+                  height: 'md',
+                  taskProgressStatus: 'pending',
+                  taskProgressCompletePercent: 75,
+                  prepayment: { status: 'closed', children: '100 000' },
+                  payment: { status: 'sended', children: '10 000' },
+                  category: 'time',
+                  status: 'pending',
+                  fact: 56,
+                  plan: 78,
+                },
+              },
+            ]}
+          />
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>CardItem</h1>
+        <div className={'my-2 bg-cGray py-2 px-2 w-full'}>
+          <StageCard
+            task={{
+              totalCheck: 139000,
+              prepayment: 20000,
+              time: { fact: 56, plan: 72, category: 'time', status: 'default' },
+              profit: {
+                fact: 20,
+                plan: 10,
+                category: 'profit',
+                status: 'completed',
+              },
+              height: 'md',
+              stageProgress: { dayRemains: 20 },
+              customer: 'HyperPC',
+              dateStart: new Date('2023-12-17'),
+              dateEnd: new Date('2024-1-17'),
+              category: 'hours',
+              manager: {
+                name: 'Елизавета Которова',
+                avatar: '/images/employees_temp/1.png',
+              },
+            }}
+            stages={[
+              {
+                dateStart: new Date('2023-12-15'),
+                dateEnd: new Date('2023-12-31'),
+                stageInfo: {
+                  height: 'md',
+                  taskProgressStatus: 'completed',
+                  taskProgressCompletePercent: 75,
+                  payment: { status: 'closed', children: '10 000' },
+                  category: 'time',
+                  status: 'completed',
+                  fact: 56,
+                  plan: 78,
+                },
+              },
+              {
+                dateStart: new Date('2023-12-22'),
+                dateEnd: new Date('2024-01-02'),
+                stageInfo: {
+                  height: 'md',
+                  taskProgressStatus: 'pending',
+                  taskProgressCompletePercent: 30,
+                  prepayment: { status: 'closed', children: '10 000' },
+                  payment: { status: 'closed', children: '10 000' },
+                  category: 'time',
+                  status: 'failed',
+                  fact: 32,
+                  plan: 78,
+                },
+              },
+              {
+                dateStart: new Date('2024-01-05'),
+                dateEnd: new Date('2024-01-19'),
+                stageInfo: {
+                  height: 'md',
+                  taskProgressStatus: 'pending',
+                  taskProgressCompletePercent: 75,
+                  prepayment: { status: 'closed', children: '100 000' },
+                  payment: { status: 'sended', children: '10 000' },
+                  category: 'time',
+                  status: 'pending',
+                  fact: 56,
+                  plan: 78,
+                },
+              },
+            ]}
+          />
         </div>
       </main>
     </>

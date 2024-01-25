@@ -55,7 +55,7 @@ const cvaPinButton = cva([
 ]);
 
 const cvaTextBlock = cva(['flex flex-col gap-1']);
-const cvaCustomerTitle = cva(['']);
+const cvaCustomerTitle = cva(['text-lg']);
 const cvaCustomerBlock = cva(['flex items-center gap-0.5']);
 const cvaDateTitle = cva([
   'capitalize whitespace-nowrap font-secondary text-[1.2rem] opacity-50',
@@ -65,10 +65,10 @@ const cvaHeader = cva([
   'rounded-3xl',
   'bg-white',
   'w-full',
-  'p-1',
+  'p-1.5',
   'flex justify-between gap-3 items-center',
 ]);
-const cvaAvatar = cva(['rounded-full', 'w-5 aspect-square']);
+const cvaAvatar = cva(['rounded-full', 'h-7 aspect-square']);
 
 const getDateTitle = (dateStart: Date, dateEnd: Date) => {
   if (

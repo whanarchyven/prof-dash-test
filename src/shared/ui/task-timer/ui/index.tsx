@@ -13,16 +13,16 @@ export interface TaskTimerProps
 
 const cvaRoot = cva(
   [
-    'rounded-3xl p-1.2 relative cursor-pointer bg-cBlack bg-opacity-[0.03] overflow-hidden',
+    'rounded-3xl relative cursor-pointer bg-cBlack bg-opacity-[0.03] overflow-hidden',
   ],
   {
     variants: {
       height: {
-        xl: ['h-10'],
-        lg: ['h-8'],
-        md: ['h-6'],
-        sm: ['h-4'],
-        xs: ['h-2'],
+        xl: ['h-10 p-1.4'],
+        lg: ['h-8 p-1.2'],
+        md: ['h-6 p-0.6'],
+        sm: ['h-4 p-0.8'],
+        xs: ['h-2 p-0.6'],
       },
       isShort: {
         true: 'w-1.2 rounded-xl',
@@ -58,16 +58,39 @@ const cvaTextBlock = cva(
     },
   }
 );
-const cvaTextSection = cva(['flex flex-col gap-0.3']);
+const cvaTextSection = cva(['flex flex-col gap-0.1']);
 const cvaTitle = cva(['font-base text-lg', 'whitespace-nowrap'], {
   variants: {
+    height: {
+      xl: 'text-xl',
+      lg: 'text-lg',
+      md: 'text-md',
+      sm: 'text-sm',
+      xs: 'text-xs',
+    },
     align: {
-      left: 'text-lg',
-      right: 'text-base',
+      left: 'scale-102',
+      right: 'scale-100',
     },
   },
+  defaultVariants: {
+    height: 'lg',
+  },
 });
-const cvaDescription = cva(['text-sm font-secondary opacity-50']);
+const cvaDescription = cva(['font-secondary opacity-50'], {
+  variants: {
+    height: {
+      xl: 'text-base',
+      lg: 'text-sm',
+      md: 'text-sm',
+      sm: 'text-sm',
+      xs: 'text-sm',
+    },
+  },
+  defaultVariants: {
+    height: 'lg',
+  },
+});
 
 const TaskTimer: FC<TaskTimerProps> = ({
   category,
@@ -133,16 +156,16 @@ const TaskTimer: FC<TaskTimerProps> = ({
               {fact}
               {isCategoryTime ? ' ч' : '%'}
             </p>
-            <p className={cvaDescription()}>
+            <p className={cvaDescription({ height: height })}>
               {isCategoryTime ? 'всего' : 'факт'}
             </p>
           </div>
           <div className={cvaTextSection()}>
-            <p className={cvaTitle({ align: 'right' })}>
+            <p className={cvaTitle({ align: 'right', height: height })}>
               {plan}
               {isCategoryTime ? ' ч' : '%'}
             </p>
-            <p className={cvaDescription()}>
+            <p className={cvaDescription({ height: height })}>
               {isCategoryTime ? 'оценка' : 'план'}
             </p>
           </div>
