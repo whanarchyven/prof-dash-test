@@ -7,6 +7,7 @@ export interface TaskProgressProps extends VariantProps<typeof cvaProgress> {
   task: string;
   completePercent?: number;
   isShort?: boolean;
+  isClicked?: boolean;
 }
 
 const cvaRoot = cva(
@@ -14,11 +15,11 @@ const cvaRoot = cva(
   {
     variants: {
       height: {
-        xl: ['p-1.4'],
-        lg: ['p-1.2'],
-        md: ['p-0.6'],
-        sm: ['p-0.8'],
-        xs: ['p-0.6'],
+        xl: ['h-4 p-1.4'],
+        lg: ['h-4 p-1.2'],
+        md: ['h-4 p-0.6'],
+        sm: ['h-4 p-0.8'],
+        xs: ['h-4 p-0.6'],
       },
       isShort: {
         true: 'w-1.2 rounded-xl',
@@ -60,7 +61,7 @@ const cvaTextSection = cva(['flex w-1/2 flex-col gap-0.3'], {
 const cvaTitle = cva(['font-base text-lg', 'whitespace-nowrap'], {
   variants: {
     align: {
-      left: 'text-sm truncate text-left',
+      left: 'text-sm text-left',
       right: 'text-sm text-right  ',
     },
   },
@@ -92,7 +93,7 @@ const TaskProgress: FC<TaskProgressProps> = ({
 
   const animateTaskProgressVariants = {
     open: { width: '100%' },
-    closed: { width: '5%' },
+    closed: { width: '100%' },
   };
 
   useEffect(() => {
@@ -114,7 +115,7 @@ const TaskProgress: FC<TaskProgressProps> = ({
       <div
         style={{ width: `${shortDisplay ? 100 : taskCompletePercentStatus}%` }}
         className={cvaProgress({ status, isShort: shortDisplay })}></div>
-      {!shortDisplay ? (
+      {!isShort ? (
         <div className={cvaTextBlock({ status })}>
           <div className={cvaTextSection({ align: 'left' })}>
             <p className={cvaTitle({ align: 'left' })}>{task}</p>

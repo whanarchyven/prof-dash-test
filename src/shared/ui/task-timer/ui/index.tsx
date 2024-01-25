@@ -13,7 +13,7 @@ export interface TaskTimerProps
 
 const cvaRoot = cva(
   [
-    'rounded-3xl relative cursor-pointer bg-cBlack bg-opacity-[0.03] overflow-hidden',
+    'rounded-3xl relative cursor-pointer  bg-cBlack bg-opacity-[0.03] overflow-hidden',
   ],
   {
     variants: {
@@ -25,7 +25,7 @@ const cvaRoot = cva(
         xs: ['h-2 p-0.6'],
       },
       isShort: {
-        true: 'w-1.2 rounded-xl',
+        true: 'w-full rounded-3xl',
         false: 'w-full rounded-3xl',
       },
     },
@@ -127,29 +127,29 @@ const TaskTimer: FC<TaskTimerProps> = ({
 
   const taskProgress = calculateProgressPercent(status, shortDisplay ?? false);
 
-  const animateTaskTimerVariants = {
-    open: { width: '100%' },
-    closed: { width: '5%' },
-  };
+  // const animateTaskTimerVariants = {
+  //   open: { width: '100%' },
+  //   closed: { width: 'fit-content' },
+  // };
 
   return (
     <motion.div
       transition={{ duration: 0.2 }}
-      variants={animateTaskTimerVariants}
-      animate={shortDisplay ? 'closed' : 'open'}
+      // variants={animateTaskTimerVariants}
+      // animate={shortDisplay ? 'closed' : 'open'}
       //     onMouseEnter={() => {
       //     isShort ? setShortDisplay(false) : null;
       // }}
       //      onMouseLeave={() => {
       //          isShort ? setShortDisplay(true) : null;
       //      }}
-      className={cvaRoot({ isShort: shortDisplay, height: height })}>
+      className={cvaRoot({ isShort: isShort, height: height })}>
       <div
         style={{
           width: `${shortDisplay && status == 'default' ? 0 : taskProgress}%`,
         }}
         className={cvaProgress({ status, isShort: shortDisplay })}></div>
-      {!shortDisplay && (
+      {!isShort && (
         <div className={cvaTextBlock({ status })}>
           <div className={cvaTextSection()}>
             <p className={cvaTitle({ align: 'left' })}>

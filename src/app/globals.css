@@ -139,3 +139,40 @@ strong {
     transform: translate(0, 160%);
   }
 }
+
+.timeline-items {
+  position: relative;
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  transition: all 0.2s;
+  transform: scale(0.98);
+  will-change: transform;
+  user-select: none;
+  cursor: pointer;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.timeline-items::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-items.active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+  transform: scale(1);
+}
+
+.timeline-item {
+  display: inline-block;
+  background: skyblue;
+  min-height: 250px;
+  min-width: 400px;
+  margin: 2em 1em;
+  @media screen and (max-width: 500px) {
+    min-height: 200px;
+    min-width: 200px;
+  }
+}

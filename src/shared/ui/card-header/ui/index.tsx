@@ -65,7 +65,7 @@ const cvaHeader = cva([
   'rounded-3xl',
   'bg-white',
   'w-full',
-  'p-1.5',
+  'p-1.5 py-2',
   'flex justify-between gap-3 items-center',
 ]);
 const cvaAvatar = cva(['rounded-full', 'h-7 aspect-square']);

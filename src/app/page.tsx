@@ -482,6 +482,7 @@ export default function Home() {
         <div className={'my-2 px-2 grid grid-cols-4 gap-2 '}>
           <StageItem
             height={'lg'}
+            task={'Outsorcing'}
             taskProgressStatus={'default'}
             taskProgressCompletePercent={25}
             payment={{ status: 'planning', children: '400 000' }}
@@ -491,6 +492,7 @@ export default function Home() {
             plan={78}></StageItem>
           <StageItem
             height={'lg'}
+            task={'Outsorcing'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={10}
             payment={{ status: 'planning', children: '400 000' }}
@@ -500,6 +502,7 @@ export default function Home() {
             plan={78}></StageItem>
           <StageItem
             height={'lg'}
+            task={'Outsorcing'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={75}
             prepayment={{ status: 'closed', children: '120 000' }}
@@ -510,6 +513,7 @@ export default function Home() {
             plan={78}></StageItem>
           <StageItem
             height={'lg'}
+            task={'Outsorcing'}
             taskProgressStatus={'completed'}
             taskProgressCompletePercent={75}
             payment={{ status: 'closed', children: '10 000' }}
@@ -521,6 +525,7 @@ export default function Home() {
         <div className={'my-2 px-2 grid grid-cols-4 gap-2 '}>
           <StageItem
             height={'lg'}
+            task={'Outsorcing'}
             taskProgressStatus={'default'}
             taskProgressCompletePercent={25}
             payment={{ status: 'planning', children: '400 000' }}
@@ -531,6 +536,7 @@ export default function Home() {
             plan={78}></StageItem>
           <StageItem
             height={'lg'}
+            task={'Outsorcing'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={10}
             payment={{ status: 'planning', children: '400 000' }}
@@ -541,6 +547,7 @@ export default function Home() {
             plan={78}></StageItem>
           <StageItem
             height={'lg'}
+            task={'Outsorcing'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={75}
             prepayment={{ status: 'closed', children: '120 000' }}
@@ -552,6 +559,7 @@ export default function Home() {
             plan={78}></StageItem>
           <StageItem
             height={'lg'}
+            task={'Outsorcing'}
             taskProgressStatus={'completed'}
             taskProgressCompletePercent={75}
             payment={{ status: 'closed', children: '10 000' }}
@@ -607,6 +615,7 @@ export default function Home() {
                 dateStart: new Date('2023-12-15'),
                 dateEnd: new Date('2023-12-31'),
                 stageInfo: {
+                  task: 'Компонент',
                   height: 'md',
                   taskProgressStatus: 'completed',
                   taskProgressCompletePercent: 75,
@@ -621,6 +630,7 @@ export default function Home() {
                 dateStart: new Date('2023-12-22'),
                 dateEnd: new Date('2024-01-02'),
                 stageInfo: {
+                  task: 'Компонент',
                   height: 'md',
                   taskProgressStatus: 'pending',
                   taskProgressCompletePercent: 30,
@@ -636,6 +646,7 @@ export default function Home() {
                 dateStart: new Date('2024-01-05'),
                 dateEnd: new Date('2024-01-19'),
                 stageInfo: {
+                  task: 'Компонент',
                   height: 'md',
                   taskProgressStatus: 'pending',
                   taskProgressCompletePercent: 75,
@@ -682,6 +693,7 @@ export default function Home() {
                 stageInfo: {
                   height: 'md',
                   taskProgressStatus: 'completed',
+                  task: 'Сверстать дашборд',
                   taskProgressCompletePercent: 75,
                   payment: { status: 'closed', children: '10 000' },
                   category: 'time',
@@ -697,6 +709,7 @@ export default function Home() {
                   height: 'md',
                   taskProgressStatus: 'pending',
                   taskProgressCompletePercent: 30,
+                  task: 'Сверстать дашборд 2',
                   prepayment: { status: 'closed', children: '10 000' },
                   payment: { status: 'closed', children: '10 000' },
                   category: 'time',
@@ -707,11 +720,12 @@ export default function Home() {
               },
               {
                 dateStart: new Date('2024-01-05'),
-                dateEnd: new Date('2024-01-19'),
+                dateEnd: new Date('2024-01-10'),
                 stageInfo: {
                   height: 'md',
                   taskProgressStatus: 'pending',
                   taskProgressCompletePercent: 75,
+                  task: 'Сверстать дашборд 3 ',
                   prepayment: { status: 'closed', children: '100 000' },
                   payment: { status: 'sended', children: '10 000' },
                   category: 'time',
@@ -722,6 +736,247 @@ export default function Home() {
               },
             ]}
           />
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>Синхронизированный таймлайн</h1>
+        <div className={'bg-black mt-4 bg-opacity-5 flex flex-col gap-1 '}>
+          <div className={'px-2 w-full'}>
+            <StageCard
+              task={{
+                totalCheck: 139000,
+                prepayment: 20000,
+                time: {
+                  fact: 56,
+                  plan: 72,
+                  category: 'time',
+                  status: 'default',
+                },
+                profit: {
+                  fact: 20,
+                  plan: 10,
+                  category: 'profit',
+                  status: 'completed',
+                },
+                height: 'md',
+                stageProgress: { dayRemains: 20 },
+                customer: 'HyperPC',
+                dateStart: new Date('2023-12-17'),
+                dateEnd: new Date('2024-1-17'),
+                category: 'hours',
+                manager: {
+                  name: 'Елизавета Которова',
+                  avatar: '/images/employees_temp/1.png',
+                },
+              }}
+              stages={[
+                {
+                  dateStart: new Date('2023-12-15'),
+                  dateEnd: new Date('2023-12-31'),
+                  stageInfo: {
+                    height: 'md',
+                    taskProgressStatus: 'completed',
+                    task: 'Сверстать дашборд',
+                    taskProgressCompletePercent: 75,
+                    payment: { status: 'closed', children: '10 000' },
+                    category: 'time',
+                    status: 'completed',
+                    fact: 56,
+                    plan: 78,
+                  },
+                },
+                {
+                  dateStart: new Date('2023-12-22'),
+                  dateEnd: new Date('2024-01-02'),
+                  stageInfo: {
+                    height: 'md',
+                    taskProgressStatus: 'pending',
+                    taskProgressCompletePercent: 30,
+                    task: 'Сверстать дашборд 2',
+                    prepayment: { status: 'closed', children: '10 000' },
+                    payment: { status: 'closed', children: '10 000' },
+                    category: 'time',
+                    status: 'failed',
+                    fact: 32,
+                    plan: 78,
+                  },
+                },
+                {
+                  dateStart: new Date('2024-01-05'),
+                  dateEnd: new Date('2024-01-10'),
+                  stageInfo: {
+                    height: 'md',
+                    taskProgressStatus: 'pending',
+                    taskProgressCompletePercent: 75,
+                    task: 'Сверстать дашборд 3 ',
+                    prepayment: { status: 'closed', children: '100 000' },
+                    payment: { status: 'sended', children: '10 000' },
+                    category: 'time',
+                    status: 'pending',
+                    fact: 56,
+                    plan: 78,
+                  },
+                },
+              ]}
+            />
+          </div>
+          <div className={'px-2 w-full'}>
+            <StageCard
+              task={{
+                totalCheck: 139000,
+                prepayment: 20000,
+                time: {
+                  fact: 56,
+                  plan: 72,
+                  category: 'time',
+                  status: 'default',
+                },
+                profit: {
+                  fact: 20,
+                  plan: 10,
+                  category: 'profit',
+                  status: 'completed',
+                },
+                height: 'md',
+                stageProgress: { dayRemains: 20 },
+                customer: 'HyperPC',
+                dateStart: new Date('2023-12-17'),
+                dateEnd: new Date('2024-1-17'),
+                category: 'hours',
+                manager: {
+                  name: 'Елизавета Которова',
+                  avatar: '/images/employees_temp/1.png',
+                },
+              }}
+              stages={[
+                {
+                  dateStart: new Date('2023-12-15'),
+                  dateEnd: new Date('2023-12-31'),
+                  stageInfo: {
+                    height: 'md',
+                    taskProgressStatus: 'completed',
+                    task: 'Сверстать дашборд',
+                    taskProgressCompletePercent: 75,
+                    payment: { status: 'closed', children: '10 000' },
+                    category: 'time',
+                    status: 'completed',
+                    fact: 56,
+                    plan: 78,
+                  },
+                },
+                {
+                  dateStart: new Date('2023-12-22'),
+                  dateEnd: new Date('2024-01-02'),
+                  stageInfo: {
+                    height: 'md',
+                    taskProgressStatus: 'pending',
+                    taskProgressCompletePercent: 30,
+                    task: 'Сверстать дашборд 2',
+                    prepayment: { status: 'closed', children: '10 000' },
+                    payment: { status: 'closed', children: '10 000' },
+                    category: 'time',
+                    status: 'failed',
+                    fact: 32,
+                    plan: 78,
+                  },
+                },
+                {
+                  dateStart: new Date('2024-01-05'),
+                  dateEnd: new Date('2024-01-10'),
+                  stageInfo: {
+                    height: 'md',
+                    taskProgressStatus: 'pending',
+                    taskProgressCompletePercent: 75,
+                    task: 'Сверстать дашборд 3 ',
+                    prepayment: { status: 'closed', children: '100 000' },
+                    payment: { status: 'sended', children: '10 000' },
+                    category: 'time',
+                    status: 'pending',
+                    fact: 56,
+                    plan: 78,
+                  },
+                },
+              ]}
+            />
+          </div>
+          <div className={'px-2 w-full'}>
+            <StageCard
+              task={{
+                totalCheck: 139000,
+                prepayment: 20000,
+                time: {
+                  fact: 56,
+                  plan: 72,
+                  category: 'time',
+                  status: 'default',
+                },
+                profit: {
+                  fact: 20,
+                  plan: 10,
+                  category: 'profit',
+                  status: 'completed',
+                },
+                height: 'md',
+                stageProgress: { dayRemains: 20 },
+                customer: 'HyperPC',
+                dateStart: new Date('2023-12-17'),
+                dateEnd: new Date('2024-1-17'),
+                category: 'hours',
+                manager: {
+                  name: 'Елизавета Которова',
+                  avatar: '/images/employees_temp/1.png',
+                },
+              }}
+              stages={[
+                {
+                  dateStart: new Date('2023-12-15'),
+                  dateEnd: new Date('2023-12-31'),
+                  stageInfo: {
+                    height: 'md',
+                    taskProgressStatus: 'completed',
+                    task: 'Сверстать дашборд',
+                    taskProgressCompletePercent: 75,
+                    payment: { status: 'closed', children: '10 000' },
+                    category: 'time',
+                    status: 'completed',
+                    fact: 56,
+                    plan: 78,
+                  },
+                },
+                {
+                  dateStart: new Date('2023-12-22'),
+                  dateEnd: new Date('2024-01-02'),
+                  stageInfo: {
+                    height: 'md',
+                    taskProgressStatus: 'pending',
+                    taskProgressCompletePercent: 30,
+                    task: 'Сверстать дашборд 2',
+                    prepayment: { status: 'closed', children: '10 000' },
+                    payment: { status: 'closed', children: '10 000' },
+                    category: 'time',
+                    status: 'failed',
+                    fact: 32,
+                    plan: 78,
+                  },
+                },
+                {
+                  dateStart: new Date('2024-01-05'),
+                  dateEnd: new Date('2024-01-10'),
+                  stageInfo: {
+                    height: 'md',
+                    taskProgressStatus: 'pending',
+                    taskProgressCompletePercent: 75,
+                    task: 'Сверстать дашборд 3 ',
+                    prepayment: { status: 'closed', children: '100 000' },
+                    payment: { status: 'sended', children: '10 000' },
+                    category: 'time',
+                    status: 'pending',
+                    fact: 56,
+                    plan: 78,
+                  },
+                },
+              ]}
+            />
+          </div>
         </div>
       </main>
     </>
