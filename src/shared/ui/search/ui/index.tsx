@@ -83,7 +83,7 @@ const Search: FC<Props> = ({ placeholder, mutateFunc, searchFunc, state }) => {
             searchFunc ? searchFunc(query) : null;
           }}
           className={cvaSearchButton()}>
-          <ArrowRightIcon className={'arrow-right-white'} />
+          <ArrowRightIcon className={'stroke-white'} />
         </div>
       ) : null}
     </div>

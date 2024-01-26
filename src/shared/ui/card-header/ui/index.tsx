@@ -4,7 +4,7 @@ import { FC, useState } from 'react';
 import Category, { categoryName } from '@/shared/ui/category/ui/Category';
 import { employeeDropDown } from '@/shared/ui/dropdown-item/ui/DropdownItem';
 import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
-import PinIcon from '../../../../../public/icons/PinIcon';
+import PinIcon from '../../../../../public/icons/pin.svg';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 
@@ -137,13 +137,14 @@ const CardHeader: FC<CardHeaderProps> = ({
             {!pined ? (
               <motion.div>
                 <PinIcon
-                  size={24}
-                  fillOpacity={0.34}
-                  color={'#3e3e3e'}></PinIcon>
+                  className={'opacity-[0.34] fill-[#070707] w-[24px] h-[24px]'}
+                />
               </motion.div>
             ) : (
               <motion.div>
-                <PinIcon size={24} color={'#070707'}></PinIcon>
+                <PinIcon
+                  className={'fill-[#3E3E3E] opacity-100 w-[24px] h-[24px]'}
+                />
               </motion.div>
             )}
           </motion.div>
@@ -157,7 +158,7 @@ const CardHeader: FC<CardHeaderProps> = ({
           className={cvaTextBlock()}>
           <div className={cvaCustomerBlock()}>
             <p className={cvaCustomerTitle()}>{customer}</p>
-            <ArrowRightIcon className={'arrow-right-black'} />
+            <ArrowRightIcon className={'stroke-cBlack'} />
           </div>
           <div className={cvaDateCategoryBlock()}>
             {getDateTitle(dateStart, dateEnd)}

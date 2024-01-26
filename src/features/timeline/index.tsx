@@ -11,8 +11,7 @@ import {
 } from 'date-fns';
 import StageItem, { StageItemProps } from '@/entities/stage-item/ui';
 import { useAppDispatch } from '@/shared/store/hooks/useAppDispatch';
-import { store } from '@/shared/store/store';
-import { setScroll } from '@/shared/store/timelineSlice';
+import { setScroll, timelineSelectors } from '@/shared/store/timelineSlice';
 import { useAppSelector } from '@/shared/store/hooks/useAppSelector';
 
 export interface TimeLineProps {
@@ -76,7 +75,7 @@ const TimeLine: FC<TimeLineProps> = ({ stages }) => {
 
   const timeLineRef = useRef<HTMLDivElement>(null);
 
-  const storeScrollState = useAppSelector((state) => state.timelineSlice);
+  const storeScrollState = useAppSelector(timelineSelectors.timeLineScroll);
 
   const [scrollState, setScrollState] = useState(0);
 
@@ -110,12 +109,11 @@ const TimeLine: FC<TimeLineProps> = ({ stages }) => {
         dispatch(setScroll(scrollLeft - walk));
       });
     }
-    console.log(store.getState().timelineSlice.timeLineScroll);
   }, []);
 
   useEffect(() => {
     // console.log(storeScrollState.timeLineScroll)
-    setScrollState(storeScrollState.timeLineScroll);
+    setScrollState(storeScrollState);
   }, [storeScrollState]);
 
   useEffect(() => {

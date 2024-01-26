@@ -101,14 +101,6 @@ strong {
   font-weight: 700;
 }
 
-.arrow-right-white > path {
-  stroke: white;
-}
-
-.arrow-right-black > path {
-  stroke: #3e3e3e;
-}
-
 @supports (font: -apple-system-body) and (-webkit-appearance: none) {
   img[loading='lazy'] {
     clip-path: inset(0.06rem);
@@ -151,8 +143,8 @@ strong {
   will-change: transform;
   user-select: none;
   cursor: pointer;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .timeline-items::-webkit-scrollbar {

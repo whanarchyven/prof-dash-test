@@ -204,7 +204,7 @@ const SortDropdown: FC<Props> = ({ category, state }) => {
             {translateDropDownCategory(category)}
           </div>
           <div onClick={() => {}} className={cvaSortDropDownButton()}>
-            <ArrowDownIcon></ArrowDownIcon>
+            <ArrowDownIcon />
           </div>
         </div>
         <AnimatePresence>
