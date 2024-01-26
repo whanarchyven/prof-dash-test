@@ -6,6 +6,7 @@ import { ru } from 'date-fns/locale';
 
 export interface DaySectionProps {
   date: Date;
+  isFilled?: boolean;
 }
 const cvaDaySectionRoot = cva(['w-[30px] h-full', 'flex justify-center']);
 const cvaDaySectionMark = cva(['h-full relative w-[1px]'], {
@@ -13,12 +14,13 @@ const cvaDaySectionMark = cva(['h-full relative w-[1px]'], {
     state: {
       false: 'bg-cGrayUltraLight',
       true: 'bg-cGrayLight',
+      filled: 'bg-cBlack bg-opacity-[0.34]',
       today: 'bg-cBlue',
     },
   },
 });
 
-const DaySection: FC<DaySectionProps> = ({ date }) => {
+const DaySection: FC<DaySectionProps> = ({ date, isFilled }) => {
   const [hover, setHover] = useState(false);
   const isToday = date.toLocaleDateString() == new Date().toLocaleDateString();
   return (
@@ -30,7 +32,10 @@ const DaySection: FC<DaySectionProps> = ({ date }) => {
         setHover(false);
       }}
       className={cvaDaySectionRoot()}>
-      <div className={cvaDaySectionMark({ state: isToday ? 'today' : hover })}>
+      <div
+        className={cvaDaySectionMark({
+          state: isToday ? 'today' : isFilled ? 'filled' : hover,
+        })}>
         {isToday && hover && (
           <div
             className={

@@ -6,7 +6,6 @@ import TaskProgress, { TaskProgressProps } from '@/shared/ui/task-progress/ui';
 import InvoiceProgress, {
   InvoiceProgressProps,
 } from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
-import { formatPrice } from '@/shared/utils/formatters';
 
 export interface StageItemProps extends TaskTimerProps {
   taskProgressStatus: TaskProgressProps['status'];
@@ -68,16 +67,8 @@ const StageItem: FC<StageItemProps> = ({
         status={taskProgressStatus}></TaskProgress>
       {!isShortDisplay && (
         <div className={cvaInvoiceBlock()}>
-          {prepayment ? (
-            <InvoiceProgress {...prepayment}>
-              {prepayment.children && prepayment.children.toLocaleString()} ₽
-            </InvoiceProgress>
-          ) : (
-            <div></div>
-          )}
-          <InvoiceProgress {...payment}>
-            {payment.children && payment.children.toLocaleString()} ₽
-          </InvoiceProgress>
+          {prepayment && <InvoiceProgress {...prepayment} />}
+          <InvoiceProgress {...payment} />
         </div>
       )}
       {isShortDisplay && (
@@ -95,17 +86,8 @@ const StageItem: FC<StageItemProps> = ({
               completePercent={taskProgressCompletePercent}
               status={taskProgressStatus}></TaskProgress>
             <div className={cvaInvoiceBlock()}>
-              {prepayment ? (
-                <InvoiceProgress {...prepayment}>
-                  {prepayment.children &&
-                    formatPrice(Number(prepayment.children))}
-                </InvoiceProgress>
-              ) : (
-                <div></div>
-              )}
-              <InvoiceProgress {...payment}>
-                {payment.children && formatPrice(Number(payment.children))}
-              </InvoiceProgress>
+              {prepayment && <InvoiceProgress {...prepayment} />}
+              <InvoiceProgress {...payment} />
             </div>
           </div>
         </div>

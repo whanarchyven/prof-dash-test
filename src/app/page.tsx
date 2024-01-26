@@ -11,6 +11,7 @@ import CardHeader from '@/shared/ui/card-header/ui';
 import CardItem from '@/entities/card-item/ui';
 import TimeLine from '@/features/timeline';
 import StageCard from '@/features/stage-card';
+import TimelineHeader from '@/features/timeline/ui/timeline-header';
 
 export default function Home() {
   return (
@@ -172,12 +173,12 @@ export default function Home() {
 
         <h1 className={'mt-4  ml-2'}>Invoice Progress</h1>
         <div className={'mt-2 ml-2 flex items-center gap-1 py-5 gap-2 w-1/2'}>
-          <InvoiceProgress status={'planning'}>220 000 ₽</InvoiceProgress>
-          <InvoiceProgress status={'setting'}>220 000 ₽</InvoiceProgress>
-          <InvoiceProgress status={'ready'}>220 000 ₽</InvoiceProgress>
-          <InvoiceProgress status={'sended'}>220 000 ₽</InvoiceProgress>
-          <InvoiceProgress status={'closed'}>220 000 ₽</InvoiceProgress>
-          <InvoiceProgress status={'transit'}>220 000 ₽</InvoiceProgress>
+          <InvoiceProgress amount={120000} status={'planning'} />
+          <InvoiceProgress amount={120000} status={'setting'} />
+          <InvoiceProgress amount={120000} status={'ready'} />
+          <InvoiceProgress amount={120000} status={'sended'} />
+          <InvoiceProgress amount={120000} status={'closed'} />
+          <InvoiceProgress amount={120000} status={'transit'} />
         </div>
 
         <h1 className={'mt-4  ml-2'}>Dropdown Items</h1>
@@ -485,7 +486,7 @@ export default function Home() {
             task={'Outsorcing'}
             taskProgressStatus={'default'}
             taskProgressCompletePercent={25}
-            payment={{ status: 'planning', children: '400 000' }}
+            payment={{ status: 'planning', amount: 400000 }}
             category={'time'}
             status={'default'}
             fact={0}
@@ -495,7 +496,7 @@ export default function Home() {
             task={'Outsorcing'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={10}
-            payment={{ status: 'planning', children: '400 000' }}
+            payment={{ status: 'planning', amount: 400000 }}
             category={'time'}
             status={'pending'}
             fact={10}
@@ -505,8 +506,8 @@ export default function Home() {
             task={'Outsorcing'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={75}
-            prepayment={{ status: 'closed', children: '120 000' }}
-            payment={{ status: 'planning', children: '400 000' }}
+            prepayment={{ status: 'closed', amount: 120000 }}
+            payment={{ status: 'planning', amount: 400000 }}
             category={'time'}
             status={'failed'}
             fact={10}
@@ -516,7 +517,7 @@ export default function Home() {
             task={'Outsorcing'}
             taskProgressStatus={'completed'}
             taskProgressCompletePercent={75}
-            payment={{ status: 'closed', children: '10 000' }}
+            payment={{ status: 'closed', amount: 10000 }}
             category={'time'}
             status={'completed'}
             fact={56}
@@ -528,7 +529,7 @@ export default function Home() {
             task={'Outsorcing'}
             taskProgressStatus={'default'}
             taskProgressCompletePercent={25}
-            payment={{ status: 'planning', children: '400 000' }}
+            payment={{ status: 'planning', amount: 400000 }}
             category={'time'}
             isShort={true}
             status={'default'}
@@ -539,7 +540,7 @@ export default function Home() {
             task={'Outsorcing'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={10}
-            payment={{ status: 'planning', children: '400 000' }}
+            payment={{ status: 'planning', amount: 400000 }}
             category={'time'}
             isShort={true}
             status={'pending'}
@@ -550,8 +551,8 @@ export default function Home() {
             task={'Outsorcing'}
             taskProgressStatus={'pending'}
             taskProgressCompletePercent={75}
-            prepayment={{ status: 'closed', children: '120 000' }}
-            payment={{ status: 'planning', children: '400 000' }}
+            prepayment={{ status: 'closed', amount: 120000 }}
+            payment={{ status: 'planning', amount: 400000 }}
             category={'time'}
             isShort={true}
             status={'failed'}
@@ -562,7 +563,7 @@ export default function Home() {
             task={'Outsorcing'}
             taskProgressStatus={'completed'}
             taskProgressCompletePercent={75}
-            payment={{ status: 'closed', children: '10 000' }}
+            payment={{ status: 'closed', amount: 10000 }}
             category={'time'}
             isShort={true}
             status={'completed'}
@@ -607,59 +608,67 @@ export default function Home() {
           />
         </div>
 
-        <h1 className={'mt-4  ml-2'}>TimeLine</h1>
-        <div className={'my-2 bg-cGray py-2 px-2 w-full h-[700px]'}>
-          <TimeLine
-            stages={[
-              {
-                dateStart: new Date('2023-12-15'),
-                dateEnd: new Date('2023-12-31'),
-                stageInfo: {
-                  task: 'Компонент',
-                  height: 'md',
-                  taskProgressStatus: 'completed',
-                  taskProgressCompletePercent: 75,
-                  payment: { status: 'closed', children: '10 000' },
-                  category: 'time',
-                  status: 'completed',
-                  fact: 56,
-                  plan: 78,
-                },
-              },
-              {
-                dateStart: new Date('2023-12-22'),
-                dateEnd: new Date('2024-01-02'),
-                stageInfo: {
-                  task: 'Компонент',
-                  height: 'md',
-                  taskProgressStatus: 'pending',
-                  taskProgressCompletePercent: 30,
-                  prepayment: { status: 'closed', children: '10 000' },
-                  payment: { status: 'closed', children: '10 000' },
-                  category: 'time',
-                  status: 'failed',
-                  fact: 32,
-                  plan: 78,
-                },
-              },
-              {
-                dateStart: new Date('2024-01-05'),
-                dateEnd: new Date('2024-01-19'),
-                stageInfo: {
-                  task: 'Компонент',
-                  height: 'md',
-                  taskProgressStatus: 'pending',
-                  taskProgressCompletePercent: 75,
-                  prepayment: { status: 'closed', children: '100 000' },
-                  payment: { status: 'sended', children: '10 000' },
-                  category: 'time',
-                  status: 'pending',
-                  fact: 56,
-                  plan: 78,
-                },
-              },
-            ]}
-          />
+        <h1 className={'mt-4 ml-2'}>TimeLine</h1>
+        <div className={'grid grid-cols-12 px-2 gap-1'}>
+          <div className={'col-span-4 bg-cGray'}></div>
+          <div className={'flex my-2 col-span-8 bg-cGray py-2 flex-col gap-1'}>
+            <div className={'h-3 '}>
+              <TimelineHeader />
+            </div>
+            <div className={' w-full h-[700px]'}>
+              <TimeLine
+                stages={[
+                  {
+                    dateStart: new Date('2023-12-15'),
+                    dateEnd: new Date('2023-12-31'),
+                    stageInfo: {
+                      task: 'Компонент',
+                      height: 'md',
+                      taskProgressStatus: 'completed',
+                      taskProgressCompletePercent: 75,
+                      payment: { status: 'closed', amount: 10000 },
+                      category: 'time',
+                      status: 'completed',
+                      fact: 56,
+                      plan: 78,
+                    },
+                  },
+                  {
+                    dateStart: new Date('2023-12-22'),
+                    dateEnd: new Date('2024-01-02'),
+                    stageInfo: {
+                      task: 'Компонент',
+                      height: 'md',
+                      taskProgressStatus: 'pending',
+                      taskProgressCompletePercent: 30,
+                      prepayment: { status: 'closed', amount: 10000 },
+                      payment: { status: 'closed', amount: 10000 },
+                      category: 'time',
+                      status: 'failed',
+                      fact: 32,
+                      plan: 78,
+                    },
+                  },
+                  {
+                    dateStart: new Date('2024-01-05'),
+                    dateEnd: new Date('2024-01-19'),
+                    stageInfo: {
+                      task: 'Компонент',
+                      height: 'md',
+                      taskProgressStatus: 'pending',
+                      taskProgressCompletePercent: 75,
+                      prepayment: { status: 'closed', amount: 100000 },
+                      payment: { status: 'sended', amount: 10000 },
+                      category: 'time',
+                      status: 'pending',
+                      fact: 56,
+                      plan: 78,
+                    },
+                  },
+                ]}
+              />
+            </div>
+          </div>
         </div>
 
         <h1 className={'mt-4  ml-2'}>CardItem</h1>
@@ -695,7 +704,7 @@ export default function Home() {
                   taskProgressStatus: 'completed',
                   task: 'Сверстать дашборд',
                   taskProgressCompletePercent: 75,
-                  payment: { status: 'closed', children: '10 000' },
+                  payment: { status: 'closed', amount: 10000 },
                   category: 'time',
                   status: 'completed',
                   fact: 56,
@@ -710,8 +719,8 @@ export default function Home() {
                   taskProgressStatus: 'pending',
                   taskProgressCompletePercent: 30,
                   task: 'Сверстать дашборд 2',
-                  prepayment: { status: 'closed', children: '10 000' },
-                  payment: { status: 'closed', children: '10 000' },
+                  prepayment: { status: 'closed', amount: 10000 },
+                  payment: { status: 'closed', amount: 10000 },
                   category: 'time',
                   status: 'failed',
                   fact: 32,
@@ -726,8 +735,8 @@ export default function Home() {
                   taskProgressStatus: 'pending',
                   taskProgressCompletePercent: 75,
                   task: 'Сверстать дашборд 3 ',
-                  prepayment: { status: 'closed', children: '100 000' },
-                  payment: { status: 'sended', children: '10 000' },
+                  prepayment: { status: 'closed', amount: 100000 },
+                  payment: { status: 'sended', amount: 10000 },
                   category: 'time',
                   status: 'pending',
                   fact: 56,
@@ -777,7 +786,7 @@ export default function Home() {
                     taskProgressStatus: 'completed',
                     task: 'Сверстать дашборд',
                     taskProgressCompletePercent: 75,
-                    payment: { status: 'closed', children: '10 000' },
+                    payment: { status: 'closed', amount: 10000 },
                     category: 'time',
                     status: 'completed',
                     fact: 56,
@@ -792,8 +801,8 @@ export default function Home() {
                     taskProgressStatus: 'pending',
                     taskProgressCompletePercent: 30,
                     task: 'Сверстать дашборд 2',
-                    prepayment: { status: 'closed', children: '10 000' },
-                    payment: { status: 'closed', children: '10 000' },
+                    prepayment: { status: 'closed', amount: 10000 },
+                    payment: { status: 'closed', amount: 10000 },
                     category: 'time',
                     status: 'failed',
                     fact: 32,
@@ -808,8 +817,8 @@ export default function Home() {
                     taskProgressStatus: 'pending',
                     taskProgressCompletePercent: 75,
                     task: 'Сверстать дашборд 3 ',
-                    prepayment: { status: 'closed', children: '100 000' },
-                    payment: { status: 'sended', children: '10 000' },
+                    prepayment: { status: 'closed', amount: 100000 },
+                    payment: { status: 'sended', amount: 10000 },
                     category: 'time',
                     status: 'pending',
                     fact: 56,
@@ -856,7 +865,7 @@ export default function Home() {
                     taskProgressStatus: 'completed',
                     task: 'Сверстать дашборд',
                     taskProgressCompletePercent: 75,
-                    payment: { status: 'closed', children: '10 000' },
+                    payment: { status: 'closed', amount: 10000 },
                     category: 'time',
                     status: 'completed',
                     fact: 56,
@@ -871,8 +880,8 @@ export default function Home() {
                     taskProgressStatus: 'pending',
                     taskProgressCompletePercent: 30,
                     task: 'Сверстать дашборд 2',
-                    prepayment: { status: 'closed', children: '10 000' },
-                    payment: { status: 'closed', children: '10 000' },
+                    prepayment: { status: 'closed', amount: 10000 },
+                    payment: { status: 'closed', amount: 10000 },
                     category: 'time',
                     status: 'failed',
                     fact: 32,
@@ -887,8 +896,8 @@ export default function Home() {
                     taskProgressStatus: 'pending',
                     taskProgressCompletePercent: 75,
                     task: 'Сверстать дашборд 3 ',
-                    prepayment: { status: 'closed', children: '100 000' },
-                    payment: { status: 'sended', children: '10 000' },
+                    prepayment: { status: 'closed', amount: 100000 },
+                    payment: { status: 'sended', amount: 10000 },
                     category: 'time',
                     status: 'pending',
                     fact: 56,
@@ -935,7 +944,7 @@ export default function Home() {
                     taskProgressStatus: 'completed',
                     task: 'Сверстать дашборд',
                     taskProgressCompletePercent: 75,
-                    payment: { status: 'closed', children: '10 000' },
+                    payment: { status: 'closed', amount: 10000 },
                     category: 'time',
                     status: 'completed',
                     fact: 56,
@@ -950,8 +959,8 @@ export default function Home() {
                     taskProgressStatus: 'pending',
                     taskProgressCompletePercent: 30,
                     task: 'Сверстать дашборд 2',
-                    prepayment: { status: 'closed', children: '10 000' },
-                    payment: { status: 'closed', children: '10 000' },
+                    prepayment: { status: 'closed', amount: 10000 },
+                    payment: { status: 'closed', amount: 10000 },
                     category: 'time',
                     status: 'failed',
                     fact: 32,
@@ -966,8 +975,8 @@ export default function Home() {
                     taskProgressStatus: 'pending',
                     taskProgressCompletePercent: 75,
                     task: 'Сверстать дашборд 3 ',
-                    prepayment: { status: 'closed', children: '100 000' },
-                    payment: { status: 'sended', children: '10 000' },
+                    prepayment: { status: 'closed', amount: 100000 },
+                    payment: { status: 'sended', amount: 10000 },
                     category: 'time',
                     status: 'pending',
                     fact: 56,

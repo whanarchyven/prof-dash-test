@@ -37,7 +37,6 @@ const cvaSortContainer = cva(
     'py-0.4',
     'pl-0.4',
     'pr-1',
-    'bg-white',
     'border-[0.2rem] hover:border-cGrayAccent',
     'rounded-full',
     'flex items-center relative justify-between',
@@ -45,9 +44,9 @@ const cvaSortContainer = cva(
   {
     variants: {
       state: {
-        default: ['border-transparent'],
-        hovered: ['border-cGrayAccent'],
-        typing: ['border-cGrayAccent'],
+        default: ['border-cGrayAccent'],
+        hovered: ['border-cBlack border-opacity-[0.34]'],
+        typing: ['border-cBlack border-opacity-[0.34]'],
       },
     },
   }
@@ -177,9 +176,9 @@ const SortDropdown: FC<Props> = ({ category, state }) => {
   return (
     <div className={cvaWrapper()}>
       <div
-        onBlur={() => {
-          setSearchState('default');
-        }}
+        // onBlur={() => {
+        //   setSearchState('default');
+        // }}
         onClick={() => {
           setSearchState('hovered');
         }}

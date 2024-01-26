@@ -38,6 +38,7 @@ const cvaRemainsCheckTitle = cva([
 ]);
 const CardItem: FC<CardItemProps> = ({
   totalCheck,
+  isPined,
   prepayment,
   time,
   profit,
@@ -52,6 +53,7 @@ const CardItem: FC<CardItemProps> = ({
     <div className={cvaCardItemRoot()}>
       <CardHeader
         customer={customer}
+        isPined={isPined}
         dateStart={new Date('2023-12-17')}
         dateEnd={new Date('2024-1-17')}
         category={'development'}
@@ -63,9 +65,7 @@ const CardItem: FC<CardItemProps> = ({
             <p className={cvaTotalCheckTitle()}>
               {totalCheck.toLocaleString()} ₽
             </p>
-            <InvoiceProgress status={'closed'}>
-              {formatPrice(prepayment)}
-            </InvoiceProgress>
+            <InvoiceProgress status={'closed'} amount={prepayment} />
             <p className={cvaRemainsCheckTitle()}>
               Остаток {formatPrice(totalCheck - prepayment)}
             </p>

@@ -1,12 +1,13 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import CompletedIcon from '/public/icons/complete.svg';
+import { formatPrice } from '@/shared/utils/formatters';
 
 export interface InvoiceProgressProps
   extends VariantProps<typeof cvaStageProgressContainer> {
-  children: ReactNode;
+  amount: number;
 }
 
 const cvaStageProgressContainer = cva(
@@ -26,7 +27,7 @@ const cvaStageProgressContainer = cva(
 );
 
 const cvaTransitPostfix = cva(['text-cOrange']);
-const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, children }) => {
+const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, amount }) => {
   const translateInvoiceProgressByStatus = (invoiceStatus: typeof status) => {
     const statusMap: Map<typeof invoiceStatus, number> = new Map();
     statusMap.set('planning', 0);
@@ -55,7 +56,7 @@ const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, children }) => {
           />
         </div>
       )}
-      {children}
+      {formatPrice(amount)}
       {status == 'transit' ? (
         <p className={cvaTransitPostfix()}>транзит</p>
       ) : null}
