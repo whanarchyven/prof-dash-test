@@ -127,22 +127,9 @@ const TaskTimer: FC<TaskTimerProps> = ({
 
   const taskProgress = calculateProgressPercent(status, shortDisplay ?? false);
 
-  // const animateTaskTimerVariants = {
-  //   open: { width: '100%' },
-  //   closed: { width: 'fit-content' },
-  // };
-
   return (
     <motion.div
       transition={{ duration: 0.2 }}
-      // variants={animateTaskTimerVariants}
-      // animate={shortDisplay ? 'closed' : 'open'}
-      //     onMouseEnter={() => {
-      //     isShort ? setShortDisplay(false) : null;
-      // }}
-      //      onMouseLeave={() => {
-      //          isShort ? setShortDisplay(true) : null;
-      //      }}
       className={cvaRoot({ isShort: isShort, height: height })}>
       <div
         style={{

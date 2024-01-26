@@ -7,6 +7,7 @@ import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
 import PinIcon from '../../../../../public/icons/pin.svg';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
+import { getDateTitle } from '@/shared/ui/card-header/utils/getDateTitle';
 
 export interface CardHeaderProps
   extends VariantProps<typeof cvaRoot>,
@@ -57,9 +58,6 @@ const cvaPinButton = cva([
 const cvaTextBlock = cva(['flex flex-col gap-1']);
 const cvaCustomerTitle = cva(['text-lg']);
 const cvaCustomerBlock = cva(['flex items-center gap-0.5']);
-const cvaDateTitle = cva([
-  'capitalize whitespace-nowrap font-secondary text-[1.2rem] opacity-50',
-]);
 const cvaDateCategoryBlock = cva(['flex items-center gap-3']);
 const cvaHeader = cva([
   'rounded-3xl',
@@ -70,28 +68,6 @@ const cvaHeader = cva([
 ]);
 const cvaAvatar = cva(['rounded-full', 'h-7 aspect-square']);
 
-const getDateTitle = (dateStart: Date, dateEnd: Date) => {
-  if (
-    dateStart.getMonth() == dateEnd.getMonth() &&
-    dateStart.getFullYear() == dateEnd.getFullYear()
-  ) {
-    return dateStart
-      .toLocaleString('default', { month: 'long' })
-      .concat(' ', dateStart.getFullYear().toString());
-  } else {
-    return (
-      <p className={cvaDateTitle()}>
-        {dateStart
-          .toLocaleString('default', { month: 'long' })
-          .concat(' ', dateStart.getFullYear().toString(), ' - ')}
-        <br />
-        {dateEnd
-          .toLocaleString('default', { month: 'long' })
-          .concat(' ', dateEnd.getFullYear().toString())}
-      </p>
-    );
-  }
-};
 const CardHeader: FC<CardHeaderProps> = ({
   category,
   customer,

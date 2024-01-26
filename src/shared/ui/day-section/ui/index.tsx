@@ -1,6 +1,8 @@
 'use client';
 import { cva } from 'class-variance-authority';
 import { FC, useState } from 'react';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 
 export interface DaySectionProps {
   date: Date;
@@ -34,10 +36,7 @@ const DaySection: FC<DaySectionProps> = ({ date }) => {
             className={
               'absolute z-10 p-0.5 rounded-r-lg bg-cBlue text-[1.3rem] whitespace-nowrap text-cWhite'
             }>
-            {date.toLocaleDateString('default', {
-              month: 'short',
-              day: '2-digit',
-            })}
+            {format(date, 'dd MMM', { locale: ru })}
           </div>
         )}
       </div>

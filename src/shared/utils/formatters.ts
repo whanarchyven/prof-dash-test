@@ -59,3 +59,6 @@ export const formattedNumber = (num: number): string => {
 export const normalizePhone = (phone: string) => {
   return `+${phone.replace(/\s|\(|\)|-|\+/g, '')}`;
 };
+
+export const formatPrice = (price: number | string) =>
+  `${price.toLocaleString()} ₽`;

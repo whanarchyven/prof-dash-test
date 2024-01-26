@@ -12,6 +12,7 @@ export interface StageCardInterface {
 const cvaStageCardRoot = cva(['grid grid-cols-12 gap-1 w-full']);
 const cvaStageTaskCard = cva(['col-span-4']);
 const cvaStageTimelineBlock = cva(['col-span-8']);
+
 const StageCard: FC<StageCardInterface> = ({ task, stages }) => {
   return (
     <div className={cvaStageCardRoot()}>

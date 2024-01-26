@@ -22,7 +22,7 @@ const TimelineSlice = createSlice({
 export const { setScroll } = TimelineSlice.actions;
 
 export const timelineSelectors = {
-  timeLineScroll: (state: RootState) => state.timelineSlice.timeLineScroll,
+  timeLineScroll: (state: RootState) => state.timelineReducer.timeLineScroll,
 };
 
 export default TimelineSlice.reducer;

@@ -6,11 +6,11 @@ import {
 } from '@reduxjs/toolkit';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import exampleName from './exampleSlice';
-import timelineSlice from './timelineSlice';
+import timelineReducer from './timelineSlice';
 
 const combinedReducer = combineReducers({
   exampleName,
-  timelineSlice,
+  timelineReducer,
 });
 
 export const makeStore = configureStore({

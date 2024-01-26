@@ -7,6 +7,9 @@ import StageProgressCountdown, {
   StageProgressProps,
 } from '@/shared/ui/stage-progress-countdown/ui/StageProgressCountdown';
 import InvoiceProgress from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
+import { formatPrice } from '@/shared/utils/formatters';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 
 export interface CardItemProps extends CardHeaderProps {
   totalCheck: number;
@@ -61,27 +64,19 @@ const CardItem: FC<CardItemProps> = ({
               {totalCheck.toLocaleString()} ₽
             </p>
             <InvoiceProgress status={'closed'}>
-              {prepayment.toLocaleString()} ₽
+              {formatPrice(prepayment)}
             </InvoiceProgress>
             <p className={cvaRemainsCheckTitle()}>
-              Остаток {(totalCheck - prepayment).toLocaleString()} ₽
+              Остаток {formatPrice(totalCheck - prepayment)}
             </p>
           </div>
           <div className={cvaDatesAndProgressBlock()}>
             <div className={cvaDatesBlock()}>
               <p className={cvaDateTitle()}>
-                {dateStart.toLocaleDateString('default', {
-                  month: 'short',
-                  day: '2-digit',
-                  year: 'numeric',
-                })}
+                {format(dateStart, 'dd MMM yyyy г.', { locale: ru })}
               </p>
               <p className={cvaDateTitle()}>
-                {dateEnd.toLocaleDateString('default', {
-                  month: 'short',
-                  day: '2-digit',
-                  year: 'numeric',
-                })}
+                {format(dateEnd, 'dd MMM yyyy г.', { locale: ru })}{' '}
               </p>
             </div>
             <StageProgressCountdown dayRemains={stageProgress.dayRemains}>
