@@ -132,7 +132,7 @@ strong {
   }
 }
 
-.timeline-items {
+.timeline-header-items {
   position: relative;
   width: 100%;
   overflow-x: scroll;
@@ -147,6 +147,21 @@ strong {
   scrollbar-width: none; /* Firefox */
 }
 
+.timeline-items {
+  position: absolute;
+  width: 100vw;
+  right: 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  /*transition: all 0.2s;*/
+  /*transform: scale(0.98);*/
+  will-change: transform;
+  user-select: none;
+  cursor: pointer;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 .timeline-items::-webkit-scrollbar {
   display: none;
 }

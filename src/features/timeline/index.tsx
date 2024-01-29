@@ -22,16 +22,20 @@ export interface TimeLineProps {
     dateEnd: Date;
     stageInfo: StageItemProps;
   }[];
+  isFirstCard?: boolean;
+  isLastCard?: boolean;
 }
 
 const cvaTimeLineRoot = cva([
-  'w-fit max-w-full bg-white h-full rounded-xl',
+  'w-[100vw] bg-white h-full rounded-xl',
   'overflow-x-scroll',
+  'absolute right-0',
   'timeline-items',
+  'pl-4.8',
 ]);
 const cvaTimeLine = cva(['flex w-fit relative h-full']);
 
-const TimeLine: FC<TimeLineProps> = ({ stages }) => {
+const TimeLine: FC<TimeLineProps> = ({ stages, isFirstCard, isLastCard }) => {
   const prevMonthDays = getMonthDays(getPrevMonthLastDay());
   const thisMonthDays = getMonthDays(getThisMonthLastDay());
   const nextMonthDays = getMonthDays(getNextMonthLastDay());
@@ -88,13 +92,31 @@ const TimeLine: FC<TimeLineProps> = ({ stages }) => {
       {/*</div>*/}
       <div className={cvaTimeLine()}>
         {prevMonthDays.map((day, counter) => (
-          <DaySection key={counter} date={day} />
+          <DaySection
+            displayDay={isFirstCard ?? false}
+            displayTopArrow={isFirstCard ?? false}
+            displayBottomArrow={isLastCard ?? false}
+            key={counter}
+            date={day}
+          />
         ))}
         {thisMonthDays.map((day, counter) => (
-          <DaySection key={counter} date={day} />
+          <DaySection
+            displayDay={isFirstCard ?? false}
+            displayTopArrow={isFirstCard ?? false}
+            displayBottomArrow={isLastCard ?? false}
+            key={counter}
+            date={day}
+          />
         ))}
         {nextMonthDays.map((day, counter) => (
-          <DaySection key={counter} date={day} />
+          <DaySection
+            displayDay={isFirstCard ?? false}
+            displayTopArrow={isFirstCard ?? false}
+            displayBottomArrow={isLastCard ?? false}
+            key={counter}
+            date={day}
+          />
         ))}
         {stages.map((item, counter) => (
           <CalculatedStageItem

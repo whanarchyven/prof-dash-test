@@ -3,24 +3,46 @@ import { cva } from 'class-variance-authority';
 import { FC, useState } from 'react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import TodayLineTriangle from '../../../../../public/icons/today_line_triangle.svg';
 
 export interface DaySectionProps {
   date: Date;
   isFilled?: boolean;
+  isUnfilled?: boolean;
+  displayDay?: boolean;
+  displayTopArrow?: boolean;
+  displayBottomArrow?: boolean;
 }
+
 const cvaDaySectionRoot = cva(['w-[30px] h-full', 'flex justify-center']);
-const cvaDaySectionMark = cva(['h-full relative w-[1px]'], {
+const cvaDaySectionMark = cva(['h-full relative w-[1.05px]'], {
   variants: {
     state: {
       false: 'bg-cGrayUltraLight',
       true: 'bg-cGrayLight',
       filled: 'bg-cBlack bg-opacity-[0.34]',
       today: 'bg-cBlue',
+      isUnfilled: 'bg-transparent',
     },
   },
 });
 
-const DaySection: FC<DaySectionProps> = ({ date, isFilled }) => {
+const cvaArrowTop = cva(['absolute -top-0.3', 'rotate-180 w-1 h-1']);
+const cvaArrowBottom = cva(['absolute -bottom-0.1', ' w-1 h-1']);
+const cvaDayTitle = cva([
+  'absolute z-10 top-1',
+  'p-0.5 rounded-r-lg bg-cBlue',
+  'text-[1.3rem] whitespace-nowrap text-cWhite',
+]);
+
+const DaySection: FC<DaySectionProps> = ({
+  date,
+  isFilled,
+  isUnfilled,
+  displayDay,
+  displayBottomArrow,
+  displayTopArrow,
+}) => {
   const [hover, setHover] = useState(false);
   const isToday = date.toLocaleDateString() == new Date().toLocaleDateString();
   return (
@@ -34,17 +56,30 @@ const DaySection: FC<DaySectionProps> = ({ date, isFilled }) => {
       className={cvaDaySectionRoot()}>
       <div
         className={cvaDaySectionMark({
-          state: isToday ? 'today' : isFilled ? 'filled' : hover,
+          state: isToday
+            ? 'today'
+            : isFilled
+              ? 'filled'
+              : isUnfilled
+                ? 'isUnfilled'
+                : hover,
         })}>
-        {isToday && hover && (
-          <div
-            className={
-              'absolute z-10 p-0.5 rounded-r-lg bg-cBlue text-[1.3rem] whitespace-nowrap text-cWhite'
-            }>
+        {isToday && displayDay && (
+          <div className={cvaDayTitle()}>
             {format(date, 'dd MMM', { locale: ru })}
           </div>
         )}
       </div>
+      {isToday && displayTopArrow && (
+        <div className={cvaArrowTop()}>
+          <TodayLineTriangle />
+        </div>
+      )}
+      {isToday && displayBottomArrow && (
+        <div className={cvaArrowBottom()}>
+          <TodayLineTriangle />
+        </div>
+      )}
     </div>
   );
 };

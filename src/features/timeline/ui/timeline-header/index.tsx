@@ -17,14 +17,14 @@ import TimelineHeaderDaySection from '@/features/timeline/ui/timeline-header-day
 export interface TimeLineHeaderProps {}
 
 const cvaTimeLineRoot = cva([
-  'w-fit max-w-full bg-white h-full min-h-3 rounded-xl',
+  'w-fit max-w-full  h-full min-h-3 rounded-xl',
   'overflow-x-scroll',
-  'timeline-items',
+  'timeline-header-items',
 ]);
 const cvaTimeLine = cva(['flex w-fit relative h-full']);
 
 const cvaTimeLineHeaderMonthTitle = cva([
-  'w-[120px] font-secondary capitalize flex items-center justify-center text-sm',
+  'w-[120px] font-secondary capitalize flex items-end justify-center text-sm',
 ]);
 const TimeLineHeader: FC<TimeLineHeaderProps> = () => {
   const prevMonthDays = getMonthDays(getPrevMonthLastDay());
