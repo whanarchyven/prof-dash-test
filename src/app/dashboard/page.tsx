@@ -10,13 +10,15 @@ import StageCard from '@/features/stage-card';
 
 const cvaRoot = cva(['p-2.4', 'bg-cBlack bg-opacity-5', 'min-h-screen']);
 
-const cvaHeader = cva(['flex items-center', 'justify-between']);
+const cvaHeader = cva(['flex items-start', 'justify-between']);
 
 const cvaHeaderTitle = cva(['text-lg']);
 
-const cvaControlBlock = cva(['flex gap-1']);
+const cvaControlBlock = cva(['flex flex-wrap justify-end gap-1']);
 
 const cvaDropFIltersButton = cva(['text-sm p-1 bg-white rounded-full']);
+
+const cvaSearchInputBlock = cva(['w-1/5']);
 
 export default function AnotherPage() {
   return (
@@ -25,7 +27,9 @@ export default function AnotherPage() {
         <div className={cvaHeader()}>
           <h1 className={cvaHeaderTitle()}>Рентабельность</h1>
           <div className={cvaControlBlock()}>
-            <Search placeholder={'Найти проект'}></Search>
+            <div className={cvaSearchInputBlock()}>
+              <Search placeholder={'Найти проект'}></Search>
+            </div>
             <SortDropdown
               state={'default'}
               category={'category'}></SortDropdown>

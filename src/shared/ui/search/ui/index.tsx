@@ -2,6 +2,8 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useState } from 'react';
 import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface Props extends VariantProps<typeof cvaSearchContainer> {
   placeholder?: string;
@@ -40,13 +42,18 @@ const cvaSearchInput = cva([
 ]);
 
 const cvaSearchButton = cva([
-  'h-full',
+  'w-3 ',
   'aspect-square',
   'bg-cGray bg-opacity-50',
   'rounded-full',
   'flex items-center justify-center',
   'cursor-pointer',
 ]);
+
+const animateArrowIconVariants = {
+  closed: { x: '-5%', opacity: 0 },
+  open: { x: '0%', opacity: 1 },
+};
 
 const Search: FC<Props> = ({ placeholder, mutateFunc, searchFunc, state }) => {
   const [searchState, setSearchState] = useState<typeof state>(state);
@@ -77,15 +84,21 @@ const Search: FC<Props> = ({ placeholder, mutateFunc, searchFunc, state }) => {
         }}
         className={cvaSearchInput()}
       />
-      {query ? (
-        <div
-          onClick={() => {
-            searchFunc ? searchFunc(query) : null;
-          }}
-          className={cvaSearchButton()}>
-          <ArrowRightIcon className={'stroke-white'} />
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {query ? (
+          <motion.div
+            variants={animateArrowIconVariants}
+            initial={'closed'}
+            animate={'open'}
+            exit={'closed'}
+            onClick={() => {
+              searchFunc ? searchFunc(query) : null;
+            }}
+            className={cvaSearchButton()}>
+            <ArrowRightIcon className={'stroke-white'} />
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 };

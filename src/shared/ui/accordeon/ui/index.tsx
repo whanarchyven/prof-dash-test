@@ -48,8 +48,8 @@ const Accordeon: FC<AccordeonProps> = ({
           <ArrowRightIcon className={'stroke-cBlack'} />
         </motion.div>
       </div>
-      {open && (
-        <AnimatePresence>
+      <AnimatePresence>
+        {open && (
           <motion.div
             initial={'closed'}
             animate={'open'}
@@ -58,8 +58,8 @@ const Accordeon: FC<AccordeonProps> = ({
             className={''}>
             {children}
           </motion.div>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </div>
   );
 };
