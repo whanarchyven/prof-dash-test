@@ -14,7 +14,7 @@ const TimelineSlice = createSlice({
   initialState,
   reducers: {
     setScroll: (state, action: PayloadAction<number>) => {
-      state.timeLineScroll = action.payload;
+      state.timeLineScroll = action.payload >= 0 ? action.payload : 0;
     },
   },
 });

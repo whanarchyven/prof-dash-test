@@ -43,7 +43,7 @@ export default function AnotherPage() {
             </Button>
           </div>
         </div>
-        <div className={'grid absolute mt-4 grid-cols-12'}>
+        <div className={'grid absolute left-0 px-2.4 mt-4 grid-cols-12'}>
           <div className={'col-start-1 col-end-13'}>
             <TimelineHeader />
           </div>

@@ -15,7 +15,7 @@ export interface DaySectionProps {
 }
 
 const cvaDaySectionRoot = cva(['w-[30px] h-full', 'flex justify-center']);
-const cvaDaySectionMark = cva(['h-full relative w-[1.05px]'], {
+const cvaDaySectionMark = cva(['h-full relative w-[1px]'], {
   variants: {
     state: {
       false: 'bg-cGrayUltraLight',
@@ -27,8 +27,8 @@ const cvaDaySectionMark = cva(['h-full relative w-[1.05px]'], {
   },
 });
 
-const cvaArrowTop = cva(['absolute -top-0.3', 'rotate-180 w-1 h-1']);
-const cvaArrowBottom = cva(['absolute -bottom-0.1', ' w-1 h-1']);
+const cvaArrowTop = cva(['absolute -top-0.3', 'rotate-180 w-0.8 h-0.8']);
+const cvaArrowBottom = cva(['absolute -bottom-0.1', ' w-0.8 h-0.8']);
 const cvaDayTitle = cva([
   'absolute z-10 top-1',
   'p-0.5 rounded-r-lg bg-cBlue',
