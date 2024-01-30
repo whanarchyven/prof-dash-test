@@ -3,36 +3,29 @@ import { cva } from 'class-variance-authority';
 import { FC, useEffect, useRef, useState } from 'react';
 import { timelineSelectors } from '@/shared/store/timelineSlice';
 import { useAppSelector } from '@/shared/store/hooks/useAppSelector';
-import {
-  getNextMonthLastDay,
-  getPrevMonthLastDay,
-  getThisMonthLastDay,
-  getMonthDays,
-} from '@/features/timeline/utils/getMonths';
-import { useSlider } from '@/features/timeline/hooks/useSlider';
 import DaySection from '@/shared/ui/day-section/ui';
+import { calculateDaysQnt } from '@/features/timeline/utils/calculateDaysQnt';
 
-export interface TimeLineHeaderProps {}
+export interface TimeLineHeaderProps {
+  startPeriod: Date;
+  endPeriod: Date;
+}
 
 const cvaTimeLineRoot = cva([
-  'w-fit max-w-full absolute z-[-1] h-full pt-[20rem] min-h-3 rounded-xl',
-  'overflow-x-scroll',
-  'timeline-items',
+  'w-fit max-w-full absolute z-[10] overflow-y-none top-[100%] rounded-xl',
+  'overflow-auto',
 ]);
-const cvaTimeLine = cva(['flex w-fit relative h-full']);
+const cvaTimeLine = cva(['flex w-fit overflow-y-visible relative h-5']);
 
-const TimeLineHeader: FC<TimeLineHeaderProps> = () => {
-  const prevMonthDays = getMonthDays(getPrevMonthLastDay());
-  const thisMonthDays = getMonthDays(getThisMonthLastDay());
-  const nextMonthDays = getMonthDays(getNextMonthLastDay());
-
+const TimeLineHeader: FC<TimeLineHeaderProps> = ({
+  startPeriod,
+  endPeriod,
+}) => {
   const timeLineRef = useRef<HTMLDivElement>(null);
 
   const storeScrollState = useAppSelector(timelineSelectors.timeLineScroll);
 
   const [scrollState, setScrollState] = useState(0);
-
-  useSlider(timeLineRef);
 
   useEffect(() => {
     // console.log(storeScrollState.timeLineScroll)
@@ -43,19 +36,26 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = () => {
     timeLineRef.current?.scrollTo(scrollState, 0);
     // console.log(scrollState,'ScrollTo')
   }, [scrollState]);
+  const days = calculateDaysQnt(startPeriod, endPeriod);
 
   return (
     <div ref={timeLineRef} className={cvaTimeLineRoot()}>
       <div className={cvaTimeLine()}>
-        {prevMonthDays.map((day, counter) => (
-          <DaySection key={counter} isUnfilled date={day} />
-        ))}
-        {thisMonthDays.map((day, counter) => (
-          <DaySection key={counter} isUnfilled date={day} />
-        ))}
-        {nextMonthDays.map((day, counter) => (
-          <DaySection key={counter} isUnfilled date={day} />
-        ))}
+        {days.map((day, counter) =>
+          day.getDate() == new Date().getDate() ? (
+            <div key={counter} className={'relative h-screen'}>
+              <DaySection
+                displayDay={true}
+                displayBottomArrow={true}
+                displayTopArrow={true}
+                isUnfilled
+                date={day}
+              />
+            </div>
+          ) : (
+            <div key={counter} className={'w-[30px] h-0'}></div>
+          )
+        )}
       </div>
     </div>
   );

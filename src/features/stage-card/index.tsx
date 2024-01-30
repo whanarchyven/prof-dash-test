@@ -7,8 +7,8 @@ import TimeLine, { TimeLineProps } from '@/features/timeline';
 export interface StageCardInterface {
   task: CardItemProps;
   stages: TimeLineProps['stages'];
-  isFirstCard?: boolean;
-  isLastCard?: boolean;
+  startPeriod: Date;
+  endPeriod: Date;
 }
 
 const cvaStageCardRoot = cva(['grid grid-cols-12 gap-1 w-full']);
@@ -23,8 +23,9 @@ const cvaStageTimelineBlock = cva([
 const StageCard: FC<StageCardInterface> = ({
   task,
   stages,
-  isFirstCard,
-  isLastCard,
+
+  startPeriod,
+  endPeriod,
 }) => {
   return (
     <div className={cvaStageCardRoot()}>
@@ -33,8 +34,8 @@ const StageCard: FC<StageCardInterface> = ({
       </div>
       <div className={cvaStageTimelineBlock()}>
         <TimeLine
-          isFirstCard={isFirstCard ?? false}
-          isLastCard={isLastCard ?? false}
+          startPeriod={startPeriod}
+          endPeriod={endPeriod}
           stages={stages}
         />
       </div>

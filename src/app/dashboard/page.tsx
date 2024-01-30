@@ -9,52 +9,71 @@ import Accordeon from '@/shared/ui/accordeon/ui';
 import StageCard from '@/features/stage-card';
 import TodayLine from '@/features/timeline/ui/today-line';
 
-const cvaRoot = cva(['p-2.4', 'bg-cBlack bg-opacity-5', 'min-h-screen']);
+const cvaRoot = cva(['p-2.4', 'bg-cGrayBg', 'min-h-screen']);
 
-const cvaHeader = cva(['flex items-start', 'justify-between']);
+const cvaHeaderContainer = cva([
+  'sticky top-0 z-[999]',
+  'pt-2.4',
+  'bg-cGrayBg',
+  'flex flex-col gap-2',
+]);
 
-const cvaHeaderTitle = cva(['text-lg']);
+const cvaHeader = cva(['flex items-center', 'justify-between']);
+
+const cvaHeaderTitle = cva(['text-[4.4rem]']);
 
 const cvaControlBlock = cva(['flex flex-wrap justify-end gap-1']);
 
 const cvaDropFIltersButton = cva(['text-sm p-1 bg-white rounded-full']);
 
-const cvaSearchInputBlock = cva(['w-1/5']);
+const cvaSearchInputBlock = cva(['']);
 
-const cvaCardsBlock = cva(['relative', 'w-full', 'mt-10', 'h-fit']);
+const cvaCardsBlock = cva(['relative', 'w-full', 'mt-2', 'h-fit']);
+
+const tempStartPeriod = new Date('2023-10-12');
+const tempEndPeriod = new Date('2024-02-16');
 
 export default function AnotherPage() {
   return (
     <>
       <main className={cvaRoot()}>
-        <div className={cvaHeader()}>
-          <h1 className={cvaHeaderTitle()}>Рентабельность</h1>
-          <div className={cvaControlBlock()}>
-            <div className={cvaSearchInputBlock()}>
-              <Search placeholder={'Найти проект'}></Search>
+        <div className={cvaHeaderContainer()}>
+          <div className={cvaHeader()}>
+            <h1 className={cvaHeaderTitle()}>Рентабельность</h1>
+            <div className={cvaControlBlock()}>
+              <div className={cvaSearchInputBlock()}>
+                <Search placeholder={'Найти проект'}></Search>
+              </div>
+              <SortDropdown
+                state={'default'}
+                category={'category'}></SortDropdown>
+              <SortDropdown
+                state={'default'}
+                category={'manager'}></SortDropdown>
+              <SortDropdown state={'default'} category={'pay'}></SortDropdown>
+              <Button onClick={() => {}} className={cvaDropFIltersButton()}>
+                Очистить
+              </Button>
             </div>
-            <SortDropdown
-              state={'default'}
-              category={'category'}></SortDropdown>
-            <SortDropdown state={'default'} category={'manager'}></SortDropdown>
-            <SortDropdown state={'default'} category={'pay'}></SortDropdown>
-            <Button onClick={() => {}} className={cvaDropFIltersButton()}>
-              Очистить
-            </Button>
           </div>
-        </div>
-        <div className={'grid absolute left-0 px-2.4 mt-4 grid-cols-12'}>
-          <div className={'col-start-1 col-end-13'}>
-            <TimelineHeader />
+          <div className={'relative h-6 w-full'}>
+            <div className={'w-full absolute left-0'}>
+              <TimelineHeader
+                startPeriod={tempStartPeriod}
+                endPeriod={tempEndPeriod}
+              />
+            </div>
           </div>
+          <TodayLine startPeriod={tempStartPeriod} endPeriod={tempEndPeriod} />
         </div>
+
         <div className={cvaCardsBlock()}>
-          <TodayLine></TodayLine>
           <div>
             <Accordeon isOpen={true} childrensQnt={2} title={'Закреплённые'}>
               <div className={'flex flex-col gap-3'}>
                 <StageCard
-                  isFirstCard={true}
+                  startPeriod={tempStartPeriod}
+                  endPeriod={tempEndPeriod}
                   task={{
                     isPined: true,
                     totalCheck: 500000,
@@ -133,6 +152,8 @@ export default function AnotherPage() {
                   ]}
                 />
                 <StageCard
+                  startPeriod={tempStartPeriod}
+                  endPeriod={tempEndPeriod}
                   task={{
                     isPined: true,
                     totalCheck: 139000,
@@ -217,6 +238,8 @@ export default function AnotherPage() {
             <Accordeon isOpen={true} childrensQnt={5} title={'Все'}>
               <div className={'flex flex-col gap-3'}>
                 <StageCard
+                  startPeriod={tempStartPeriod}
+                  endPeriod={tempEndPeriod}
                   task={{
                     totalCheck: 139000,
                     prepayment: 20000,
@@ -294,6 +317,8 @@ export default function AnotherPage() {
                   ]}
                 />
                 <StageCard
+                  startPeriod={tempStartPeriod}
+                  endPeriod={tempEndPeriod}
                   task={{
                     totalCheck: 139000,
                     prepayment: 20000,
@@ -371,6 +396,8 @@ export default function AnotherPage() {
                   ]}
                 />
                 <StageCard
+                  startPeriod={tempStartPeriod}
+                  endPeriod={tempEndPeriod}
                   task={{
                     totalCheck: 139000,
                     prepayment: 20000,
@@ -448,6 +475,8 @@ export default function AnotherPage() {
                   ]}
                 />
                 <StageCard
+                  startPeriod={tempStartPeriod}
+                  endPeriod={tempEndPeriod}
                   task={{
                     totalCheck: 139000,
                     prepayment: 20000,
@@ -525,7 +554,8 @@ export default function AnotherPage() {
                   ]}
                 />
                 <StageCard
-                  isLastCard={true}
+                  startPeriod={tempStartPeriod}
+                  endPeriod={tempEndPeriod}
                   task={{
                     totalCheck: 139000,
                     prepayment: 20000,

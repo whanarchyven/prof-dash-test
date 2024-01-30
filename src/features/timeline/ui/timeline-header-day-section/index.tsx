@@ -5,7 +5,7 @@ import DaySection from '@/shared/ui/day-section/ui';
 
 interface TimelineHeaderDaySectionProps {
   day: Date;
-  daysQnt: number;
+  isFullHeight: boolean;
 }
 
 const cvaRoot = cva(['flex flex-col h-full justify-end']);
@@ -19,13 +19,13 @@ const cvaSection = cva([''], {
 });
 const TimelineHeaderDaySection: FC<TimelineHeaderDaySectionProps> = ({
   day,
-  daysQnt,
+  isFullHeight,
 }) => {
   return (
     <div className={cvaRoot()}>
       <div
         className={cvaSection({
-          height: Math.floor(daysQnt / 2) == day.getDate() ? 'full' : 'half',
+          height: isFullHeight ? 'full' : 'half',
         })}>
         <DaySection isFilled date={day} />
       </div>

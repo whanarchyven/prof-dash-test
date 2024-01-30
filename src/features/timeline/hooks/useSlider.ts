@@ -32,13 +32,7 @@ export const useSlider = (sliderRef: RefObject<HTMLDivElement>) => {
         const x = e.pageX - slider.offsetLeft;
         const walk = (x - startX) * 3; //scroll-fast
         slider.scrollLeft = scrollLeft - walk;
-        dispatch(
-          setScroll(
-            scrollLeft - walk <= slider.offsetWidth
-              ? scrollLeft - walk
-              : slider.offsetWidth
-          )
-        );
+        dispatch(setScroll(scrollLeft - walk));
       });
     }
   }, []);

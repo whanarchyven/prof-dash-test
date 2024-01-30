@@ -1,13 +1,13 @@
 import { addMonths, lastDayOfMonth, subMonths } from 'date-fns';
 
-export const getPrevMonthLastDay = () => {
-  const prevMonth = subMonths(new Date(), 1);
+export const getPrevMonthLastDay = (monthAmount?: number) => {
+  const prevMonth = subMonths(new Date(), monthAmount ?? 1);
 
   return lastDayOfMonth(prevMonth);
 };
 
-export const getNextMonthLastDay = () => {
-  const nextMonth = addMonths(new Date(), 1);
+export const getNextMonthLastDay = (monthAmount?: number) => {
+  const nextMonth = addMonths(new Date(), monthAmount ?? 1);
   return lastDayOfMonth(nextMonth);
 };
 

@@ -6,14 +6,9 @@ import { areIntervalsOverlapping } from 'date-fns';
 import { StageItemProps } from '@/entities/stage-item/ui';
 import { timelineSelectors } from '@/shared/store/timelineSlice';
 import { useAppSelector } from '@/shared/store/hooks/useAppSelector';
-import {
-  getNextMonthLastDay,
-  getPrevMonthLastDay,
-  getThisMonthLastDay,
-  getMonthDays,
-} from '@/features/timeline/utils/getMonths';
 import { useSlider } from '@/features/timeline/hooks/useSlider';
 import CalculatedStageItem from '@/features/timeline/ui/CalculatedStageItem';
+import { calculateDaysQnt } from '@/features/timeline/utils/calculateDaysQnt';
 
 export interface TimeLineProps {
   stages: {
@@ -24,6 +19,8 @@ export interface TimeLineProps {
   }[];
   isFirstCard?: boolean;
   isLastCard?: boolean;
+  startPeriod: Date;
+  endPeriod: Date;
 }
 
 const cvaTimeLineRoot = cva([
@@ -35,10 +32,14 @@ const cvaTimeLineRoot = cva([
 ]);
 const cvaTimeLine = cva(['flex w-fit relative h-full']);
 
-const TimeLine: FC<TimeLineProps> = ({ stages, isFirstCard, isLastCard }) => {
-  const prevMonthDays = getMonthDays(getPrevMonthLastDay());
-  const thisMonthDays = getMonthDays(getThisMonthLastDay());
-  const nextMonthDays = getMonthDays(getNextMonthLastDay());
+const TimeLine: FC<TimeLineProps> = ({
+  stages,
+  isFirstCard,
+  isLastCard,
+  startPeriod,
+  endPeriod,
+}) => {
+  const days = calculateDaysQnt(startPeriod, endPeriod);
 
   const timeLineRef = useRef<HTMLDivElement>(null);
 
@@ -87,29 +88,8 @@ const TimeLine: FC<TimeLineProps> = ({ stages, isFirstCard, isLastCard }) => {
 
   return (
     <div ref={timeLineRef} className={cvaTimeLineRoot()}>
-      {/*<div className={cvaTimeLine()}>*/}
-      {/*    */}
-      {/*</div>*/}
       <div className={cvaTimeLine()}>
-        {prevMonthDays.map((day, counter) => (
-          <DaySection
-            displayDay={isFirstCard ?? false}
-            displayTopArrow={isFirstCard ?? false}
-            displayBottomArrow={isLastCard ?? false}
-            key={counter}
-            date={day}
-          />
-        ))}
-        {thisMonthDays.map((day, counter) => (
-          <DaySection
-            displayDay={isFirstCard ?? false}
-            displayTopArrow={isFirstCard ?? false}
-            displayBottomArrow={isLastCard ?? false}
-            key={counter}
-            date={day}
-          />
-        ))}
-        {nextMonthDays.map((day, counter) => (
+        {days.map((day, counter) => (
           <DaySection
             displayDay={isFirstCard ?? false}
             displayTopArrow={isFirstCard ?? false}
@@ -122,7 +102,7 @@ const TimeLine: FC<TimeLineProps> = ({ stages, isFirstCard, isLastCard }) => {
           <CalculatedStageItem
             key={counter}
             stageItem={item}
-            startPeriod={prevMonthDays[0]}
+            startPeriod={days[0]}
           />
         ))}
       </div>
