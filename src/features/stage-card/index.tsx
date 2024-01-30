@@ -17,6 +17,7 @@ const cvaStageTimelineBlock = cva([
   'col-span-8',
   'relative',
   'overflow-hidden',
+  'rounded-2xl',
 ]);
 
 const StageCard: FC<StageCardInterface> = ({

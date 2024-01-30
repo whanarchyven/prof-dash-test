@@ -9,9 +9,8 @@ import TaskProgress from '@/shared/ui/task-progress/ui';
 import StageItem from '@/entities/stage-item/ui';
 import CardHeader from '@/shared/ui/card-header/ui';
 import CardItem from '@/entities/card-item/ui';
-import TimeLine from '@/features/timeline';
 import StageCard from '@/features/stage-card';
-import TimelineHeader from '@/features/timeline/ui/timeline-header';
+import ToolTip from '@/shared/ui/tooltip/ui';
 
 export default function Home() {
   return (
@@ -131,10 +130,19 @@ export default function Home() {
             plan={10}></TaskTimer>
         </div>
 
-        <h1 className={'mt-4  ml-2'}>Search</h1>
+        <h1 className={'mt-4 ml-2'}>Search</h1>
         <div
           className={'mt-2 ml-2 grid grid-cols-2 py-5 bg-gray-100 gap-2 w-1/2'}>
           <Search placeholder={'Введите значение'} state={'default'} />
+        </div>
+
+        <h1 className={'mt-4  ml-2'}>ToolTip</h1>
+        <div
+          className={'mt-2 ml-2 grid grid-cols-2 py-5 bg-gray-100 gap-2 w-1/2'}>
+          <ToolTip>Подсказка</ToolTip>
+          <ToolTip>
+            Подсказка c текстом куда длинее чем тот что был изначально
+          </ToolTip>
         </div>
 
         <h1 className={'mt-4  ml-2'}>Category</h1>
@@ -606,69 +614,6 @@ export default function Home() {
               avatar: '/images/employees_temp/1.png',
             }}
           />
-        </div>
-
-        <h1 className={'mt-4 ml-2'}>TimeLine</h1>
-        <div className={'grid grid-cols-12 px-2 gap-1'}>
-          <div className={'col-span-4 bg-cGray'}></div>
-          <div className={'flex my-2 col-span-8 bg-cGray py-2 flex-col gap-1'}>
-            <div className={'h-3 '}>
-              <TimelineHeader />
-            </div>
-            <div className={' w-full h-[700px]'}>
-              <TimeLine
-                stages={[
-                  {
-                    dateStart: new Date('2023-12-15'),
-                    dateEnd: new Date('2023-12-31'),
-                    stageInfo: {
-                      task: 'Компонент',
-                      height: 'md',
-                      taskProgressStatus: 'completed',
-                      taskProgressCompletePercent: 75,
-                      payment: { status: 'closed', amount: 10000 },
-                      category: 'time',
-                      status: 'completed',
-                      fact: 56,
-                      plan: 78,
-                    },
-                  },
-                  {
-                    dateStart: new Date('2023-12-22'),
-                    dateEnd: new Date('2024-01-02'),
-                    stageInfo: {
-                      task: 'Компонент',
-                      height: 'md',
-                      taskProgressStatus: 'pending',
-                      taskProgressCompletePercent: 30,
-                      prepayment: { status: 'closed', amount: 10000 },
-                      payment: { status: 'closed', amount: 10000 },
-                      category: 'time',
-                      status: 'failed',
-                      fact: 32,
-                      plan: 78,
-                    },
-                  },
-                  {
-                    dateStart: new Date('2024-01-05'),
-                    dateEnd: new Date('2024-01-19'),
-                    stageInfo: {
-                      task: 'Компонент',
-                      height: 'md',
-                      taskProgressStatus: 'pending',
-                      taskProgressCompletePercent: 75,
-                      prepayment: { status: 'closed', amount: 100000 },
-                      payment: { status: 'sended', amount: 10000 },
-                      category: 'time',
-                      status: 'pending',
-                      fact: 56,
-                      plan: 78,
-                    },
-                  },
-                ]}
-              />
-            </div>
-          </div>
         </div>
 
         <h1 className={'mt-4  ml-2'}>CardItem</h1>

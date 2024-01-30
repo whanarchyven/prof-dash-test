@@ -1,7 +1,10 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import { AnimatePresence } from 'framer-motion';
+import ToolTip from '@/shared/ui/tooltip/ui';
+
 export interface StageProgressProps {
   dayRemains: number;
   children?: ReactNode;
@@ -26,7 +29,9 @@ export const getStageProgressColor: (
 };
 
 const cvaStageProgressContainer = cva(
-  ['flex items-center w-fit h-fit whitespace-nowrap text-sm gap-1'],
+  [
+    'flex items-center w-fit h-fit whitespace-nowrap justify-center relative text-sm gap-1',
+  ],
   {
     variants: {
       remain: {
@@ -44,8 +49,16 @@ const StageProgressCountdown: FC<StageProgressProps> = ({
 }) => {
   const dayToSecCoef = 24 * 60 * 60;
   const stageProgressColor = getStageProgressColor(dayRemains);
+  const [hovered, setHovered] = useState(false);
   return (
-    <div className={cvaStageProgressContainer({ remain: stageProgressColor })}>
+    <div
+      onMouseEnter={() => {
+        setHovered(true);
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+      }}
+      className={cvaStageProgressContainer({ remain: stageProgressColor })}>
       {dayRemains >= 0 ? (
         <CountdownCircleTimer
           size={18}
@@ -78,6 +91,9 @@ const StageProgressCountdown: FC<StageProgressProps> = ({
         />
       )}
       {children ? children : dayRemains.toString().concat(' ', 'дней')}
+      <AnimatePresence>
+        {hovered && <ToolTip>До окончания этапа</ToolTip>}
+      </AnimatePresence>
     </div>
   );
 };

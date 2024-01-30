@@ -245,6 +245,12 @@ module.exports = {
           lineHeight: '120%',
         },
       ],
+      xs: [
+        '1.2rem',
+        {
+          lineHeight: '100%',
+        },
+      ],
       0: [
         '0',
         {

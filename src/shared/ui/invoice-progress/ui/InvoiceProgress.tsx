@@ -1,9 +1,11 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import CompletedIcon from '/public/icons/complete.svg';
 import { formatPrice } from '@/shared/utils/formatters';
+import { AnimatePresence } from 'framer-motion';
+import ToolTip from '@/shared/ui/tooltip/ui';
 
 export interface InvoiceProgressProps
   extends VariantProps<typeof cvaStageProgressContainer> {
@@ -11,7 +13,9 @@ export interface InvoiceProgressProps
 }
 
 const cvaStageProgressContainer = cva(
-  ['flex items-center w-fit whitespace-nowrap text-sm gap-1'],
+  [
+    'flex items-center justify-center relative w-fit whitespace-nowrap text-sm gap-1',
+  ],
   {
     variants: {
       status: {
@@ -29,17 +33,37 @@ const cvaStageProgressContainer = cva(
 const cvaTransitPostfix = cva(['text-cOrange']);
 const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, amount }) => {
   const translateInvoiceProgressByStatus = (invoiceStatus: typeof status) => {
-    const statusMap: Map<typeof invoiceStatus, number> = new Map();
-    statusMap.set('planning', 0);
-    statusMap.set('setting', 35);
-    statusMap.set('ready', 65);
-    statusMap.set('sended', 100);
-
+    const statusMap: Map<
+      typeof invoiceStatus,
+      { progress: number; title: string }
+    > = new Map();
+    statusMap.set('planning', { progress: 0, title: 'Планируется' });
+    statusMap.set('setting', { progress: 35, title: 'Выставить' });
+    statusMap.set('ready', { progress: 65, title: 'Подготовлен' });
+    statusMap.set('sended', { progress: 100, title: 'Отправлен' });
     return statusMap.get(status);
   };
 
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <div className={cvaStageProgressContainer({ status: status })}>
+    <div
+      onMouseEnter={() => {
+        setHovered(true);
+      }}
+      onMouseLeave={() => {
+        setHovered(false);
+      }}
+      className={cvaStageProgressContainer({ status: status })}>
+      <AnimatePresence>
+        {hovered && (
+          <ToolTip>
+            {status == 'closed' || status == 'transit'
+              ? 'Закрыт'
+              : translateInvoiceProgressByStatus(status)?.title}
+          </ToolTip>
+        )}
+      </AnimatePresence>
       {status == 'closed' || status == 'transit' ? (
         <CompletedIcon />
       ) : (
@@ -49,7 +73,9 @@ const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, amount }) => {
             strokeWidth={3}
             isSmoothColorTransition={false}
             duration={100}
-            initialRemainingTime={translateInvoiceProgressByStatus(status)}
+            initialRemainingTime={
+              translateInvoiceProgressByStatus(status)?.progress
+            }
             trailColor={'rgba(7,7,7,0.08)'}
             colors={['#2555FF', '#F8AE00', '#FF5757']}
             colorsTime={[100, 66, 36, 0]}
