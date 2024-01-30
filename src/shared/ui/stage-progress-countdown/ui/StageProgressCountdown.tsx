@@ -30,7 +30,10 @@ export const getStageProgressColor: (
 
 const cvaStageProgressContainer = cva(
   [
-    'flex items-center w-fit h-fit whitespace-nowrap justify-center relative text-sm gap-1',
+    'flex items-center gap-1 justify-center',
+    'relative',
+    'w-fit h-fit',
+    'whitespace-nowrap text-sm ',
   ],
   {
     variants: {

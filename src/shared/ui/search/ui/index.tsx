@@ -50,6 +50,8 @@ const cvaSearchButton = cva([
   'cursor-pointer',
 ]);
 
+const cvaArrowRightIcon = cva(['stroke-white']);
+
 const animateArrowIconVariants = {
   closed: { x: '-5%', opacity: 0 },
   open: { x: '0%', opacity: 1 },
@@ -95,7 +97,7 @@ const Search: FC<Props> = ({ placeholder, mutateFunc, searchFunc, state }) => {
               searchFunc ? searchFunc(query) : null;
             }}
             className={cvaSearchButton()}>
-            <ArrowRightIcon className={'stroke-white'} />
+            <ArrowRightIcon className={cvaArrowRightIcon()} />
           </motion.div>
         ) : null}
       </AnimatePresence>

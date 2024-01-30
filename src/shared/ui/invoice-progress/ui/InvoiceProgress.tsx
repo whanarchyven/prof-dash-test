@@ -14,7 +14,10 @@ export interface InvoiceProgressProps
 
 const cvaStageProgressContainer = cva(
   [
-    'flex items-center justify-center relative w-fit whitespace-nowrap text-sm gap-1',
+    'flex items-center justify-center gap-1',
+    'relative',
+    'w-fit',
+    'whitespace-nowrap text-sm',
   ],
   {
     variants: {

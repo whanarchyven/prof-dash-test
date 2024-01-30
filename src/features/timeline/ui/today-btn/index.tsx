@@ -2,11 +2,13 @@ import { FC } from 'react';
 import { cva } from 'class-variance-authority';
 import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
 import { motion } from 'framer-motion';
+
 const cvaTodayButton = cva([
-  'h-full bg-cGrayBg',
+  'h-full',
+  'bg-cGrayBg',
   'absolute right-0 z-20 ',
   'p-1 pb-0',
-  ' gap-1 flex justify-center items-center',
+  'gap-1 flex justify-center items-center',
   'cursor-pointer',
 ]);
 const cvaTodayButtonText = cva(['font-secondary text-cBlue text-sm']);
@@ -20,6 +22,7 @@ const animateTodayBtnVariants = {
 export interface todayBtnProps {
   onClick?: () => any;
 }
+
 const TodayBtn: FC<todayBtnProps> = ({ onClick }) => {
   return (
     <motion.div

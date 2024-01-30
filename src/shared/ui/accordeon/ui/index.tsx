@@ -13,7 +13,8 @@ interface AccordeonProps {
 }
 
 const cvaRoot = cva(['flex flex-col gap-2']);
-const cvaTextTitle = cva(['flex cursor-pointer items-center gap-1']);
+const cvaTextTitle = cva(['flex items-center gap-1', 'cursor-pointer']);
+const cvaArrowRightIcon = cva(['stroke-cBlack']);
 const Accordeon: FC<AccordeonProps> = ({
   isOpen,
   title,
@@ -45,7 +46,7 @@ const Accordeon: FC<AccordeonProps> = ({
         <motion.div
           variants={animateArrowVariants}
           animate={open ? 'open' : 'closed'}>
-          <ArrowRightIcon className={'stroke-cBlack'} />
+          <ArrowRightIcon className={cvaArrowRightIcon()} />
         </motion.div>
       </div>
       <AnimatePresence>

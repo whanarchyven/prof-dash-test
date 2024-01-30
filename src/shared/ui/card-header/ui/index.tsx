@@ -67,6 +67,15 @@ const cvaHeader = cva([
   'flex justify-between gap-3 items-center',
 ]);
 const cvaAvatar = cva(['rounded-full', 'h-7 aspect-square']);
+const cvaPinIcon = cva(['w-[24px] h-[24px]'], {
+  variants: {
+    isActive: {
+      true: 'fill-[#3E3E3E] opacity-100',
+      false: 'opacity-[0.34] fill-[#070707]',
+    },
+  },
+});
+const cvaArrowRightIcon = cva(['stroke-cBlack']);
 
 const CardHeader: FC<CardHeaderProps> = ({
   category,
@@ -110,19 +119,9 @@ const CardHeader: FC<CardHeaderProps> = ({
               setPined(!pined);
             }}
             className={cvaPin()}>
-            {!pined ? (
-              <motion.div>
-                <PinIcon
-                  className={'opacity-[0.34] fill-[#070707] w-[24px] h-[24px]'}
-                />
-              </motion.div>
-            ) : (
-              <motion.div>
-                <PinIcon
-                  className={'fill-[#3E3E3E] opacity-100 w-[24px] h-[24px]'}
-                />
-              </motion.div>
-            )}
+            <motion.div>
+              <PinIcon className={cvaPinIcon({ isActive: pined })} />
+            </motion.div>
           </motion.div>
         </AnimatePresence>
       )}
@@ -134,7 +133,7 @@ const CardHeader: FC<CardHeaderProps> = ({
           className={cvaTextBlock()}>
           <div className={cvaCustomerBlock()}>
             <p className={cvaCustomerTitle()}>{customer}</p>
-            <ArrowRightIcon className={'stroke-cBlack'} />
+            <ArrowRightIcon className={cvaArrowRightIcon()} />
           </div>
           <div className={cvaDateCategoryBlock()}>
             {getDateTitle(dateStart, dateEnd)}

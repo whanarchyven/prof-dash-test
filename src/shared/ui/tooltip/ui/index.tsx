@@ -9,7 +9,8 @@ export interface ToolTipInterface {
 }
 
 const cvaToolTipRoot = cva([
-  'flex flex-col absolute -top-[5rem] z-50 items-center justify-end',
+  'absolute -top-[5rem] z-50',
+  'flex flex-col items-center justify-end',
 ]);
 const cvaToolTipBody = cva([
   'bg-cGray',

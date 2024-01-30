@@ -42,6 +42,10 @@ const cvaDropDownItemBody = cva(['flex items-center'], {
     },
   },
 });
+const cvaAvatarManagerImage = cva([
+  'border-[0.2rem] border-white rounded-full',
+  'w-2 aspect-square',
+]);
 
 const translatePaymentStatus = (paymentStatus: paymentDropDown['status']) => {
   switch (paymentStatus) {
@@ -80,14 +84,7 @@ export const tranSlateDropDownItem = (item: Props['dropdownItems'][0]) => {
   if ('name' in item && 'avatar' in item) {
     return {
       title: item.name,
-      body: (
-        <img
-          className={
-            'border-[0.2rem] border-white rounded-full w-2 aspect-square'
-          }
-          src={item.avatar}
-        />
-      ),
+      body: <img className={cvaAvatarManagerImage()} src={item.avatar} />,
     };
   } else if ('status' in item) {
     return translatePaymentStatus(item.status);

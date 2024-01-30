@@ -80,14 +80,28 @@ const cvaSortDropdownItems = cva(['flex w-fit relative items-center'], {
 });
 
 const cvaSortDropdownAllLabel = cva([
-  'rounded-full bg-cBlack bg-opacity-50 text-white p-0.5 px-1 flex items-center justify-center lowercase text-sm',
+  'rounded-full',
+  'bg-cBlack bg-opacity-50',
+  'text-white lowercase text-sm',
+  'p-0.5 px-1',
+  'flex items-center justify-center',
 ]);
 const cvaTitleDropDownBlock = cva([
-  'flex items-center h-full whitespace-nowrap cursor-pointer gap-1 pr-1',
+  'flex items-center gap-1',
+  'h-full',
+  'whitespace-nowrap',
+  'cursor-pointer',
+  'pr-1',
 ]);
 
 const cvaDropdownPopup = cva([
-  'absolute right-0 z-50 top-4 flex flex-col gap-2 rounded-3xl shadow-xl w-fit min-w-[32rem] bg-white p-2',
+  'absolute right-0 z-50 top-4',
+  'flex flex-col gap-2',
+  'rounded-3xl',
+  'shadow-xl',
+  'w-fit min-w-[32rem]',
+  'bg-white',
+  'p-2',
 ]);
 
 const dropdownPopupAnimationVariants = {
