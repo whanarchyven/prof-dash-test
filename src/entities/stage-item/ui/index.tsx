@@ -17,7 +17,7 @@ export interface StageItemProps extends TaskTimerProps {
   payment: InvoiceProgressProps;
 }
 
-const cvaRoot = cva(['flex w-full relative flex-col gap-0.4'], {
+const cvaRoot = cva(['flex flex-col gap-0.4', 'w-full', 'relative'], {
   variants: {},
 });
 const cvaInvoiceBlock = cva(['flex justify-between gap-2']);

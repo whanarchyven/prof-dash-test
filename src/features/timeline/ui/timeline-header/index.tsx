@@ -58,7 +58,7 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
     );
   };
 
-  useSlider(timeLineRef);
+  useSlider(timeLineRef, days.length * 30);
 
   useEffect(() => {
     //
@@ -92,6 +92,7 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
       <div ref={timeLineRef} className={cvaTimeLineContainer()}>
         <div ref={fullTimeLineRef} className={cvaTimeLine()}>
           {days.map((day, counter) => {
+            //дальше костыль, продумать как унифицировать
             const isSkipping =
               addDays(startOfMonth(day), 0).getDate() == day.getDate() ||
               addDays(startOfMonth(day), 1).getDate() == day.getDate() ||

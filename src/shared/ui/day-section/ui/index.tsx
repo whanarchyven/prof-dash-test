@@ -28,7 +28,7 @@ const cvaDaySectionMark = cva(['h-full relative w-[1px]'], {
 });
 
 const cvaArrowTop = cva(['absolute -top-0.3', 'rotate-180 w-0.8 h-0.8']);
-const cvaArrowBottom = cva(['absolute -bottom-0.1', ' w-0.8 h-0.8']);
+const cvaArrowBottom = cva(['absolute bottom-[17.5rem]', ' w-0.8 h-0.8']);
 const cvaDayTitle = cva([
   'absolute z-10 top-1',
   'p-0.5 rounded-r-lg bg-cBlue',

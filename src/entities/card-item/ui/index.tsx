@@ -34,7 +34,8 @@ const cvaTimersBlock = cva(['flex flex-col gap-0.5']);
 const cvaDateTitle = cva(['text-[1.3rem] font-secondary text-cGray']);
 const cvaTotalCheckTitle = cva(['text-lg']);
 const cvaRemainsCheckTitle = cva([
-  'text-sm font-secondary text-cGray opacity-50',
+  'text-sm font-secondary text-cGray ',
+  'opacity-50',
 ]);
 const CardItem: FC<CardItemProps> = ({
   totalCheck,
@@ -54,8 +55,8 @@ const CardItem: FC<CardItemProps> = ({
       <CardHeader
         customer={customer}
         isPined={isPined}
-        dateStart={new Date('2023-12-17')}
-        dateEnd={new Date('2024-1-17')}
+        dateStart={dateStart}
+        dateEnd={dateEnd}
         category={'development'}
         manager={manager}
       />

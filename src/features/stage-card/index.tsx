@@ -11,7 +11,7 @@ export interface StageCardInterface {
   endPeriod: Date;
 }
 
-const cvaStageCardRoot = cva(['grid grid-cols-12 gap-1 w-full']);
+const cvaStageCardRoot = cva(['grid grid-cols-12 gap-1', 'w-full']);
 const cvaStageTaskCard = cva(['col-span-4']);
 const cvaStageTimelineBlock = cva([
   'col-span-8',

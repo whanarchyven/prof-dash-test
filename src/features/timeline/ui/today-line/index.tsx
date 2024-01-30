@@ -11,11 +11,9 @@ export interface TimeLineHeaderProps {
   endPeriod: Date;
 }
 
-const cvaTimeLineRoot = cva([
-  'w-fit max-w-full absolute z-[10] overflow-y-none top-[100%] rounded-xl',
-  'overflow-auto',
-]);
-const cvaTimeLine = cva(['flex w-fit overflow-y-visible relative h-5']);
+const cvaTodayLineRoot = cva(['relative', 'h-0']);
+const cvaTodayLineContainer = cva(['left-0', 'overflow-hidden', 'h-full']);
+const cvaTodayLine = cva(['absolute z-[99999]', 'h-screen w-[30px]']);
 
 const TimeLineHeader: FC<TimeLineHeaderProps> = ({
   startPeriod,
@@ -37,25 +35,30 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
     // console.log(scrollState,'ScrollTo')
   }, [scrollState]);
   const days = calculateDaysQnt(startPeriod, endPeriod);
+  const todayOffset = calculateDaysQnt(startPeriod, new Date()).length * 30;
 
   return (
-    <div ref={timeLineRef} className={cvaTimeLineRoot()}>
-      <div className={cvaTimeLine()}>
-        {days.map((day, counter) =>
-          day.getDate() == new Date().getDate() ? (
-            <div key={counter} className={'relative h-screen'}>
-              <DaySection
-                displayDay={true}
-                displayBottomArrow={true}
-                displayTopArrow={true}
-                isUnfilled
-                date={day}
-              />
-            </div>
-          ) : (
-            <div key={counter} className={'w-[30px] h-0'}></div>
-          )
-        )}
+    <div className={cvaTodayLineRoot()}>
+      <div
+        style={{ width: days.length * 30 }}
+        className={cvaTodayLineContainer()}>
+        <div
+          style={{
+            left:
+              days.length * 30 -
+              (days.length * 30 - todayOffset) -
+              scrollState -
+              45 -
+              15,
+          }}
+          className={cvaTodayLine()}>
+          <DaySection
+            date={new Date()}
+            displayDay
+            displayTopArrow
+            displayBottomArrow
+          />
+        </div>
       </div>
     </div>
   );

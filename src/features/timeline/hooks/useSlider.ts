@@ -2,7 +2,10 @@ import { RefObject, useEffect } from 'react';
 import { setScroll } from '@/shared/store/timelineSlice';
 import { useAppDispatch } from '@/shared/store/hooks/useAppDispatch';
 
-export const useSlider = (sliderRef: RefObject<HTMLDivElement>) => {
+export const useSlider = (
+  sliderRef: RefObject<HTMLDivElement>,
+  maxWidth: number
+) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -32,7 +35,14 @@ export const useSlider = (sliderRef: RefObject<HTMLDivElement>) => {
         const x = e.pageX - slider.offsetLeft;
         const walk = (x - startX) * 3; //scroll-fast
         slider.scrollLeft = scrollLeft - walk;
-        dispatch(setScroll(scrollLeft - walk));
+        console.log(maxWidth - slider.offsetWidth + 45);
+        dispatch(
+          setScroll(
+            scrollLeft - walk >= maxWidth - slider.offsetWidth + 45
+              ? maxWidth - slider.offsetWidth + 45
+              : scrollLeft - walk
+          )
+        );
       });
     }
   }, []);
