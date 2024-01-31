@@ -2,7 +2,7 @@
 import { FC, ReactNode } from 'react';
 import { cva } from 'class-variance-authority';
 import { motion } from 'framer-motion';
-import ToolTipLeg from '../../../../../public/icons/tooltip_leg.svg';
+import ToolTipLeg from '/public/icons/tooltip_leg.svg';
 
 export interface ToolTipInterface {
   children: ReactNode;

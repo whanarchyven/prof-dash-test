@@ -117,7 +117,7 @@ const TaskTimer: FC<TaskTimerProps> = ({
         return 100;
     }
   };
-  const [shortDisplay, setShortDisplay] = useState(isShort);
+  const [shortDisplay, setShortDisplay] = useState<typeof isShort>(isShort);
 
   useEffect(() => {
     setShortDisplay(isShort);

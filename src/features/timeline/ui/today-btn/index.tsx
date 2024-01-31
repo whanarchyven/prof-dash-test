@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { cva } from 'class-variance-authority';
-import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
+import ArrowRightIcon from '/public/icons/arrow_right.svg';
 import { motion } from 'framer-motion';
 
 const cvaTodayButton = cva([

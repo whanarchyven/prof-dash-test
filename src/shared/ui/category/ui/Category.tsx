@@ -52,6 +52,7 @@ const cvaCategory = cva(
     },
   }
 );
+
 const Category: FC<Props> = ({ category }) => {
   const categoryInfo = getCategory(category);
   return (

@@ -31,6 +31,7 @@ const animateFullDescriptionVariants = {
   open: { x: '0%', opacity: 1 },
   closed: { x: '-5%', opacity: 0 },
 };
+
 const StageItem: FC<StageItemProps> = ({
   category,
   plan,
@@ -44,7 +45,7 @@ const StageItem: FC<StageItemProps> = ({
   prepayment,
   task,
 }) => {
-  const [isShortDisplay, setIsShortDisplay] = useState(false);
+  const [isShortDisplay, setIsShortDisplay] = useState<boolean>(false);
   const handleHover = (value: boolean) => {
     setIsShortDisplay(value);
   };

@@ -52,7 +52,7 @@ const StageProgressCountdown: FC<StageProgressProps> = ({
 }) => {
   const dayToSecCoef = 24 * 60 * 60;
   const stageProgressColor = getStageProgressColor(dayRemains);
-  const [hovered, setHovered] = useState(false);
+  const [hovered, setHovered] = useState<boolean>(false);
   return (
     <div
       onMouseEnter={() => {

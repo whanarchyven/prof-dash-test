@@ -3,11 +3,12 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useState } from 'react';
 import Category, { categoryName } from '@/shared/ui/category/ui/Category';
 import { employeeDropDown } from '@/shared/ui/dropdown-item/ui/DropdownItem';
-import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
-import PinIcon from '../../../../../public/icons/pin.svg';
+import ArrowRightIcon from '/public/icons/arrow_right.svg';
+import PinIcon from '/public/icons/pin.svg';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { getDateTitle } from '@/shared/ui/card-header/utils/getDateTitle';
+import Image from 'next/image';
 
 export interface CardHeaderProps
   extends VariantProps<typeof cvaRoot>,
@@ -66,8 +67,8 @@ const cvaHeader = cva([
   'p-1.5 py-2',
   'flex justify-between gap-3 items-center',
 ]);
-const cvaAvatar = cva(['rounded-full', 'h-7 aspect-square']);
-const cvaPinIcon = cva(['w-[24px] h-[24px]'], {
+const cvaAvatar = cva(['rounded-full', 'h-7 aspect-square', 'relative']);
+const cvaPinIcon = cva(['w-2.4 h-2.4'], {
   variants: {
     isActive: {
       true: 'fill-[#3E3E3E] opacity-100',
@@ -86,8 +87,8 @@ const CardHeader: FC<CardHeaderProps> = ({
   isPined,
   manager,
 }) => {
-  const [hovered, setHovered] = useState(isHovered ?? false);
-  const [pined, setPined] = useState(isPined ?? false);
+  const [hovered, setHovered] = useState<boolean>(isHovered ?? false);
+  const [pined, setPined] = useState<boolean>(isPined ?? false);
 
   const pinButtonAnimateVariants = {
     open: { opacity: 1, y: 0 },
@@ -140,7 +141,14 @@ const CardHeader: FC<CardHeaderProps> = ({
             <Category category={category}></Category>
           </div>
         </motion.div>
-        <img className={cvaAvatar()} src={manager.avatar} />
+        <div className={cvaAvatar()}>
+          <Image
+            alt={manager.name + 'avatar'}
+            className={cvaAvatar()}
+            layout={'fill'}
+            src={manager.avatar}
+          />
+        </div>
       </motion.div>
     </div>
   );

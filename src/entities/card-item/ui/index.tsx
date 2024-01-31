@@ -37,6 +37,7 @@ const cvaRemainsCheckTitle = cva([
   'text-sm font-secondary text-cGray ',
   'opacity-50',
 ]);
+
 const CardItem: FC<CardItemProps> = ({
   totalCheck,
   isPined,

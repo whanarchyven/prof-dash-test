@@ -44,15 +44,12 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
 
   const storeScrollState = useAppSelector(timelineSelectors.timeLineScroll);
 
-  const [scrollState, setScrollState] = useState(0);
+  const [scrollState, setScrollState] = useState<number>(0);
 
   const days = calculateDaysQnt(startPeriod, endPeriod);
 
   const maxWidth = days.length * 30;
   const timeLineOffsetWidth = timeLineRef?.current?.offsetWidth ?? 0;
-
-  // console.log(maxWidth)
-  // console.log(timeLineOffsetWidth)
 
   const todayOffset = calculateTodayOffset(
     startPeriod,
@@ -61,9 +58,7 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
   );
   const todayBtnOffset = calculateDaysQnt(startPeriod, new Date()).length * 30;
 
-  // console.log(calculateTodayOffset(startPeriod, new Date(),(maxWidth-timeLineOffsetWidth)),'aaa')
-
-  const [isTodayLineVisible, setIsTodayLineVisible] = useState(false);
+  const [isTodayLineVisible, setIsTodayLineVisible] = useState<boolean>(false);
   const checkIsTodayLineVisible = (
     currentOffset: number,
     todayOffset: number,
@@ -71,6 +66,15 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
   ) => {
     return (
       todayOffset >= currentOffset && todayOffset <= currentOffset + areaWidth
+    );
+  };
+
+  const checkIsDaySkipped = (day: Date) => {
+    return (
+      addDays(startOfMonth(day), 0).getDate() == day.getDate() ||
+      addDays(startOfMonth(day), 1).getDate() == day.getDate() ||
+      addDays(startOfMonth(day), 2).getDate() == day.getDate() ||
+      addDays(startOfMonth(day), 3).getDate() == day.getDate()
     );
   };
 
@@ -108,12 +112,7 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
       <div ref={timeLineRef} className={cvaTimeLineContainer()}>
         <div ref={fullTimeLineRef} className={cvaTimeLine()}>
           {days.map((day, counter) => {
-            //дальше костыль, продумать как унифицировать
-            const isSkipping =
-              addDays(startOfMonth(day), 0).getDate() == day.getDate() ||
-              addDays(startOfMonth(day), 1).getDate() == day.getDate() ||
-              addDays(startOfMonth(day), 2).getDate() == day.getDate() ||
-              addDays(startOfMonth(day), 3).getDate() == day.getDate();
+            const isSkipping = checkIsDaySkipped(day);
             if (!isSkipping) {
               return (
                 <TimelineHeaderDaySection

@@ -9,7 +9,7 @@ import Accordeon from '@/shared/ui/accordeon/ui';
 import StageCard from '@/features/stage-card';
 import TodayLine from '@/features/timeline/ui/today-line';
 
-const cvaRoot = cva(['p-2.4', 'bg-cGrayBg', 'min-h-screen', 'overflow-hidden']);
+const cvaRoot = cva(['p-2.4', 'bg-cGrayBg', 'min-h-screen']);
 
 const cvaHeaderContainer = cva([
   'sticky top-0 z-[999]',
@@ -36,12 +36,14 @@ const cvaTodayLineMask = cva([
   'bg-cGrayBg',
 ]);
 
+const cvaRootWrapper = cva(['overflow-x-clip']);
+
 const tempStartPeriod = new Date('2023-10-12');
 const tempEndPeriod = new Date('2024-02-16');
 
 export default function AnotherPage() {
   return (
-    <>
+    <div className={cvaRootWrapper()}>
       <main className={cvaRoot()}>
         <div className={cvaTodayLineMask()}></div>
         <div className={cvaHeaderContainer()}>
@@ -644,6 +646,6 @@ export default function AnotherPage() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }

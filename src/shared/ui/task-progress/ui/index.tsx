@@ -89,7 +89,7 @@ const TaskProgress: FC<TaskProgressProps> = ({
     completePercent
   );
 
-  const [shortDisplay, setShortDisplay] = useState(isShort);
+  const [shortDisplay, setShortDisplay] = useState<boolean>(isShort);
 
   const animateTaskProgressVariants = {
     open: { width: '100%' },

@@ -28,7 +28,7 @@ const StageCard: FC<StageCardInterface> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [maxContainerWidth, setMaxCointainerWidth] = useState(0);
+  const [maxContainerWidth, setMaxCointainerWidth] = useState<number>(0);
 
   useEffect(() => {
     if (containerRef.current) {

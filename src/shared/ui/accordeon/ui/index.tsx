@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority';
 import { FC, ReactNode, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
-import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
+import ArrowRightIcon from '/public/icons/arrow_right.svg';
 
 interface AccordeonProps {
   isOpen?: boolean;
@@ -15,13 +15,14 @@ interface AccordeonProps {
 const cvaRoot = cva(['flex flex-col gap-2']);
 const cvaTextTitle = cva(['flex items-center gap-1', 'cursor-pointer']);
 const cvaArrowRightIcon = cva(['stroke-cBlack']);
+
 const Accordeon: FC<AccordeonProps> = ({
   isOpen,
   title,
   childrensQnt,
   children,
 }) => {
-  const [open, setOpen] = useState(isOpen ?? false);
+  const [open, setOpen] = useState<boolean>(isOpen ?? false);
 
   const animateHiddenBlockVariants = {
     closed: { y: '-10%', opacity: 0 },

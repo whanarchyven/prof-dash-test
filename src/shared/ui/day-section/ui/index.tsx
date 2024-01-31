@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority';
 import { FC, useState } from 'react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import TodayLineTriangle from '../../../../../public/icons/today_line_triangle.svg';
+import TodayLineTriangle from '/public/icons/today_line_triangle.svg';
 
 export interface DaySectionProps {
   date: Date;
@@ -45,7 +45,7 @@ const DaySection: FC<DaySectionProps> = ({
   displayBottomArrow,
   displayTopArrow,
 }) => {
-  const [hover, setHover] = useState(false);
+  const [hover, setHover] = useState<boolean>(false);
   const isToday = date.toLocaleDateString() == new Date().toLocaleDateString();
   return (
     <div

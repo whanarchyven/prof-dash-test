@@ -42,7 +42,7 @@ const TimeLine: FC<TimeLineProps> = ({
 
   const storeScrollState = useAppSelector(timelineSelectors.timeLineScroll);
 
-  const [scrollState, setScrollState] = useState(0);
+  const [scrollState, setScrollState] = useState<number>(0);
 
   useSlider(timeLineRef, days.length * 30);
 
@@ -56,7 +56,9 @@ const TimeLine: FC<TimeLineProps> = ({
     // console.log(scrollState,'ScrollTo')
   }, [scrollState]);
 
-  const [fitleredStages, setFilteredStages] = useState([...stages]);
+  const [fitleredStages, setFilteredStages] = useState<typeof stages>([
+    ...stages,
+  ]);
 
   useEffect(() => {
     const temp = [...fitleredStages];

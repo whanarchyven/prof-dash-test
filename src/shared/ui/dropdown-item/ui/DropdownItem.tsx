@@ -5,7 +5,7 @@ import { categoryName, getCategory } from '@/shared/ui/category/ui/Category';
 import StageProgressCountdown from '@/shared/ui/stage-progress-countdown/ui/StageProgressCountdown';
 import CompletedIcon from '/public/icons/complete.svg';
 import { motion } from 'framer-motion';
-
+import Image from 'next/image';
 export interface employeeDropDown {
   name: string;
   avatar: string;
@@ -45,6 +45,7 @@ const cvaDropDownItemBody = cva(['flex items-center'], {
 const cvaAvatarManagerImage = cva([
   'border-[0.2rem] border-white rounded-full',
   'w-2 aspect-square',
+  'relative',
 ]);
 
 const translatePaymentStatus = (paymentStatus: paymentDropDown['status']) => {
@@ -84,7 +85,16 @@ export const tranSlateDropDownItem = (item: Props['dropdownItems'][0]) => {
   if ('name' in item && 'avatar' in item) {
     return {
       title: item.name,
-      body: <img className={cvaAvatarManagerImage()} src={item.avatar} />,
+      body: (
+        <div className={cvaAvatarManagerImage()}>
+          <Image
+            alt={item.name + 'avatar'}
+            className={cvaAvatarManagerImage()}
+            layout={'fill'}
+            src={item.avatar}
+          />
+        </div>
+      ),
     };
   } else if ('status' in item) {
     return translatePaymentStatus(item.status);
@@ -99,6 +109,7 @@ export const tranSlateDropDownItem = (item: Props['dropdownItems'][0]) => {
   }
   return { title: '', body: <></> };
 };
+
 const DropdownItem: FC<Props> = ({
   category,
   isAllItems,

@@ -19,6 +19,7 @@ interface CalulatedStageItem {
 }
 
 const cvaStage = cva(['absolute z-[9999]']);
+
 const CalculatedStageItem = ({
   stageItem,
   startPeriod,

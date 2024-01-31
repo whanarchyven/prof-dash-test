@@ -23,7 +23,7 @@ const TodayLine: FC<TodayLineProps> = ({ startPeriod }) => {
 
   const storeScrollState = useAppSelector(timelineSelectors.timeLineScroll);
 
-  const [scrollState, setScrollState] = useState(0);
+  const [scrollState, setScrollState] = useState<number>(0);
 
   useEffect(() => {
     setScrollState(storeScrollState);
@@ -32,14 +32,14 @@ const TodayLine: FC<TodayLineProps> = ({ startPeriod }) => {
   useEffect(() => {
     timeLineRef.current?.scrollTo(scrollState, 0);
   }, [scrollState]);
-  const todayOffset = calculateDaysQnt(startPeriod, new Date()).length * 30;
+  const todayOffset =
+    (calculateDaysQnt(startPeriod, new Date()).length - 1) * 30;
 
   return (
     <div className={cvaTodayLineRoot()}>
       <div
         style={{
           transform: `translate(${todayOffset - scrollState}px,0px)`,
-          left: '-30px',
         }}
         className={cvaTodayLine()}>
         <DaySection

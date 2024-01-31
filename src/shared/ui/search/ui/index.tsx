@@ -1,7 +1,7 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useState } from 'react';
-import ArrowRightIcon from '../../../../../public/icons/arrow_right.svg';
+import ArrowRightIcon from '/public/icons/arrow_right.svg';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 

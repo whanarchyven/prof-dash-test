@@ -156,12 +156,12 @@ const SortDropdown: FC<Props> = ({ category, state }) => {
     }
   };
 
-  const [isAll, setIsAll] = useState(true);
+  const [isAll, setIsAll] = useState<boolean>(true);
   const allDropdownItems = stateInitialization(category);
   const [dropdownItems, setDropDownItems] = useState<
     Array<employeeDropDown | paymentDropDown | categoryDropDown>
   >([]);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
   const checkDropdown = (
     item: employeeDropDown | paymentDropDown | categoryDropDown

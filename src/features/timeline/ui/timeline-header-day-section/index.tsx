@@ -17,6 +17,7 @@ const cvaSection = cva([''], {
     },
   },
 });
+
 const TimelineHeaderDaySection: FC<TimelineHeaderDaySectionProps> = ({
   day,
   isFullHeight,

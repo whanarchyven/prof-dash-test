@@ -34,6 +34,7 @@ const cvaStageProgressContainer = cva(
 );
 
 const cvaTransitPostfix = cva(['text-cOrange']);
+
 const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, amount }) => {
   const translateInvoiceProgressByStatus = (invoiceStatus: typeof status) => {
     const statusMap: Map<
@@ -47,7 +48,7 @@ const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, amount }) => {
     return statusMap.get(status);
   };
 
-  const [hovered, setHovered] = useState(false);
+  const [hovered, setHovered] = useState<boolean>(false);
 
   return (
     <div
