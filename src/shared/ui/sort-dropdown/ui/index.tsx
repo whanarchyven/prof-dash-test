@@ -11,11 +11,13 @@ import DropdownItem, {
 } from '@/shared/ui/dropdown-item/ui/DropdownItem';
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface Props
+export interface SortDropdownProps
   extends VariantProps<typeof cvaSortContainer>,
     VariantProps<typeof cvaSortDropdownItems> {
   mutateFunc?: (arg: string) => any;
   category: dropDownCategory;
+  callback?: () => any;
+  isOpen?: boolean;
 }
 
 const translateDropDownCategory = (dropdownCategory: dropDownCategory) => {
@@ -37,16 +39,17 @@ const cvaSortContainer = cva(
     'py-0.4',
     'pl-0.4',
     'pr-1',
-    'border-[0.2rem] hover:border-cGrayAccent',
+    'border-[0.2rem] ',
     'rounded-full',
     'flex items-center relative justify-between',
+    'bg-white',
   ],
   {
     variants: {
       state: {
         default: ['border-cGrayAccent'],
         hovered: ['border-cBlack border-opacity-[0.34]'],
-        typing: ['border-cBlack border-opacity-[0.34]'],
+        typing: ['border-cBlack border-opacity-[0]'],
       },
     },
   }
@@ -109,7 +112,12 @@ const dropdownPopupAnimationVariants = {
   closed: { opacity: 0, y: '-10%' },
 };
 
-const SortDropdown: FC<Props> = ({ category, state }) => {
+const SortDropdown: FC<SortDropdownProps> = ({
+  category,
+  state,
+  callback,
+  isOpen,
+}) => {
   const [searchState, setSearchState] = useState<typeof state>(state);
 
   const allItems = {
@@ -161,7 +169,7 @@ const SortDropdown: FC<Props> = ({ category, state }) => {
   const [dropdownItems, setDropDownItems] = useState<
     Array<employeeDropDown | paymentDropDown | categoryDropDown>
   >([]);
-  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(isOpen ?? false);
 
   const checkDropdown = (
     item: employeeDropDown | paymentDropDown | categoryDropDown
@@ -187,14 +195,25 @@ const SortDropdown: FC<Props> = ({ category, state }) => {
     }
   }, [dropdownItems]);
 
+  useEffect(() => {
+    isOpen ? setDropdownOpen(isOpen) : setDropdownOpen(false);
+  }, [isOpen]);
+
   return (
     <div className={cvaWrapper()}>
       <div
         // onBlur={() => {
         //   setSearchState('default');
         // }}
-        onClick={() => {
+        onMouseEnter={() => {
           setSearchState('hovered');
+        }}
+        onMouseLeave={() => {
+          setSearchState('default');
+        }}
+        onClick={() => {
+          setSearchState('typing');
+          callback ? callback() : null;
         }}
         className={cvaSortContainer({ state: searchState })}>
         <div>

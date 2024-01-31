@@ -15,21 +15,24 @@ export const useSlider = (
     let scrollLeft = 0;
 
     if (slider) {
-      slider.addEventListener('mousedown', (e) => {
+      const mouseDown = (e: MouseEvent) => {
         isDown = true;
         slider.classList.add('active');
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
-      });
-      slider.addEventListener('mouseleave', () => {
+      };
+
+      const mouseLeave = () => {
         isDown = false;
         slider.classList.remove('active');
-      });
-      slider.addEventListener('mouseup', () => {
+      };
+
+      const mouseUp = () => {
         isDown = false;
         slider.classList.remove('active');
-      });
-      slider.addEventListener('mousemove', (e) => {
+      };
+
+      const mouseMove = (e: MouseEvent) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
@@ -40,7 +43,17 @@ export const useSlider = (
             : scrollLeft - walk;
         slider.scrollLeft = mutatingValue;
         dispatch(setScroll(mutatingValue));
-      });
+      };
+      slider.addEventListener('mousedown', mouseDown);
+      slider.addEventListener('mouseleave', mouseLeave);
+      slider.addEventListener('mouseup', mouseUp);
+      slider.addEventListener('mousemove', mouseMove);
+      return () => {
+        slider.removeEventListener('mousedown', mouseDown);
+        slider.removeEventListener('mouseleave', mouseLeave);
+        slider.removeEventListener('mouseup', mouseUp);
+        slider.removeEventListener('mousemove', mouseMove);
+      };
     }
   }, []);
 };

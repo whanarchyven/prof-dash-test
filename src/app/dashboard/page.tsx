@@ -3,11 +3,11 @@ import Button from '@/shared/ui/button/ui';
 import { cva } from 'class-variance-authority';
 import Search from '@/shared/ui/search/ui';
 import React from 'react';
-import SortDropdown from '@/shared/ui/sort-dropdown/ui';
 import TimelineHeader from '@/features/timeline/ui/timeline-header';
 import Accordeon from '@/shared/ui/accordeon/ui';
 import StageCard from '@/features/stage-card';
 import TodayLine from '@/features/timeline/ui/today-line';
+import SortDropDowns from '@/shared/ui/sort-dropdown/ui/SortDropDowns';
 
 const cvaRoot = cva(['p-2.4', 'bg-cGrayBg', 'min-h-screen']);
 
@@ -53,13 +53,7 @@ export default function AnotherPage() {
               <div className={cvaSearchInputBlock()}>
                 <Search placeholder={'Найти проект'}></Search>
               </div>
-              <SortDropdown
-                state={'default'}
-                category={'category'}></SortDropdown>
-              <SortDropdown
-                state={'default'}
-                category={'manager'}></SortDropdown>
-              <SortDropdown state={'default'} category={'pay'}></SortDropdown>
+              <SortDropDowns />
               <Button onClick={() => {}} className={cvaDropFIltersButton()}>
                 Очистить
               </Button>
