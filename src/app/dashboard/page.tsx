@@ -9,7 +9,7 @@ import Accordeon from '@/shared/ui/accordeon/ui';
 import StageCard from '@/features/stage-card';
 import TodayLine from '@/features/timeline/ui/today-line';
 
-const cvaRoot = cva(['p-2.4', 'bg-cGrayBg', 'min-h-screen']);
+const cvaRoot = cva(['p-2.4', 'bg-cGrayBg', 'min-h-screen', 'overflow-hidden']);
 
 const cvaHeaderContainer = cva([
   'sticky top-0 z-[999]',
