@@ -34,15 +34,12 @@ export const useSlider = (
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
         const walk = (x - startX) * 3; //scroll-fast
-        slider.scrollLeft = scrollLeft - walk;
-        console.log(maxWidth - slider.offsetWidth + 45);
-        dispatch(
-          setScroll(
-            scrollLeft - walk >= maxWidth - slider.offsetWidth + 45
-              ? maxWidth - slider.offsetWidth + 45
-              : scrollLeft - walk
-          )
-        );
+        const mutatingValue =
+          scrollLeft - walk >= maxWidth - slider.offsetWidth
+            ? maxWidth - slider.offsetWidth
+            : scrollLeft - walk;
+        slider.scrollLeft = mutatingValue;
+        dispatch(setScroll(mutatingValue));
       });
     }
   }, []);

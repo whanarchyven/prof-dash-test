@@ -1,6 +1,6 @@
 'use client';
 import { cva } from 'class-variance-authority';
-import { FC } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import CardItem, { CardItemProps } from '@/entities/card-item/ui';
 import TimeLine, { TimeLineProps } from '@/features/timeline';
 
@@ -11,24 +11,33 @@ export interface StageCardInterface {
   endPeriod: Date;
 }
 
-const cvaStageCardRoot = cva(['grid grid-cols-12 gap-1', 'w-full']);
+const cvaStageCardRoot = cva(['grid grid-cols-12 gap-1', 'w-full', 'relative']);
 const cvaStageTaskCard = cva(['col-span-4']);
 const cvaStageTimelineBlock = cva([
   'col-span-8',
-  'relative',
   'overflow-hidden',
   'rounded-2xl',
+  'relative',
 ]);
 
 const StageCard: FC<StageCardInterface> = ({
   task,
   stages,
-
   startPeriod,
   endPeriod,
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [maxContainerWidth, setMaxCointainerWidth] = useState(0);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setMaxCointainerWidth(containerRef.current.offsetWidth);
+    }
+  }, [containerRef]);
+
   return (
-    <div className={cvaStageCardRoot()}>
+    <div ref={containerRef} className={cvaStageCardRoot()}>
       <div className={cvaStageTaskCard()}>
         <CardItem {...task} />
       </div>
@@ -37,6 +46,7 @@ const StageCard: FC<StageCardInterface> = ({
           startPeriod={startPeriod}
           endPeriod={endPeriod}
           stages={stages}
+          maxWidth={maxContainerWidth}
         />
       </div>
     </div>

@@ -9,6 +9,7 @@ export interface DaySectionProps {
   date: Date;
   isFilled?: boolean;
   isUnfilled?: boolean;
+  displayTodayMark?: boolean;
   displayDay?: boolean;
   displayTopArrow?: boolean;
   displayBottomArrow?: boolean;
@@ -40,6 +41,7 @@ const DaySection: FC<DaySectionProps> = ({
   isFilled,
   isUnfilled,
   displayDay,
+  displayTodayMark,
   displayBottomArrow,
   displayTopArrow,
 }) => {
@@ -56,13 +58,14 @@ const DaySection: FC<DaySectionProps> = ({
       className={cvaDaySectionRoot()}>
       <div
         className={cvaDaySectionMark({
-          state: isToday
-            ? 'today'
-            : isFilled
-              ? 'filled'
-              : isUnfilled
-                ? 'isUnfilled'
-                : hover,
+          state:
+            isToday && displayTodayMark
+              ? 'today'
+              : isFilled
+                ? 'filled'
+                : isUnfilled
+                  ? 'isUnfilled'
+                  : hover,
         })}>
         {isToday && displayDay && (
           <div className={cvaDayTitle()}>

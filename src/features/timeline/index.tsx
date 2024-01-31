@@ -17,25 +17,22 @@ export interface TimeLineProps {
     dateEnd: Date;
     stageInfo: StageItemProps;
   }[];
-  isFirstCard?: boolean;
-  isLastCard?: boolean;
+  maxWidth?: number | null;
   startPeriod: Date;
   endPeriod: Date;
 }
 
 const cvaTimeLineRoot = cva([
-  'w-[100vw] bg-white h-full rounded-xl',
+  'w-full bg-white h-full rounded-xl',
   'overflow-x-scroll',
   'absolute right-0',
   'timeline-items',
-  'pl-4.8',
 ]);
 const cvaTimeLine = cva(['flex w-fit relative h-full']);
 
 const TimeLine: FC<TimeLineProps> = ({
   stages,
-  isFirstCard,
-  isLastCard,
+  maxWidth,
   startPeriod,
   endPeriod,
 }) => {
@@ -87,16 +84,13 @@ const TimeLine: FC<TimeLineProps> = ({
   }, []);
 
   return (
-    <div ref={timeLineRef} className={cvaTimeLineRoot()}>
+    <div
+      ref={timeLineRef}
+      style={{ width: maxWidth ?? '100%' }}
+      className={cvaTimeLineRoot()}>
       <div className={cvaTimeLine()}>
         {days.map((day, counter) => (
-          <DaySection
-            displayDay={isFirstCard ?? false}
-            displayTopArrow={isFirstCard ?? false}
-            displayBottomArrow={isLastCard ?? false}
-            key={counter}
-            date={day}
-          />
+          <DaySection key={counter} date={day} />
         ))}
         {stages.map((item, counter) => (
           <CalculatedStageItem

@@ -11,6 +11,7 @@ import TodayBtn from '@/features/timeline/ui/today-btn';
 import { AnimatePresence } from 'framer-motion';
 import { calculateDaysQnt } from '@/features/timeline/utils/calculateDaysQnt';
 import { ru } from 'date-fns/locale';
+import { calculateTodayOffset } from '@/features/timeline/utils/calculateTodayOffset';
 
 export interface TimeLineHeaderProps {
   startPeriod: Date;
@@ -47,7 +48,20 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
 
   const days = calculateDaysQnt(startPeriod, endPeriod);
 
-  const todayOffset = calculateDaysQnt(startPeriod, new Date()).length * 30;
+  const maxWidth = days.length * 30;
+  const timeLineOffsetWidth = timeLineRef?.current?.offsetWidth ?? 0;
+
+  // console.log(maxWidth)
+  // console.log(timeLineOffsetWidth)
+
+  const todayOffset = calculateTodayOffset(
+    startPeriod,
+    new Date(),
+    maxWidth - timeLineOffsetWidth
+  );
+  const todayBtnOffset = calculateDaysQnt(startPeriod, new Date()).length * 30;
+
+  // console.log(calculateTodayOffset(startPeriod, new Date(),(maxWidth-timeLineOffsetWidth)),'aaa')
 
   const [isTodayLineVisible, setIsTodayLineVisible] = useState(false);
   const checkIsTodayLineVisible = (
@@ -69,7 +83,7 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
       setIsTodayLineVisible(
         checkIsTodayLineVisible(
           storeScrollState,
-          todayOffset,
+          todayBtnOffset,
           timeLineRef.current.offsetWidth
         )
       );

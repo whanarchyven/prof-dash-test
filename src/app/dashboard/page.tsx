@@ -30,6 +30,12 @@ const cvaSearchInputBlock = cva(['']);
 
 const cvaCardsBlock = cva(['relative', 'w-full', 'mt-2', 'h-fit']);
 
+const cvaTodayLineMask = cva([
+  'absolute z-[99999] right-0',
+  'h-screen w-2.4',
+  'bg-cGrayBg',
+]);
+
 const tempStartPeriod = new Date('2023-10-12');
 const tempEndPeriod = new Date('2024-02-16');
 
@@ -37,6 +43,7 @@ export default function AnotherPage() {
   return (
     <>
       <main className={cvaRoot()}>
+        <div className={cvaTodayLineMask()}></div>
         <div className={cvaHeaderContainer()}>
           <div className={cvaHeader()}>
             <h1 className={cvaHeaderTitle()}>Рентабельность</h1>
