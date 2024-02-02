@@ -5,7 +5,7 @@ import SortDropdown, {
 
 const SortDropDowns = () => {
   const items: SortDropdownProps['category'][] = ['category', 'manager', 'pay'];
-  const [currentDropDownOpen, setCurrentDropDownOpen] = useState<number>(0);
+  const [currentDropDownOpen, setCurrentDropDownOpen] = useState<number>(6);
 
   return (
     <>

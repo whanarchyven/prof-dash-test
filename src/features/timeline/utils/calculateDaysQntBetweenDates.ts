@@ -1,9 +1,7 @@
 import { startOfMonth, addDays } from 'date-fns';
-
-export const calculateTodayOffset = (
+export const calculateDaysQntBetweenDates = (
   startPeriod: Date,
-  endPeriod: Date,
-  maxOffset: number
+  endPeriod: Date
 ) => {
   let start = startOfMonth(startPeriod);
   const end = endPeriod;
@@ -13,10 +11,5 @@ export const calculateTodayOffset = (
     result.push(start);
     start = addDays(start, 1);
   }
-  result.pop();
-  if (result.length * 30 >= maxOffset) {
-    return maxOffset;
-  } else {
-    return result.length * 30;
-  }
+  return result;
 };

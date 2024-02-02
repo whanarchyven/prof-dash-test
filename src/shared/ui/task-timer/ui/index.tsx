@@ -2,11 +2,12 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { formatPrice } from '@/shared/utils/formatters';
 
 export interface TaskTimerProps
   extends VariantProps<typeof cvaProgress>,
     VariantProps<typeof cvaRoot> {
-  category: 'time' | 'profit';
+  category: 'time' | 'profit' | 'money';
   fact: number;
   plan: number;
 }
@@ -20,7 +21,7 @@ const cvaRoot = cva(
       height: {
         xl: ['h-10 p-1.4'],
         lg: ['h-8 p-1.2'],
-        md: ['h-6 p-0.6'],
+        md: ['h-6 px-1 py-0.6'],
         sm: ['h-4 p-0.8'],
         xs: ['h-2 p-0.6'],
       },
@@ -124,6 +125,7 @@ const TaskTimer: FC<TaskTimerProps> = ({
   }, [isShort]);
 
   const isCategoryTime = category == 'time';
+  const isCategoryMoney = category == 'money';
 
   const taskProgress = calculateProgressPercent(status, shortDisplay ?? false);
 
@@ -140,8 +142,14 @@ const TaskTimer: FC<TaskTimerProps> = ({
         <div className={cvaTextBlock({ status })}>
           <div className={cvaTextSection()}>
             <p className={cvaTitle({ align: 'left' })}>
-              {fact}
-              {isCategoryTime ? ' ч' : '%'}
+              {isCategoryMoney ? (
+                <>{formatPrice(fact)}</>
+              ) : (
+                <>
+                  {fact}
+                  {isCategoryTime ? ' ч' : '%'}
+                </>
+              )}
             </p>
             <p className={cvaDescription({ height: height })}>
               {isCategoryTime ? 'всего' : 'факт'}
@@ -149,8 +157,14 @@ const TaskTimer: FC<TaskTimerProps> = ({
           </div>
           <div className={cvaTextSection()}>
             <p className={cvaTitle({ align: 'right', height: height })}>
-              {plan}
-              {isCategoryTime ? ' ч' : '%'}
+              {isCategoryMoney ? (
+                <>{formatPrice(plan)}</>
+              ) : (
+                <>
+                  {plan}
+                  {isCategoryTime ? ' ч' : '%'}
+                </>
+              )}
             </p>
             <p className={cvaDescription({ height: height })}>
               {isCategoryTime ? 'оценка' : 'план'}

@@ -8,6 +8,7 @@ import Accordeon from '@/shared/ui/accordeon/ui';
 import StageCard from '@/features/stage-card';
 import TodayLine from '@/features/timeline/ui/today-line';
 import SortDropDowns from '@/shared/ui/sort-dropdown/ui/SortDropDowns';
+import SummaryPop from '@/features/summary-pop';
 
 const cvaRoot = cva(['p-2.4', 'bg-cGrayBg', 'min-h-screen']);
 
@@ -39,13 +40,56 @@ const cvaTodayLineMask = cva([
 const cvaRootWrapper = cva(['overflow-x-clip']);
 
 const tempStartPeriod = new Date('2023-10-12');
-const tempEndPeriod = new Date('2024-02-16');
+const tempEndPeriod = new Date('2024-03-16');
 
 export default function AnotherPage() {
   return (
     <div className={cvaRootWrapper()}>
       <main className={cvaRoot()}>
         <div className={cvaTodayLineMask()}></div>
+        <div className={'fixed right-2.4 bottom-2.4 z-[9999]'}>
+          <SummaryPop
+            startPeriod={tempStartPeriod}
+            endPeriod={tempEndPeriod}
+            summary={[
+              {
+                monthId: 9,
+                goal: 520000,
+                goalPercent: 20,
+                fact: 100000,
+                plan: 500000,
+              },
+              {
+                monthId: 10,
+                goal: 520000,
+                goalPercent: 25,
+                fact: 200000,
+                plan: 500000,
+              },
+              {
+                monthId: 11,
+                goal: 520000,
+                goalPercent: 20,
+                fact: 100000,
+                plan: 500000,
+              },
+              {
+                monthId: 0,
+                goal: 520000,
+                goalPercent: 30,
+                fact: 300000,
+                plan: 500000,
+              },
+              {
+                monthId: 1,
+                goal: 520000,
+                goalPercent: 50,
+                fact: 400000,
+                plan: 500000,
+              },
+            ]}
+          />
+        </div>
         <div className={cvaHeaderContainer()}>
           <div className={cvaHeader()}>
             <h1 className={cvaHeaderTitle()}>Рентабельность</h1>
@@ -106,8 +150,8 @@ export default function AnotherPage() {
                   }}
                   stages={[
                     {
-                      dateStart: new Date('2023-12-04'),
-                      dateEnd: new Date('2023-12-14'),
+                      dateStart: new Date('2024-02-04'),
+                      dateEnd: new Date('2024-02-14'),
                       stageInfo: {
                         height: 'md',
                         taskProgressStatus: 'completed',
@@ -121,8 +165,8 @@ export default function AnotherPage() {
                       },
                     },
                     {
-                      dateStart: new Date('2023-12-12'),
-                      dateEnd: new Date('2023-12-13'),
+                      dateStart: new Date('2024-02-12'),
+                      dateEnd: new Date('2024-02-13'),
                       stageInfo: {
                         height: 'md',
                         taskProgressStatus: 'pending',
@@ -137,8 +181,8 @@ export default function AnotherPage() {
                       },
                     },
                     {
-                      dateStart: new Date('2023-12-15'),
-                      dateEnd: new Date('2023-12-25'),
+                      dateStart: new Date('2024-02-15'),
+                      dateEnd: new Date('2024-02-25'),
                       stageInfo: {
                         height: 'md',
                         taskProgressStatus: 'pending',

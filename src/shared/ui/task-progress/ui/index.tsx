@@ -7,7 +7,7 @@ export interface TaskProgressProps extends VariantProps<typeof cvaProgress> {
   task: string;
   completePercent?: number;
   isShort?: boolean;
-  isClicked?: boolean;
+  isDisplayingPercent?: boolean;
 }
 
 const cvaRoot = cva(
@@ -72,6 +72,7 @@ const TaskProgress: FC<TaskProgressProps> = ({
   status,
   completePercent,
   isShort = false,
+  isDisplayingPercent,
 }) => {
   const calculateCompletePercent = (
     taskStatus: typeof status,
@@ -105,12 +106,6 @@ const TaskProgress: FC<TaskProgressProps> = ({
       transition={{ duration: 0.2 }}
       variants={animateTaskProgressVariants}
       animate={shortDisplay ? 'closed' : 'open'}
-      // onMouseEnter={() => {
-      //   isShort ? setShortDisplay(false) : null;
-      // }}
-      // onMouseLeave={() => {
-      //   isShort ? setShortDisplay(true) : null;
-      // }}
       className={cvaRoot({ isShort: shortDisplay, height: 'sm' })}>
       <div
         style={{ width: `${shortDisplay ? 100 : taskCompletePercentStatus}%` }}
@@ -121,7 +116,9 @@ const TaskProgress: FC<TaskProgressProps> = ({
             <p className={cvaTitle({ align: 'left' })}>{task}</p>
           </div>
           <div className={cvaTextSection({ align: 'right' })}>
-            <p className={cvaTitle({ align: 'right' })}>100%</p>
+            <p className={cvaTitle({ align: 'right' })}>
+              {isDisplayingPercent ? taskCompletePercentStatus + '%' : '100%'}
+            </p>
           </div>
         </div>
       ) : null}

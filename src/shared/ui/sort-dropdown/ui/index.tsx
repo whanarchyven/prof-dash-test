@@ -98,7 +98,7 @@ const cvaTitleDropDownBlock = cva([
 ]);
 
 const cvaDropdownPopup = cva([
-  'absolute right-0 z-50 top-4',
+  'absolute right-0 z-[99999] top-4',
   'flex flex-col gap-2',
   'rounded-3xl',
   'shadow-xl',

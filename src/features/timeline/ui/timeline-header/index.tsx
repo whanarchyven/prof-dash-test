@@ -12,6 +12,7 @@ import { AnimatePresence } from 'framer-motion';
 import { calculateDaysQnt } from '@/features/timeline/utils/calculateDaysQnt';
 import { ru } from 'date-fns/locale';
 import { calculateTodayOffset } from '@/features/timeline/utils/calculateTodayOffset';
+import { containerParametersSelectors } from '@/shared/store/containerWidthSlice';
 
 export interface TimeLineHeaderProps {
   startPeriod: Date;
@@ -33,6 +34,18 @@ const cvaTimeLineHeaderMonthTitle = cva([
   'flex items-end justify-center',
 ]);
 
+export const checkIsTodayLineVisible = (
+  currentOffset: number,
+  todayOffset: number,
+  areaWidth: number,
+  areaCard: number
+) => {
+  return (
+    todayOffset >= currentOffset + areaCard &&
+    todayOffset <= currentOffset + areaWidth
+  );
+};
+
 const TimeLineHeader: FC<TimeLineHeaderProps> = ({
   startPeriod,
   endPeriod,
@@ -43,31 +56,23 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
   const fullTimeLineRef = useRef<HTMLDivElement>(null);
 
   const storeScrollState = useAppSelector(timelineSelectors.timeLineScroll);
+  const containerParams = useAppSelector(
+    containerParametersSelectors.containerParameters
+  );
 
   const [scrollState, setScrollState] = useState<number>(0);
 
   const days = calculateDaysQnt(startPeriod, endPeriod);
 
   const maxWidth = days.length * 30;
-  const timeLineOffsetWidth = timeLineRef?.current?.offsetWidth ?? 0;
 
   const todayOffset = calculateTodayOffset(
     startPeriod,
     new Date(),
-    maxWidth - timeLineOffsetWidth
+    maxWidth - containerParams.area
   );
-  const todayBtnOffset = calculateDaysQnt(startPeriod, new Date()).length * 30;
 
   const [isTodayLineVisible, setIsTodayLineVisible] = useState<boolean>(false);
-  const checkIsTodayLineVisible = (
-    currentOffset: number,
-    todayOffset: number,
-    areaWidth: number
-  ) => {
-    return (
-      todayOffset >= currentOffset && todayOffset <= currentOffset + areaWidth
-    );
-  };
 
   const checkIsDaySkipped = (day: Date) => {
     return (
@@ -87,8 +92,9 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
       setIsTodayLineVisible(
         checkIsTodayLineVisible(
           storeScrollState,
-          todayBtnOffset,
-          timeLineRef.current.offsetWidth
+          todayOffset,
+          containerParams.container,
+          containerParams.card
         )
       );
     }
@@ -104,7 +110,7 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
         {!isTodayLineVisible && (
           <TodayBtn
             onClick={() => {
-              dispatch(setScroll(todayOffset));
+              dispatch(setScroll(todayOffset - containerParams.card));
             }}
           />
         )}
