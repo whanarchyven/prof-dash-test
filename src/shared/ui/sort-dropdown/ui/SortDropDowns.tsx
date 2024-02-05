@@ -10,28 +10,16 @@ const SortDropDowns = () => {
   return (
     <>
       {items.map((item, counter) => {
-        if (counter == currentDropDownOpen) {
-          return (
-            <SortDropdown
-              key={counter}
-              isOpen
-              callback={() => {
-                setCurrentDropDownOpen(counter);
-              }}
-              state={'default'}
-              category={item}></SortDropdown>
-          );
-        } else {
-          return (
-            <SortDropdown
-              key={counter}
-              callback={() => {
-                setCurrentDropDownOpen(counter);
-              }}
-              state={'default'}
-              category={item}></SortDropdown>
-          );
-        }
+        return (
+          <SortDropdown
+            key={counter}
+            isOpen={counter == currentDropDownOpen}
+            callback={() => {
+              setCurrentDropDownOpen(counter);
+            }}
+            state={'default'}
+            category={item}></SortDropdown>
+        );
       })}
     </>
   );

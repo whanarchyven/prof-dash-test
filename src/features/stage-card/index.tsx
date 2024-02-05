@@ -81,12 +81,7 @@ const StageCard: FC<StageCardInterface> = ({
   >([]);
 
   useEffect(() => {
-    const temp: {
-      stage: (typeof stages)[0];
-      coordinate: number;
-      isDisplay: boolean;
-      type: 'task' | 'invoice';
-    }[] = [];
+    const temp: typeof stagesNotifications = [];
     stages.map((stage) => {
       if (stage.stageInfo.payment.status != 'closed') {
         temp.push({
@@ -122,6 +117,19 @@ const StageCard: FC<StageCardInterface> = ({
     }
   }, [currentScroll]);
 
+  const calculateStageNotificationScroll = (
+    notification: (typeof stagesNotifications)[0]
+  ) => {
+    return (
+      notification.coordinate -
+      calculateStageWidth(
+        notification.stage.dateStart,
+        notification.stage.dateEnd
+      ) -
+      containerParameters.card
+    );
+  };
+
   return (
     <div ref={containerRef} className={cvaStageCardRoot()}>
       <div ref={cardRef} className={cvaStageTaskCard()}>
@@ -132,13 +140,7 @@ const StageCard: FC<StageCardInterface> = ({
           <AnimatePresence>
             {stagesNotifications.map((notification, counter) => {
               if (notification.isDisplay && notification.type == 'invoice') {
-                const scrollTo =
-                  notification.coordinate -
-                  calculateStageWidth(
-                    notification.stage.dateStart,
-                    notification.stage.dateEnd
-                  ) -
-                  containerParameters.card;
+                const scrollTo = calculateStageNotificationScroll(notification);
                 return (
                   <StageNotification
                     key={'invoice' + counter}

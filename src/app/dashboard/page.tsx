@@ -41,13 +41,18 @@ const cvaRootWrapper = cva(['overflow-x-clip']);
 
 const tempStartPeriod = new Date('2023-10-12');
 const tempEndPeriod = new Date('2024-03-16');
+const cvaSummaryPop = cva(['fixed right-2.4 bottom-2.4 z-[9999]']);
+const cvaTimelineHeaderRoot = cva(['relative h-6 w-full']);
+const cvaTimelineHeaderWrapper = cva(['w-full absolute left-0']);
+const cvaAccordeonSubBlock = cva(['flex flex-col gap-3']);
+const cvaAccordeonWrapper = cva(['']);
 
 export default function AnotherPage() {
   return (
     <div className={cvaRootWrapper()}>
       <main className={cvaRoot()}>
         <div className={cvaTodayLineMask()}></div>
-        <div className={'fixed right-2.4 bottom-2.4 z-[9999]'}>
+        <div className={cvaSummaryPop()}>
           <SummaryPop
             startPeriod={tempStartPeriod}
             endPeriod={tempEndPeriod}
@@ -103,8 +108,8 @@ export default function AnotherPage() {
               </Button>
             </div>
           </div>
-          <div className={'relative h-6 w-full'}>
-            <div className={'w-full absolute left-0'}>
+          <div className={cvaTimelineHeaderRoot()}>
+            <div className={cvaTimelineHeaderWrapper()}>
               <TimelineHeader
                 startPeriod={tempStartPeriod}
                 endPeriod={tempEndPeriod}
@@ -117,7 +122,7 @@ export default function AnotherPage() {
         <div className={cvaCardsBlock()}>
           <div>
             <Accordeon isOpen={true} childrensQnt={2} title={'Закреплённые'}>
-              <div className={'flex flex-col gap-3'}>
+              <div className={cvaAccordeonSubBlock()}>
                 <StageCard
                   startPeriod={tempStartPeriod}
                   endPeriod={tempEndPeriod}
@@ -281,9 +286,9 @@ export default function AnotherPage() {
               </div>
             </Accordeon>
           </div>
-          <div className={'mt-9'}>
+          <div className={cvaAccordeonWrapper()}>
             <Accordeon isOpen={true} childrensQnt={5} title={'Все'}>
-              <div className={'flex flex-col gap-3'}>
+              <div className={cvaAccordeonSubBlock()}>
                 <StageCard
                   startPeriod={tempStartPeriod}
                   endPeriod={tempEndPeriod}
