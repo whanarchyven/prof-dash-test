@@ -29,7 +29,7 @@ const cvaButton = cva(
   [
     'group/button',
     'relative',
-    'inline-flex items-center justify-center',
+    'inline-flex text-sm items-center justify-center',
     'cursor-pointer select-none',
     'disabled:cursor-not-allowed',
   ],

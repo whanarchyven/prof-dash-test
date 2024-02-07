@@ -33,7 +33,7 @@ const cvaSummaryPopRoot = cva([
 ]);
 const cvaSummaryPopBtn = cva([
   'bg-white',
-  'text-cBlue text-xs',
+  'text-cBlue text-sm',
   'p-1',
   'rounded-full',
   'shadow-xl',

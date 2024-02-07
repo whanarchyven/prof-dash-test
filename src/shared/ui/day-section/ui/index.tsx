@@ -33,7 +33,7 @@ const cvaArrowBottom = cva(['absolute bottom-[17.5rem]', ' w-0.8 h-0.8']);
 const cvaDayTitle = cva([
   'absolute z-10 top-1',
   'p-0.5 rounded-r-lg bg-cBlue',
-  'text-[1.3rem] whitespace-nowrap text-cWhite',
+  'text-xs whitespace-nowrap text-cWhite',
 ]);
 
 const DaySection: FC<DaySectionProps> = ({

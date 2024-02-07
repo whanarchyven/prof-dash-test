@@ -15,11 +15,11 @@ const cvaRoot = cva(
   {
     variants: {
       height: {
-        xl: ['h-4 p-1.4'],
-        lg: ['h-4 p-1.2'],
-        md: ['h-4 p-0.6'],
-        sm: ['h-4 p-0.8'],
-        xs: ['h-4 p-0.6'],
+        xl: ['h-2 p-1.4'],
+        lg: ['h-2 p-1.2'],
+        md: ['h-2 p-0.6'],
+        sm: ['h-2 p-0.2 px-1'],
+        xs: ['h-2 p-0.2'],
       },
       isShort: {
         true: 'w-1.2 rounded-xl',

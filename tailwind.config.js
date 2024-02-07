@@ -222,31 +222,31 @@ module.exports = {
         },
       ],
       lg: [
-        '2.8rem',
+        '2.2rem',
         {
           lineHeight: '105%',
         },
       ],
       md: [
-        '1.8rem',
+        '1.6rem',
         {
           lineHeight: '120%',
         },
       ],
       base: [
-        '1.6rem',
+        '1.2rem',
         {
           lineHeight: '130%',
         },
       ],
       sm: [
-        '1.4rem',
+        '1.2rem',
         {
           lineHeight: '120%',
         },
       ],
       xs: [
-        '1.2rem',
+        '1rem',
         {
           lineHeight: '100%',
         },

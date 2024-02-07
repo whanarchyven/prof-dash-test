@@ -56,7 +56,7 @@ const cvaPinButton = cva([
   },
 ]);
 
-const cvaTextBlock = cva(['flex flex-col gap-1']);
+const cvaTextBlock = cva(['flex flex-col gap-0']);
 const cvaCustomerTitle = cva(['text-lg']);
 const cvaCustomerBlock = cva(['flex items-center gap-0.5']);
 const cvaDateCategoryBlock = cva(['flex items-center gap-3']);
@@ -64,11 +64,11 @@ const cvaHeader = cva([
   'rounded-3xl',
   'bg-white',
   'w-full',
-  'p-1.5 py-2',
+  'p-1 py-1',
   'flex justify-between gap-3 items-center',
 ]);
-const cvaAvatar = cva(['rounded-full', 'h-7 aspect-square', 'relative']);
-const cvaPinIcon = cva(['w-2.4 h-2.4'], {
+const cvaAvatar = cva(['rounded-full', 'h-5 aspect-square', 'relative']);
+const cvaPinIcon = cva(['w-1.6 h-1.6'], {
   variants: {
     isActive: {
       true: 'fill-[#3E3E3E] opacity-100',

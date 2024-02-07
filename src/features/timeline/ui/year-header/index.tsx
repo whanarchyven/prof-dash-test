@@ -13,10 +13,10 @@ export interface YearHeaderProps {
   endPeriod: Date;
 }
 
-const cvaTimeLineRoot = cva(['h-3', 'flex justify-end', 'relative']);
+const cvaTimeLineRoot = cva(['h-2', 'flex justify-end', 'relative']);
 
 const cvaTimeLineContainer = cva([
-  'w-fit max-w-full  h-full min-h-3 rounded-xl',
+  'w-fit max-w-full  h-full rounded-xl',
   'overflow-x-scroll',
   'timeline-header-items',
 ]);
@@ -24,7 +24,7 @@ const cvaTimeLine = cva(['flex', 'w-fit h-full', 'relative']);
 
 const cvaYearHeaderYearTitle = cva([
   'w-[120px]',
-  'font-secondary capitalize text-md',
+  'font-secondary capitalize text-sm',
   'flex items-center justify-center',
 ]);
 

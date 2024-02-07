@@ -14,7 +14,8 @@ interface AccordeonProps {
 
 const cvaRoot = cva(['flex flex-col gap-2']);
 const cvaTextTitle = cva(['flex items-center gap-1', 'cursor-pointer']);
-const cvaArrowRightIcon = cva(['stroke-cBlack']);
+const cvaArrowRightIcon = cva(['stroke-cBlack opacity-[0.32]']);
+const cvaChildrensQntSpan = cva(['opacity-[0.32]']);
 
 const Accordeon: FC<AccordeonProps> = ({
   isOpen,
@@ -42,7 +43,7 @@ const Accordeon: FC<AccordeonProps> = ({
         }}
         className={cvaTextTitle()}>
         <p>
-          {title} <span>{childrensQnt}</span>
+          {title} <span className={cvaChildrensQntSpan()}>{childrensQnt}</span>
         </p>
         <motion.div
           variants={animateArrowVariants}

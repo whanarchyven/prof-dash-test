@@ -20,8 +20,8 @@ const cvaRoot = cva(
     variants: {
       height: {
         xl: ['h-10 p-1.4'],
-        lg: ['h-8 p-1.2'],
-        md: ['h-6 px-1 py-0.6'],
+        lg: ['h-6 p-1.2'],
+        md: ['h-5.5 px-1 py-0.6'],
         sm: ['h-4 p-0.8'],
         xs: ['h-2 p-0.6'],
       },

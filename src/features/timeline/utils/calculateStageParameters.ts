@@ -16,4 +16,4 @@ export const calculateStageMarginLeft = (
 };
 
 export const calculateStageMarginTop = (level: number) =>
-  `${1 + (level ?? 0) * 13 + 'rem'}`;
+  `${1 + (level ?? 0) * 10 + 'rem'}`;

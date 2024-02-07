@@ -30,7 +30,7 @@ const cvaDropFIltersButton = cva(['text-sm p-1 bg-white rounded-full']);
 
 const cvaSearchInputBlock = cva(['']);
 
-const cvaCardsBlock = cva(['relative', 'w-full', 'mt-2', 'h-fit']);
+const cvaCardsBlock = cva(['relative', 'w-full', 'h-fit']);
 
 const cvaTodayLineMask = cva([
   'absolute z-[99999] right-0',
@@ -43,12 +43,12 @@ const cvaRootWrapper = cva(['overflow-x-clip']);
 const tempStartPeriod = new Date('2023-10-12');
 const tempEndPeriod = new Date('2024-03-16');
 const cvaSummaryPop = cva(['fixed right-2.4 bottom-2.4 z-[9999]']);
-const cvaTimelineHeaderRoot = cva(['relative h-4 w-full']);
-const cvaTimelineYearRoot = cva(['relative h-3 w-full']);
+const cvaTimelineHeaderRoot = cva(['relative h-2 w-full']);
+const cvaTimelineYearRoot = cva(['relative h-1 w-full']);
 const cvaTimelineHeaderWrapper = cva(['w-full absolute left-0']);
 const cvaTimelineYearWrapper = cva(['w-full absolute left-0']);
-const cvaAccordeonSubBlock = cva(['flex flex-col gap-3']);
-const cvaAccordeonWrapper = cva(['']);
+const cvaAccordeonSubBlock = cva(['flex flex-col gap-1']);
+const cvaAccordeonWrapper = cva(['my-2']);
 
 export default function AnotherPage() {
   return (
@@ -131,7 +131,7 @@ export default function AnotherPage() {
         </div>
 
         <div className={cvaCardsBlock()}>
-          <div>
+          <div className={cvaAccordeonWrapper()}>
             <Accordeon isOpen={true} childrensQnt={2} title={'Закреплённые'}>
               <div className={cvaAccordeonSubBlock()}>
                 <StageCard

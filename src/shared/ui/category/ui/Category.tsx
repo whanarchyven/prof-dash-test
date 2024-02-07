@@ -35,7 +35,7 @@ export const getCategory = (category: Props['category']) => {
 
 const cvaCategory = cva(
   [
-    'text-sm whitespace-nowrap font-base',
+    'text-xs whitespace-nowrap font-base',
     'p-0.5',
     'rounded-2xl border-2',
     'w-fit',

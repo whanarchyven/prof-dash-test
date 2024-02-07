@@ -3,7 +3,7 @@ import { ru } from 'date-fns/locale';
 import { cva } from 'class-variance-authority';
 
 const cvaDateTitle = cva([
-  'capitalize whitespace-nowrap font-secondary text-[1.2rem] opacity-50',
+  'capitalize whitespace-nowrap font-secondary text-xs opacity-50',
 ]);
 
 export const getDateTitle = (dateStart: Date, dateEnd: Date) => {
@@ -18,9 +18,8 @@ export const getDateTitle = (dateStart: Date, dateEnd: Date) => {
   } else {
     return (
       <p className={cvaDateTitle()}>
-        {format(dateStart, 'LLLL yyyy', { locale: ru })} -
-        <br />
-        {format(dateEnd, 'LLLL yyyy', { locale: ru })}
+        {format(dateStart, 'LLLL', { locale: ru })} -{' '}
+        {format(dateEnd, 'LLLL yy', { locale: ru })}
       </p>
     );
   }
