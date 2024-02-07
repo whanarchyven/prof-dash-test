@@ -11,7 +11,7 @@ export interface TaskProgressProps extends VariantProps<typeof cvaProgress> {
 }
 
 const cvaRoot = cva(
-  ['p-1.2 relative bg-cBlack cursor-pointer bg-opacity-[0.03] overflow-hidden'],
+  ['relative bg-cBlack cursor-pointer bg-opacity-[0.03] overflow-hidden'],
   {
     variants: {
       height: {
