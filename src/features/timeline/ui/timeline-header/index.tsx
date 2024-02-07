@@ -131,7 +131,7 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
               if (day.getDate() == startOfMonth(day).getDate()) {
                 return (
                   <div key={counter} className={cvaTimeLineHeaderMonthTitle()}>
-                    {format(startOfMonth(day), 'LLLL yy', { locale: ru })}
+                    {format(startOfMonth(day), 'LLLL', { locale: ru })}
                   </div>
                 );
               } else {

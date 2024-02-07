@@ -9,8 +9,9 @@ import StageCard from '@/features/stage-card';
 import TodayLine from '@/features/timeline/ui/today-line';
 import SortDropDowns from '@/shared/ui/sort-dropdown/ui/SortDropDowns';
 import SummaryPop from '@/features/summary-pop';
+import YearHeader from '@/features/timeline/ui/year-header';
 
-const cvaRoot = cva(['p-2.4', 'bg-cGrayBg', 'min-h-screen']);
+const cvaRoot = cva(['p-2.4 pt-0', 'bg-cGrayBg', 'min-h-screen']);
 
 const cvaHeaderContainer = cva([
   'sticky top-0 z-[999]',
@@ -21,7 +22,7 @@ const cvaHeaderContainer = cva([
 
 const cvaHeader = cva(['flex items-center', 'justify-between']);
 
-const cvaHeaderTitle = cva(['text-[4.4rem]']);
+const cvaHeaderTitle = cva(['text-[3.4rem]']);
 
 const cvaControlBlock = cva(['flex flex-wrap justify-end gap-1']);
 
@@ -42,8 +43,10 @@ const cvaRootWrapper = cva(['overflow-x-clip']);
 const tempStartPeriod = new Date('2023-10-12');
 const tempEndPeriod = new Date('2024-03-16');
 const cvaSummaryPop = cva(['fixed right-2.4 bottom-2.4 z-[9999]']);
-const cvaTimelineHeaderRoot = cva(['relative h-6 w-full']);
+const cvaTimelineHeaderRoot = cva(['relative h-4 w-full']);
+const cvaTimelineYearRoot = cva(['relative h-3 w-full']);
 const cvaTimelineHeaderWrapper = cva(['w-full absolute left-0']);
+const cvaTimelineYearWrapper = cva(['w-full absolute left-0']);
 const cvaAccordeonSubBlock = cva(['flex flex-col gap-3']);
 const cvaAccordeonWrapper = cva(['']);
 
@@ -106,6 +109,14 @@ export default function AnotherPage() {
               <Button onClick={() => {}} className={cvaDropFIltersButton()}>
                 Очистить
               </Button>
+            </div>
+          </div>
+          <div className={cvaTimelineYearRoot()}>
+            <div className={cvaTimelineYearWrapper()}>
+              <YearHeader
+                startPeriod={tempStartPeriod}
+                endPeriod={tempEndPeriod}
+              />
             </div>
           </div>
           <div className={cvaTimelineHeaderRoot()}>
