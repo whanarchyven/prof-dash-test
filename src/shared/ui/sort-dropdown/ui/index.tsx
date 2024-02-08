@@ -28,7 +28,7 @@ const translateDropDownCategory = (dropdownCategory: dropDownCategory) => {
     case 'manager':
       return 'Менеджер';
     case 'pay':
-      return 'Дата проекта';
+      return 'Дата оплаты';
   }
 };
 
