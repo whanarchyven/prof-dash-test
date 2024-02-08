@@ -53,22 +53,28 @@ const translatePaymentStatus = (paymentStatus: paymentDropDown['status']) => {
     case 'expired':
       return {
         title: 'Просроченые',
-        body: <StageProgressCountdown dayRemains={-1} />,
+        body: (
+          <StageProgressCountdown dayRemains={-1}> </StageProgressCountdown>
+        ),
       };
     case 'thisWeek':
       return {
         title: 'На этой неделе',
-        body: <StageProgressCountdown dayRemains={6} />,
+        body: <StageProgressCountdown dayRemains={6}> </StageProgressCountdown>,
       };
     case 'nextWeek':
       return {
         title: 'На следующей неделе',
-        body: <StageProgressCountdown dayRemains={10} />,
+        body: (
+          <StageProgressCountdown dayRemains={10}> </StageProgressCountdown>
+        ),
       };
     default:
       return {
         title: 'Просроченые',
-        body: <StageProgressCountdown dayRemains={-1} />,
+        body: (
+          <StageProgressCountdown dayRemains={-1}> </StageProgressCountdown>
+        ),
       };
   }
 };
@@ -121,6 +127,7 @@ const DropdownItem: FC<Props> = ({
   useEffect(() => {
     setIsChecked(checked ?? false);
   }, [checked]);
+
   return (
     <div
       onClick={() => {
@@ -153,9 +160,13 @@ const DropdownItem: FC<Props> = ({
       <div className={cvaDropDownItemBody({ category: category })}>
         {isAllItems ? (
           <>
-            {dropdownItems.map((item, counter) => (
-              <div key={counter}>{tranSlateDropDownItem(item).body}</div>
-            ))}
+            {dropdownItems.map((item, counter) => {
+              if (!('status' in item)) {
+                return (
+                  <div key={counter}>{tranSlateDropDownItem(item).body}</div>
+                );
+              }
+            })}
           </>
         ) : (
           <div>{tranSlateDropDownItem(dropdownItems[0]).body}</div>

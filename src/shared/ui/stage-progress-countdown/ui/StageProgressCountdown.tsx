@@ -4,7 +4,11 @@ import { FC, ReactNode, useState } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import { AnimatePresence } from 'framer-motion';
 import ToolTip from '@/shared/ui/tooltip/ui';
-
+import TimeAgo from 'timeago-react';
+import { addDays } from 'date-fns';
+import ru from 'timeago.js/lib/lang/ru';
+import * as timeago from 'timeago.js';
+timeago.register('ru', ru);
 export interface StageProgressProps {
   dayRemains: number;
   children?: ReactNode;
@@ -93,7 +97,13 @@ const StageProgressCountdown: FC<StageProgressProps> = ({
           colorsTime={[1, 0]}
         />
       )}
-      {children ? children : dayRemains.toString().concat(' ', 'дней')}
+      {children ? (
+        children
+      ) : dayRemains >= 0 ? (
+        dayRemains.toString().concat(' ', 'дней')
+      ) : (
+        <TimeAgo locale={'ru'} datetime={addDays(Date.now(), dayRemains)} />
+      )}
       <AnimatePresence>
         {hovered && <ToolTip>До окончания этапа</ToolTip>}
       </AnimatePresence>

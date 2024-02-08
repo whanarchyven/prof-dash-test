@@ -1,6 +1,6 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import ArrowDownIcon from '/public/icons/arrow_down.svg';
 import DropdownItem, {
   categoryDropDown,
@@ -10,6 +10,7 @@ import DropdownItem, {
   tranSlateDropDownItem,
 } from '@/shared/ui/dropdown-item/ui/DropdownItem';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useOnClickOutside } from 'next/dist/client/components/react-dev-overlay/internal/hooks/use-on-click-outside';
 
 export interface SortDropdownProps
   extends VariantProps<typeof cvaSortContainer>,
@@ -107,6 +108,18 @@ const cvaDropdownPopup = cva([
   'p-2',
 ]);
 
+const cvaDropDownButton = cva([
+  'px-1 py-1.8',
+  'cursor-pointer',
+  'w-full',
+  'bg-cGray',
+  'rounded-3xl',
+  'font-secondary font-normal',
+  'text-center text-white text-sm',
+  'flex justify-center items-center',
+]);
+const cvaDropdownButtonQntSpan = cva(['text-white opacity-50']);
+
 const dropdownPopupAnimationVariants = {
   open: { opacity: 1, y: 0 },
   closed: { opacity: 0, y: '-10%' },
@@ -199,8 +212,13 @@ const SortDropdown: FC<SortDropdownProps> = ({
     isOpen ? setDropdownOpen(isOpen) : setDropdownOpen(false);
   }, [isOpen]);
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(dropdownRef.current, () => {
+    setDropdownOpen(false);
+  });
+
   return (
-    <div className={cvaWrapper()}>
+    <div ref={dropdownRef} className={cvaWrapper()}>
       <div
         // onBlur={() => {
         //   setSearchState('default');
@@ -279,6 +297,16 @@ const SortDropdown: FC<SortDropdownProps> = ({
                   );
                 }
               )}
+              <div
+                onClick={() => {
+                  setDropdownOpen(false);
+                }}
+                className={cvaDropDownButton()}>
+                <p>
+                  Показать{' '}
+                  <span className={cvaDropdownButtonQntSpan()}>{5}</span>
+                </p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
