@@ -71,16 +71,12 @@ const StageCard: FC<StageCardInterface> = ({
     }
   }, [containerRef]);
 
-  const [stagesNotifications, setStagesNotifications] = useState<
-    {
-      stage: (typeof stages)[0];
-      coordinate: number;
-      isDisplay: boolean;
-      type: 'task' | 'invoice';
-    }[]
-  >([]);
-
-  useEffect(() => {
+  const initialStageNotifications: () => Array<{
+    stage: (typeof stages)[0];
+    coordinate: number;
+    isDisplay: boolean;
+    type: 'task' | 'invoice';
+  }> = () => {
     const temp: typeof stagesNotifications = [];
     stages.map((stage) => {
       if (stage.stageInfo.payment.status != 'closed') {
@@ -100,8 +96,17 @@ const StageCard: FC<StageCardInterface> = ({
         });
       }
     });
-    setStagesNotifications([...temp]);
-  }, [containerParameters, currentScroll]);
+    return temp;
+  };
+
+  const [stagesNotifications, setStagesNotifications] = useState<
+    {
+      stage: (typeof stages)[0];
+      coordinate: number;
+      isDisplay: boolean;
+      type: 'task' | 'invoice';
+    }[]
+  >(initialStageNotifications());
 
   useEffect(() => {
     if (stagesNotifications) {

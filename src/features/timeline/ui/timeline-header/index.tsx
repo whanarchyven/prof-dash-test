@@ -110,7 +110,12 @@ const TimeLineHeader: FC<TimeLineHeaderProps> = ({
         {!isTodayLineVisible && (
           <TodayBtn
             onClick={() => {
-              dispatch(setScroll(todayOffset - containerParams.card));
+              dispatch(
+                setScroll(
+                  todayOffset -
+                    (containerParams.container + containerParams.card) / 2
+                )
+              );
             }}
           />
         )}

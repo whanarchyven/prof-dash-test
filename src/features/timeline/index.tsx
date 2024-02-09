@@ -94,7 +94,7 @@ const TimeLine: FC<TimeLineProps> = ({
         {days.map((day, counter) => (
           <DaySection key={counter} date={day} />
         ))}
-        {stages.map((item, counter) => (
+        {fitleredStages.map((item, counter) => (
           <CalculatedStageItem
             key={counter}
             stageItem={item}
