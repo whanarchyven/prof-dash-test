@@ -23,7 +23,7 @@ const cvaRoot = cva(['flex flex-col gap-0.4', 'w-full', 'relative'], {
 const cvaInvoiceBlock = cva(['flex justify-between gap-2']);
 const cvaFullDescBlock = cva([
   'min-w-[300px] w-fit',
-  'absolute top-0 left-[15%] z-50',
+  'absolute top-0 left-[100%] z-50',
   'border-l-2 border-white',
 ]);
 

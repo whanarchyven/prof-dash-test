@@ -143,6 +143,7 @@ strong {
   will-change: transform;
   user-select: none;
   cursor: pointer;
+  overflow-style: unset;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }

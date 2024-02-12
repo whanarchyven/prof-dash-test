@@ -31,12 +31,12 @@ const cvaStageCardRoot = cva(['grid grid-cols-12 gap-1', 'w-full', 'relative']);
 const cvaStageTaskCard = cva(['col-span-4 relative']);
 const cvaStageTimelineBlock = cva([
   'col-span-8',
-  'overflow-hidden',
+  'overflow-x-clip',
   'rounded-2xl',
   'relative',
 ]);
 const cvaStageTimelineNotifications = cva([
-  'absolute z-50 left-2 top-2',
+  'absolute z-50 overflow-visible left-2 top-2',
   'flex flex-col gap-1 flex-wrap',
   'max-h-full',
 ]);
