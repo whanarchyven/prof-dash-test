@@ -8,11 +8,13 @@ import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import exampleName from './exampleSlice';
 import timelineReducer from './timelineSlice';
 import containerParametersReducer from './containerWidthSlice';
+import magnetLineReducer from './magnitLineSlice';
 
 const combinedReducer = combineReducers({
   exampleName,
   timelineReducer,
   containerParametersReducer,
+  magnetLineReducer,
 });
 
 export const makeStore = configureStore({

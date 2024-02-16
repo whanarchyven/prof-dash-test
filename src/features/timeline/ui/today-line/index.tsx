@@ -10,6 +10,7 @@ import { AnimatePresence } from 'framer-motion';
 import { checkIsTodayLineVisible } from '@/features/timeline/ui/timeline-header';
 import { containerParametersSelectors } from '@/shared/store/containerWidthSlice';
 import { motion } from 'framer-motion';
+import { magnetLineSelectors } from '@/shared/store/magnitLineSlice';
 
 export interface TodayLineProps {
   startPeriod: Date;
@@ -41,12 +42,14 @@ const TodayLine: FC<TodayLineProps> = ({ startPeriod, endPeriod }) => {
   useEffect(() => {
     setScrollState(storeScrollState);
     setIsTodayLineVisible(
-      checkIsTodayLineVisible(
-        storeScrollState,
-        todayOffset,
-        containerParams.container,
-        containerParams.card
-      )
+      storeMagnetDisplay
+        ? true
+        : checkIsTodayLineVisible(
+            storeScrollState,
+            todayOffset,
+            containerParams.container,
+            containerParams.card
+          )
     );
   }, [storeScrollState]);
 
@@ -65,6 +68,35 @@ const TodayLine: FC<TodayLineProps> = ({ startPeriod, endPeriod }) => {
     )
   );
   // console.log(calculateTodayOffset(startPeriod,new Date(),todayOffset))
+
+  const [dayDate, setDayDate] = useState<Date>(new Date());
+  const [isLineMagnet, setIsLineMagnet] = useState<boolean>(false);
+  const [currentOffset, setCurrentOffset] = useState(todayOffset - scrollState);
+
+  const storeMagnetDisplay = useAppSelector(magnetLineSelectors.display);
+  const storeMagnetDate = useAppSelector(magnetLineSelectors.date);
+
+  useEffect(() => {
+    setIsLineMagnet(storeMagnetDisplay);
+    if (storeMagnetDisplay) {
+      setDayDate(new Date(storeMagnetDate));
+      setCurrentOffset(
+        calculateTodayOffset(startPeriod, storeMagnetDate, maxWidth)
+      );
+      setIsTodayLineVisible(true);
+    } else {
+      setDayDate(new Date());
+      setIsTodayLineVisible(
+        checkIsTodayLineVisible(
+          storeScrollState,
+          todayOffset,
+          containerParams.container,
+          containerParams.card
+        )
+      );
+    }
+  }, [storeMagnetDisplay]);
+
   return (
     <div className={cvaTodayLineRoot()}>
       <AnimatePresence>
@@ -76,15 +108,18 @@ const TodayLine: FC<TodayLineProps> = ({ startPeriod, endPeriod }) => {
             exit={'closed'}>
             <div
               style={{
-                transform: `translate(${todayOffset - scrollState}px,0px)`,
+                transform: isLineMagnet
+                  ? `translate(${currentOffset - scrollState}px,0px)`
+                  : `translate(${todayOffset - scrollState}px,0px)`,
               }}
               className={cvaTodayLine()}>
               <DaySection
-                date={new Date()}
+                date={dayDate}
                 displayDay
                 displayTopArrow
                 displayBottomArrow
                 displayTodayMark
+                magnet={isLineMagnet}
               />
             </div>
           </motion.div>

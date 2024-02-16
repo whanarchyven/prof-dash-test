@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   calculateStageMarginLeft,
   calculateStageMarginTop,
@@ -7,6 +7,8 @@ import {
 import { differenceInDays } from 'date-fns';
 import StageItem, { StageItemProps } from '@/entities/stage-item/ui';
 import { cva } from 'class-variance-authority';
+import { useAppDispatch } from '@/shared/store/hooks/useAppDispatch';
+import { magnetLineActions } from '@/shared/store/magnitLineSlice';
 
 interface CalulatedStageItem {
   stageItem: {
@@ -19,6 +21,12 @@ interface CalulatedStageItem {
 }
 
 const cvaStage = cva(['absolute z-[9999]']);
+const cvaStageRightMagnet = cva([
+  'absolute z-50 -right-[30px] w-[60px] h-full pointer-none',
+]);
+const cvaStageLeftMagnet = cva([
+  'absolute z-50 -left-[30px] w-[60px] h-full pointer-none',
+]);
 
 const CalculatedStageItem = ({
   stageItem,
@@ -30,10 +38,39 @@ const CalculatedStageItem = ({
   const isStageShort =
     differenceInDays(stageItem.dateEnd, stageItem.dateStart) < 6;
 
+  const magnitRef = useRef<HTMLDivElement>(null);
+
+  const dispatch = useAppDispatch();
+
   return (
     <div
+      ref={magnitRef}
       style={{ width: width, left: marginLeft, top: marginTop }}
       className={cvaStage()}>
+      <div
+        onMouseEnter={() => {
+          if (magnitRef.current) {
+            dispatch(magnetLineActions.setDisplay(true));
+            dispatch(magnetLineActions.setDate(stageItem.dateEnd));
+          }
+        }}
+        onMouseLeave={() => {
+          dispatch(magnetLineActions.setDisplay(false));
+        }}
+        className={cvaStageRightMagnet()}
+      />
+      <div
+        onMouseEnter={() => {
+          if (magnitRef.current) {
+            dispatch(magnetLineActions.setDisplay(true));
+            dispatch(magnetLineActions.setDate(stageItem.dateStart));
+          }
+        }}
+        onMouseLeave={() => {
+          dispatch(magnetLineActions.setDisplay(false));
+        }}
+        className={cvaStageLeftMagnet()}
+      />
       <StageItem isShort={isStageShort} {...stageItem.stageInfo} />
     </div>
   );
