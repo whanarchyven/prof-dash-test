@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   calculateStageMarginLeft,
   calculateStageMarginTop,
@@ -7,8 +7,18 @@ import {
 import { differenceInDays } from 'date-fns';
 import StageItem, { StageItemProps } from '@/entities/stage-item/ui';
 import { cva } from 'class-variance-authority';
-import { useAppDispatch } from '@/shared/store/hooks/useAppDispatch';
-import { magnetLineActions } from '@/shared/store/magnitLineSlice';
+import DaySection from '@/shared/ui/day-section/ui';
+import { AnimatePresence, motion } from 'framer-motion';
+
+const animateMagnetLineVariantsRight = {
+  hidden: { opacity: '0', x: '5%' },
+  visible: { opacity: '1', x: '0' },
+};
+
+const animateMagnetLineVariantsLeft = {
+  hidden: { opacity: '0', x: '-5%' },
+  visible: { opacity: '1', x: '0' },
+};
 
 interface CalulatedStageItem {
   stageItem: {
@@ -20,12 +30,17 @@ interface CalulatedStageItem {
   startPeriod: Date;
 }
 
-const cvaStage = cva(['absolute z-[9999]']);
+const cvaStage = cva(['absolute z-[20]']);
 const cvaStageRightMagnet = cva([
-  'absolute z-50 -right-[30px] w-[60px] h-full pointer-none',
+  'absolute z-50 -right-[30px] w-[60px] flex justify-center h-full pointer-none',
 ]);
 const cvaStageLeftMagnet = cva([
   'absolute z-50 -left-[30px] w-[60px] h-full pointer-none',
+]);
+const cvaStageMagnet = cva([
+  'fixed top-0 z-[99999]',
+  'w-[60px] h-full',
+  'flex justify-center',
 ]);
 
 const CalculatedStageItem = ({
@@ -40,37 +55,68 @@ const CalculatedStageItem = ({
 
   const magnitRef = useRef<HTMLDivElement>(null);
 
-  const dispatch = useAppDispatch();
+  const [displayRightMagnet, setDisplayRightMagnet] = useState(false);
+  const [displayLeftMagnet, setDisplayLeftMagnet] = useState(false);
 
   return (
     <div
       ref={magnitRef}
-      style={{ width: width, left: marginLeft, top: marginTop }}
+      style={{ width: width, left: marginLeft, top: marginTop, zIndex: 0 }}
       className={cvaStage()}>
       <div
         onMouseEnter={() => {
-          if (magnitRef.current) {
-            dispatch(magnetLineActions.setDisplay(true));
-            dispatch(magnetLineActions.setDate(stageItem.dateEnd));
-          }
+          setDisplayRightMagnet(true);
         }}
         onMouseLeave={() => {
-          dispatch(magnetLineActions.setDisplay(false));
+          setDisplayRightMagnet(false);
         }}
-        className={cvaStageRightMagnet()}
-      />
+        className={cvaStageRightMagnet()}>
+        <AnimatePresence>
+          {displayRightMagnet && (
+            <motion.div
+              variants={animateMagnetLineVariantsRight}
+              initial={'hidden'}
+              animate={'visible'}
+              exit={'hidden'}
+              className={cvaStageMagnet()}>
+              <DaySection
+                magnet
+                displayDay
+                displayTopArrow
+                displayBottomArrow
+                date={stageItem.dateEnd}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
       <div
         onMouseEnter={() => {
-          if (magnitRef.current) {
-            dispatch(magnetLineActions.setDisplay(true));
-            dispatch(magnetLineActions.setDate(stageItem.dateStart));
-          }
+          setDisplayLeftMagnet(true);
         }}
         onMouseLeave={() => {
-          dispatch(magnetLineActions.setDisplay(false));
+          setDisplayLeftMagnet(false);
         }}
-        className={cvaStageLeftMagnet()}
-      />
+        className={cvaStageLeftMagnet()}>
+        <AnimatePresence>
+          {displayLeftMagnet && (
+            <motion.div
+              variants={animateMagnetLineVariantsLeft}
+              initial={'hidden'}
+              animate={'visible'}
+              exit={'hidden'}
+              className={cvaStageMagnet()}>
+              <DaySection
+                magnet
+                displayDay
+                displayTopArrow
+                displayBottomArrow
+                date={stageItem.dateStart}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
       <StageItem isShort={isStageShort} {...stageItem.stageInfo} />
     </div>
   );

@@ -41,7 +41,14 @@ const cvaTodayLineTriangle = cva([''], {
 });
 
 const cvaArrowTop = cva(['absolute -top-0.3', 'rotate-180', 'w-0.8 h-0.8']);
-const cvaArrowBottom = cva(['absolute bottom-[15.3rem]', ' w-0.8 h-0.8']);
+const cvaArrowBottom = cva(['absolute', ' w-0.8 h-0.8'], {
+  variants: {
+    offset: {
+      today: 'bottom-[15.3rem]',
+      magnet: '-bottom-[0.3rem]',
+    },
+  },
+});
 const cvaDayTitle = cva(
   [
     'absolute z-10 top-1',
@@ -111,7 +118,8 @@ const DaySection: FC<DaySectionProps> = ({
         </div>
       )}
       {isToday && displayBottomArrow && (
-        <div className={cvaArrowBottom()}>
+        <div
+          className={cvaArrowBottom({ offset: magnet ? 'magnet' : 'today' })}>
           <TodayLineTriangle
             className={cvaTodayLineTriangle({
               state: magnet ? 'magnet' : 'today',
