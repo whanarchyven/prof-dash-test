@@ -3,15 +3,17 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-export interface TaskProgressProps extends VariantProps<typeof cvaProgress> {
+export interface TaskProgressProps
+  extends Omit<VariantProps<typeof cvaProgress>, 'status'> {
   task: string;
   completePercent?: number;
   isShort?: boolean;
   isDisplayingPercent?: boolean;
+  status: string;
 }
 
 const cvaRoot = cva(
-  ['relative bg-cBlack cursor-pointer bg-opacity-[0.03] overflow-hidden'],
+  ['relative bg-cGraySemiLight cursor-pointer overflow-hidden'],
   {
     variants: {
       height: {
@@ -28,7 +30,7 @@ const cvaRoot = cva(
     },
   }
 );
-const cvaProgress = cva(['absolute z-[-1] left-0 top-0 h-full'], {
+const cvaProgress = cva(['absolute z-[1] left-0 top-0 h-full'], {
   variants: {
     status: {
       completed: ['bg-cGreen w-full'],
@@ -41,15 +43,18 @@ const cvaProgress = cva(['absolute z-[-1] left-0 top-0 h-full'], {
     },
   },
 });
-const cvaTextBlock = cva(['flex w-full justify-between gap-1 items-end'], {
-  variants: {
-    status: {
-      completed: ['text-cWhite'],
-      pending: ['text-cGray'],
-      default: ['text-cGray'],
+const cvaTextBlock = cva(
+  ['flex w-full justify-between absolute z-[2] pr-2 gap-1 items-end'],
+  {
+    variants: {
+      status: {
+        completed: ['text-cWhite'],
+        pending: ['text-cGray'],
+        default: ['text-cGray'],
+      },
     },
-  },
-});
+  }
+);
 const cvaTextSection = cva(['flex w-1/2 flex-col gap-0.3'], {
   variants: {
     align: {
@@ -101,6 +106,21 @@ const TaskProgress: FC<TaskProgressProps> = ({
     setShortDisplay(isShort);
   }, [isShort]);
 
+  const translateStatus: (
+    status: string
+  ) => VariantProps<typeof cvaProgress>['status'] = (status: string) => {
+    switch (status) {
+      case 'in-progress':
+        return 'pending';
+      case 'not-started':
+        return 'default';
+      case 'completed':
+        return 'completed';
+      default:
+        return 'pending';
+    }
+  };
+
   return (
     <motion.div
       transition={{ duration: 0.2 }}
@@ -109,9 +129,12 @@ const TaskProgress: FC<TaskProgressProps> = ({
       className={cvaRoot({ isShort: shortDisplay, height: 'sm' })}>
       <div
         style={{ width: `${shortDisplay ? 100 : taskCompletePercentStatus}%` }}
-        className={cvaProgress({ status, isShort: shortDisplay })}></div>
+        className={cvaProgress({
+          status: translateStatus(status),
+          isShort: shortDisplay,
+        })}></div>
       {!isShort ? (
-        <div className={cvaTextBlock({ status })}>
+        <div className={cvaTextBlock({ status: translateStatus(status) })}>
           <div className={cvaTextSection({ align: 'left' })}>
             <p className={cvaTitle({ align: 'left' })}>{task}</p>
           </div>

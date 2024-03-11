@@ -5,17 +5,16 @@ import { motion } from 'framer-motion';
 import { formatPrice } from '@/shared/utils/formatters';
 
 export interface TaskTimerProps
-  extends VariantProps<typeof cvaProgress>,
+  extends Omit<VariantProps<typeof cvaProgress>, 'status'>,
     VariantProps<typeof cvaRoot> {
   category: 'time' | 'profit' | 'money';
-  fact: number;
-  plan: number;
+  status: string;
+  fact: number | null;
+  plan: number | null;
 }
 
 const cvaRoot = cva(
-  [
-    'rounded-3xl relative cursor-pointer  bg-cBlack bg-opacity-[0.03] overflow-hidden',
-  ],
+  ['rounded-3xl relative cursor-pointer bg-cGraySemiLight overflow-hidden'],
   {
     variants: {
       height: {
@@ -36,7 +35,7 @@ const cvaProgress = cva(['absolute z-[1] left-0 top-0 rounded-3xl h-full'], {
   variants: {
     status: {
       default: ['bg-cGrayLight'],
-      completed: ['bg-cGreen w-full'],
+      done: ['bg-cGreen w-full'],
       failed: ['bg-cRed w-full'],
       pending: ['bg-cYellow'],
     },
@@ -52,7 +51,7 @@ const cvaTextBlock = cva(
     variants: {
       status: {
         default: ['text-cGray'],
-        completed: ['text-cWhite'],
+        done: ['text-cWhite'],
         failed: ['text-cWhite'],
         pending: ['text-cGray'],
       },
@@ -105,17 +104,26 @@ const TaskTimer: FC<TaskTimerProps> = ({
     taskStatus: typeof status,
     isShort?: boolean
   ) => {
-    switch (taskStatus) {
-      case 'default':
-        return (fact / plan) * 100;
-      case 'pending':
-        if (isShort) {
-          return 100;
-        } else {
+    if (plan && fact) {
+      switch (taskStatus) {
+        case 'default':
           return (fact / plan) * 100;
-        }
-      default:
-        return 100;
+        case 'in-progress':
+          if (isShort) {
+            return 100;
+          } else {
+            return (fact / plan) * 100;
+          }
+        case 'в работе':
+          if (isShort) {
+            return 100;
+          } else {
+            return (fact / plan) * 100;
+          }
+
+        default:
+          return 100;
+      }
     }
   };
   const [shortDisplay, setShortDisplay] = useState<typeof isShort>(isShort);
@@ -126,50 +134,79 @@ const TaskTimer: FC<TaskTimerProps> = ({
 
   const isCategoryTime = category == 'time';
   const isCategoryMoney = category == 'money';
-
   const taskProgress = calculateProgressPercent(status, shortDisplay ?? false);
+
+  const translateStatus: (
+    status: string
+  ) => VariantProps<typeof cvaProgress>['status'] = (status: string) => {
+    switch (status) {
+      case 'in-progress':
+        return 'pending';
+      case 'not-started':
+        return 'default';
+      case 'done':
+        return 'done';
+      case 'failed':
+        return 'failed';
+      default:
+        return 'pending';
+    }
+  };
 
   return (
     <motion.div
       transition={{ duration: 0.2 }}
-      className={cvaRoot({ isShort: isShort, height: height })}>
+      className={cvaRoot({ isShort: isShort, height: height ?? 'lg' })}>
       <div
         style={{
           width: `${shortDisplay && status == 'default' ? 0 : taskProgress}%`,
         }}
-        className={cvaProgress({ status, isShort: shortDisplay })}></div>
+        className={cvaProgress({
+          status: translateStatus(status),
+          isShort: shortDisplay,
+        })}></div>
       {!isShort && (
-        <div className={cvaTextBlock({ status })}>
-          <div className={cvaTextSection()}>
-            <p className={cvaTitle({ align: 'left' })}>
-              {isCategoryMoney ? (
-                <>{formatPrice(fact)}</>
-              ) : (
-                <>
-                  {fact}
-                  {isCategoryTime ? ' ч' : '%'}
-                </>
-              )}
-            </p>
-            <p className={cvaDescription({ height: height })}>
-              {isCategoryTime ? 'всего' : 'факт'}
-            </p>
-          </div>
-          <div className={cvaTextSection()}>
-            <p className={cvaTitle({ align: 'right', height: height })}>
-              {isCategoryMoney ? (
-                <>{formatPrice(plan)}</>
-              ) : (
-                <>
-                  {plan}
-                  {isCategoryTime ? ' ч' : '%'}
-                </>
-              )}
-            </p>
-            <p className={cvaDescription({ height: height })}>
-              {isCategoryTime ? 'оценка' : 'план'}
-            </p>
-          </div>
+        <div className={cvaTextBlock({ status: translateStatus(status) })}>
+          {fact != null ? (
+            <div className={cvaTextSection()}>
+              <p className={cvaTitle({ align: 'left' })}>
+                {isCategoryMoney ? (
+                  <>{formatPrice(fact)}</>
+                ) : (
+                  <>
+                    {fact}
+                    {isCategoryTime ? ' ч' : '%'}
+                  </>
+                )}
+              </p>
+              <p className={cvaDescription({ height: height })}>
+                {isCategoryTime ? 'всего' : 'факт'}
+              </p>
+            </div>
+          ) : (
+            <div className={cvaTextSection()}>
+              <p className={cvaDescription({ height: height })}>
+                Недостаточно данных
+              </p>
+            </div>
+          )}
+          {plan != null && (
+            <div className={cvaTextSection()}>
+              <p className={cvaTitle({ align: 'right', height: height })}>
+                {isCategoryMoney ? (
+                  <>{formatPrice(plan)}</>
+                ) : (
+                  <>
+                    {plan}
+                    {isCategoryTime ? ' ч' : '%'}
+                  </>
+                )}
+              </p>
+              <p className={cvaDescription({ height: height })}>
+                {isCategoryTime ? 'оценка' : 'план'}
+              </p>
+            </div>
+          )}
         </div>
       )}
     </motion.div>

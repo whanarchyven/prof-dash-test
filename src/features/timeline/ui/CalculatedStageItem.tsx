@@ -5,10 +5,12 @@ import {
   calculateStageWidth,
 } from '@/features/timeline/utils/calculateStageParameters';
 import { differenceInDays } from 'date-fns';
-import StageItem, { StageItemProps } from '@/entities/stage-item/ui';
+import StageItem from '@/entities/stage-item/ui';
 import { cva } from 'class-variance-authority';
 import DaySection from '@/shared/ui/day-section/ui';
 import { AnimatePresence, motion } from 'framer-motion';
+import { IStage } from '@/features/stage-card/types/IStage';
+import { formatDuration } from '@/shared/utils/formatters';
 
 const animateMagnetLineVariantsRight = {
   hidden: { opacity: '0', x: '5%' },
@@ -21,16 +23,11 @@ const animateMagnetLineVariantsLeft = {
 };
 
 interface CalulatedStageItem {
-  stageItem: {
-    level?: number;
-    dateStart: Date;
-    dateEnd: Date;
-    stageInfo: StageItemProps;
-  };
+  stageItem: IStage;
   startPeriod: Date;
 }
 
-const cvaStage = cva(['absolute z-[20]']);
+const cvaStage = cva(['absolute z-[revert]']);
 const cvaStageRightMagnet = cva([
   'absolute z-50 -right-[30px] w-[60px] flex justify-center h-full pointer-none',
 ]);
@@ -47,21 +44,27 @@ const CalculatedStageItem = ({
   stageItem,
   startPeriod,
 }: CalulatedStageItem) => {
-  const width = calculateStageWidth(stageItem.dateStart, stageItem.dateEnd);
-  const marginLeft = calculateStageMarginLeft(startPeriod, stageItem.dateStart);
-  const marginTop = calculateStageMarginTop(stageItem.level ?? 0);
-  const isStageShort =
-    differenceInDays(stageItem.dateEnd, stageItem.dateStart) < 6;
-
   const magnitRef = useRef<HTMLDivElement>(null);
 
   const [displayRightMagnet, setDisplayRightMagnet] = useState(false);
   const [displayLeftMagnet, setDisplayLeftMagnet] = useState(false);
 
+  if (stageItem.end == null || stageItem.start == null) {
+    return null;
+  }
+
+  const dateStart = new Date(String(stageItem.start));
+  const dateEnd = new Date(String(stageItem.end));
+
+  const width = calculateStageWidth(dateStart, dateEnd);
+  const marginLeft = calculateStageMarginLeft(startPeriod, dateStart);
+  const marginTop = calculateStageMarginTop(stageItem.level ?? 0);
+  const isStageShort = differenceInDays(dateEnd, dateStart) < 6;
+
   return (
     <div
       ref={magnitRef}
-      style={{ width: width, left: marginLeft, top: marginTop, zIndex: 0 }}
+      style={{ width: width, left: marginLeft, top: marginTop }}
       className={cvaStage()}>
       <div
         onMouseEnter={() => {
@@ -84,7 +87,7 @@ const CalculatedStageItem = ({
                 displayDay
                 displayTopArrow
                 displayBottomArrow
-                date={stageItem.dateEnd}
+                date={dateEnd}
               />
             </motion.div>
           )}
@@ -111,13 +114,22 @@ const CalculatedStageItem = ({
                 displayDay
                 displayTopArrow
                 displayBottomArrow
-                date={stageItem.dateStart}
+                date={dateStart}
               />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-      <StageItem isShort={isStageShort} {...stageItem.stageInfo} />
+      {stageItem.end && stageItem.start && (
+        <StageItem
+          isShort={isStageShort}
+          {...stageItem}
+          category={'time'}
+          fact={formatDuration(stageItem.timeSpent)}
+          plan={formatDuration(stageItem.estimate)}
+          invoice={stageItem?.invoice}
+        />
+      )}
     </div>
   );
 };

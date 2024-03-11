@@ -1,3 +1,5 @@
+import { Duration } from 'luxon';
+
 const currencyFormatterWithFloat = (hideCurrencySymbol?: boolean) =>
   new Intl.NumberFormat('ru', {
     style: hideCurrencySymbol ? undefined : 'currency',
@@ -62,3 +64,6 @@ export const normalizePhone = (phone: string) => {
 
 export const formatPrice = (price: number | string) =>
   `${price.toLocaleString()} ₽`;
+
+export const formatDuration = (duration: string) =>
+  Duration.fromISO(duration).hours;

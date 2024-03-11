@@ -2,25 +2,21 @@
 import { cva } from 'class-variance-authority';
 import { FC, useState } from 'react';
 import TaskTimer, { TaskTimerProps } from '@/shared/ui/task-timer/ui';
-import TaskProgress, { TaskProgressProps } from '@/shared/ui/task-progress/ui';
-import InvoiceProgress, {
-  InvoiceProgressProps,
-} from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
+import TaskProgress from '@/shared/ui/task-progress/ui';
+import InvoiceProgress from '@/shared/ui/invoice-progress/ui/InvoiceProgress';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
+import { IStage } from '@/features/stage-card/types/IStage';
+import { formatDuration } from '@/shared/utils/formatters';
 
-export interface StageItemProps extends TaskTimerProps {
-  taskProgressStatus: TaskProgressProps['status'];
-  taskProgressCompletePercent: TaskProgressProps['completePercent'];
-  task: TaskProgressProps['task'];
-  prepayment?: InvoiceProgressProps;
-  payment: InvoiceProgressProps;
+export interface StageItemProps extends IStage, Omit<TaskTimerProps, 'status'> {
+  isShort: boolean;
 }
 
 const cvaRoot = cva(['flex flex-col gap-0.4', 'w-full', 'relative'], {
   variants: {},
 });
-const cvaInvoiceBlock = cva(['flex justify-between gap-2']);
+const cvaInvoiceBlock = cva(['flex justify-end gap-2']);
 const cvaFullDescBlock = cva([
   'min-w-[300px] w-fit',
   'absolute top-0 left-[100%] z-50',
@@ -33,21 +29,28 @@ const animateFullDescriptionVariants = {
 };
 
 const StageItem: FC<StageItemProps> = ({
-  category,
-  plan,
-  fact,
+  estimate,
+  timeSpent,
   status,
   isShort,
   height,
-  taskProgressStatus,
-  taskProgressCompletePercent,
-  payment,
-  prepayment,
-  task,
+  completed,
+  invoice,
+  name,
 }) => {
   const [isShortDisplay, setIsShortDisplay] = useState<boolean>(false);
   const handleHover = (value: boolean) => {
     setIsShortDisplay(value);
+  };
+
+  const calculateTaskProgressCompletePercent = (
+    completeDuration: string,
+    estimateDuration: string
+  ) => {
+    return (
+      (formatDuration(completeDuration) / formatDuration(estimateDuration)) *
+      100
+    );
   };
 
   return (
@@ -61,22 +64,24 @@ const StageItem: FC<StageItemProps> = ({
       onClick={() => {}}
       className={cvaRoot({})}>
       <TaskTimer
-        isShort={isShort}
-        category={category}
-        fact={fact}
+        isShort={isShort ?? false}
+        category={'time'}
+        fact={formatDuration(timeSpent)}
         status={status}
-        plan={plan}
+        plan={formatDuration(estimate)}
         height={height}
       />
       <TaskProgress
         isShort={isShort ?? false}
-        task={task}
-        completePercent={taskProgressCompletePercent}
-        status={taskProgressStatus}></TaskProgress>
-      {!isShortDisplay && (
+        task={name}
+        completePercent={calculateTaskProgressCompletePercent(
+          completed,
+          estimate
+        )}
+        status={status}></TaskProgress>
+      {!isShortDisplay && invoice && (
         <div className={cvaInvoiceBlock()}>
-          {prepayment && <InvoiceProgress {...prepayment} />}
-          <InvoiceProgress {...payment} />
+          <InvoiceProgress amount={invoice?.amount} status={invoice?.status} />
         </div>
       )}
       <AnimatePresence>
@@ -89,20 +94,26 @@ const StageItem: FC<StageItemProps> = ({
             className={cvaFullDescBlock()}>
             <div className={cvaRoot({})}>
               <TaskTimer
-                category={category}
-                fact={fact}
+                isShort={isShort ?? false}
+                category={'time'}
+                fact={formatDuration(estimate)}
                 status={status}
-                plan={plan}
+                plan={formatDuration(timeSpent)}
                 height={height}
               />
               <TaskProgress
-                task={task}
-                completePercent={taskProgressCompletePercent}
-                status={taskProgressStatus}></TaskProgress>
-              <div className={cvaInvoiceBlock()}>
-                {prepayment && <InvoiceProgress {...prepayment} />}
-                <InvoiceProgress {...payment} />
-              </div>
+                isShort={isShort ?? false}
+                task={name}
+                completePercent={Number(completed)}
+                status={status}></TaskProgress>
+              {invoice && (
+                <div className={cvaInvoiceBlock()}>
+                  <InvoiceProgress
+                    amount={invoice?.amount}
+                    status={invoice?.status}
+                  />
+                </div>
+              )}
             </div>
           </motion.div>
         )}

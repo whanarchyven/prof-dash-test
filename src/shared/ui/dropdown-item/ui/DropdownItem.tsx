@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 export interface employeeDropDown {
   name: string;
-  avatar: string;
+  avatar?: string;
 }
 
 export interface categoryDropDown {
@@ -97,7 +97,7 @@ export const tranSlateDropDownItem = (item: Props['dropdownItems'][0]) => {
             alt={item.name + 'avatar'}
             className={cvaAvatarManagerImage()}
             layout={'fill'}
-            src={item.avatar}
+            src={item.avatar ?? '/icons/john_doe.svg'}
           />
         </div>
       ),
@@ -105,7 +105,7 @@ export const tranSlateDropDownItem = (item: Props['dropdownItems'][0]) => {
   } else if ('status' in item) {
     return translatePaymentStatus(item.status);
   } else if ('category' in item) {
-    const temp = getCategory(item.category);
+    const temp = getCategory(item.category ?? 'seo');
     return {
       title: temp.title,
       body: (

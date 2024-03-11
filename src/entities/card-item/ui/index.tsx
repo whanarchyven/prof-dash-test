@@ -12,11 +12,12 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
 export interface CardItemProps extends CardHeaderProps {
-  totalCheck: number;
+  totalCheck?: number | null;
   prepayment: number;
-  time: TaskTimerProps;
-  profit: TaskTimerProps;
-  stageProgress: StageProgressProps;
+  paymentRemains?: number;
+  time: { plan: number; fact: number; status: TaskTimerProps['status'] };
+  profit?: number | null;
+  stageProgress?: StageProgressProps | null;
 }
 
 const cvaCardItemRoot = cva(['flex flex-col gap-1', 'w-full']);
@@ -42,12 +43,16 @@ const CardItem: FC<CardItemProps> = ({
   totalCheck,
   isPined,
   prepayment,
+  paymentRemains,
   time,
   profit,
   stageProgress,
   dateEnd,
   dateStart,
+  categories,
   customer,
+  projectUrl,
+  listName,
   manager,
   height,
 }) => {
@@ -55,40 +60,59 @@ const CardItem: FC<CardItemProps> = ({
     <div className={cvaCardItemRoot()}>
       <CardHeader
         customer={customer}
+        projectUrl={projectUrl}
         isPined={isPined}
+        listName={listName}
         dateStart={dateStart}
         dateEnd={dateEnd}
-        category={'development'}
+        categories={categories}
         manager={manager}
       />
       <div className={cvaCardBodyBlock()}>
         <div className={cvaDatesAndPaymentsBlock()}>
           <div className={cvaPaymentsBlock()}>
             <p className={cvaTotalCheckTitle()}>
-              {totalCheck.toLocaleString()} ₽
+              {totalCheck ? `${totalCheck.toLocaleString()} ₽` : 'Не задан'}
             </p>
             <InvoiceProgress status={'closed'} amount={prepayment} />
             <p className={cvaRemainsCheckTitle()}>
-              Остаток {formatPrice(totalCheck - prepayment)}
+              Остаток{' '}
+              {paymentRemains ? formatPrice(paymentRemains) : 'не задан'}
             </p>
           </div>
           <div className={cvaDatesAndProgressBlock()}>
             <div className={cvaDatesBlock()}>
               <p className={cvaDateTitle()}>
-                {format(dateStart, 'dd MMM yyyy г.', { locale: ru })}
+                {dateStart
+                  ? format(dateStart, 'dd MMM yyyy г.', { locale: ru })
+                  : 'не задано'}
               </p>
               <p className={cvaDateTitle()}>
-                {format(dateEnd, 'dd MMM yyyy г.', { locale: ru })}{' '}
+                {dateEnd
+                  ? format(dateEnd, 'dd MMM yyyy г.', { locale: ru })
+                  : 'не задано'}{' '}
               </p>
             </div>
-            <StageProgressCountdown dayRemains={stageProgress.dayRemains}>
-              {stageProgress.children}
-            </StageProgressCountdown>
+            {stageProgress && (
+              <StageProgressCountdown dayRemains={stageProgress.dayRemains}>
+                {stageProgress.children}
+              </StageProgressCountdown>
+            )}
           </div>
         </div>
         <div className={cvaTimersBlock()}>
-          <TaskTimer height={height} {...time}></TaskTimer>
-          <TaskTimer height={height} {...profit}></TaskTimer>
+          <TaskTimer
+            height={height}
+            category={'time'}
+            fact={time.fact}
+            status={time.status}
+            plan={time.plan}></TaskTimer>
+          <TaskTimer
+            height={height}
+            category={'profit'}
+            status={profit ? (profit < 20 ? 'failed' : 'done') : 'default'}
+            plan={null}
+            fact={profit ?? null}></TaskTimer>
         </div>
       </div>
     </div>

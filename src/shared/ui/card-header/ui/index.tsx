@@ -1,23 +1,25 @@
 'use client';
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC, useState } from 'react';
-import Category, { categoryName } from '@/shared/ui/category/ui/Category';
-import { employeeDropDown } from '@/shared/ui/dropdown-item/ui/DropdownItem';
+import Category from '@/shared/ui/category/ui/Category';
 import ArrowRightIcon from '/public/icons/arrow_right.svg';
 import PinIcon from '/public/icons/pin.svg';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { getDateTitle } from '@/shared/ui/card-header/utils/getDateTitle';
-import Image from 'next/image';
+import Link from 'next/link';
+import { IResponsible } from '@/features/stage-card/types/IResponsible';
 
 export interface CardHeaderProps
   extends VariantProps<typeof cvaRoot>,
     VariantProps<typeof cvaPinButton> {
   customer: string;
-  dateStart: Date;
-  dateEnd: Date;
-  category: categoryName;
-  manager: employeeDropDown;
+  projectUrl?: string;
+  dateStart?: Date | null;
+  dateEnd?: Date | null;
+  categories: string[];
+  manager?: IResponsible | null;
+  listName?: string;
   isPined?: boolean;
   isHovered?: boolean;
 }
@@ -77,15 +79,20 @@ const cvaPinIcon = cva(['w-1.6 h-1.6'], {
   },
 });
 const cvaArrowRightIcon = cva(['stroke-cBlack']);
+const cvaListTitle = cva([
+  'capitalize whitespace-nowrap font-secondary text-xs opacity-50',
+]);
 
 const CardHeader: FC<CardHeaderProps> = ({
-  category,
+  categories,
   customer,
   dateStart,
   dateEnd,
   isHovered,
+  listName,
   isPined,
   manager,
+  projectUrl,
 }) => {
   const [hovered, setHovered] = useState<boolean>(isHovered ?? false);
   const [pined, setPined] = useState<boolean>(isPined ?? false);
@@ -133,22 +140,43 @@ const CardHeader: FC<CardHeaderProps> = ({
           animate={hovered || pined ? 'open' : 'closed'}
           className={cvaTextBlock()}>
           <div className={cvaCustomerBlock()}>
-            <p className={cvaCustomerTitle()}>{customer}</p>
+            {projectUrl ? (
+              <Link href={projectUrl} className={cvaCustomerTitle()}>
+                {customer}
+              </Link>
+            ) : (
+              <p className={cvaCustomerTitle()}>{customer}</p>
+            )}
             <ArrowRightIcon className={cvaArrowRightIcon()} />
           </div>
           <div className={cvaDateCategoryBlock()}>
-            {getDateTitle(dateStart, dateEnd)}
-            <Category category={category}></Category>
+            {listName ? (
+              <p className={cvaListTitle()}>{listName}</p>
+            ) : dateEnd && dateStart ? (
+              getDateTitle(dateStart, dateEnd)
+            ) : null}
+            {categories.map((category) => (
+              <Category key={category} category={category}></Category>
+            ))}
           </div>
         </motion.div>
-        <div className={cvaAvatar()}>
-          <Image
-            alt={manager.name + 'avatar'}
-            className={cvaAvatar()}
-            layout={'fill'}
-            src={manager.avatar}
-          />
-        </div>
+        {manager ? (
+          <div className={cvaAvatar()}>
+            <img
+              alt={manager.username + 'avatar'}
+              className={cvaAvatar()}
+              src={manager.profilePicture}
+            />
+          </div>
+        ) : (
+          <div className={cvaAvatar()}>
+            <img
+              alt={'temp' + 'avatar'}
+              className={cvaAvatar()}
+              src={'/icons/john_doe.svg'}
+            />
+          </div>
+        )}
       </motion.div>
     </div>
   );

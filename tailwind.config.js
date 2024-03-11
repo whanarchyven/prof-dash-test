@@ -21,6 +21,7 @@ module.exports = {
         cGray: '#3E3E3E',
         cGrayLight: '#EAEAEA',
         cGrayUltraLight: '#F9F9F9',
+        cGraySemiLight: '#F8F8F8',
         cGrayAccent: '#E4E4E4',
         cGrayBg: '#F5F5F5',
         cPurple: '#7B5BF0',

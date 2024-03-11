@@ -1,5 +1,5 @@
 'use client';
-import { cva, VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { FC, useState } from 'react';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import CompletedIcon from '/public/icons/complete.svg';
@@ -7,9 +7,19 @@ import { formatPrice } from '@/shared/utils/formatters';
 import { AnimatePresence } from 'framer-motion';
 import ToolTip from '@/shared/ui/tooltip/ui';
 
-export interface InvoiceProgressProps
-  extends VariantProps<typeof cvaStageProgressContainer> {
+export interface InvoiceProgressProps {
+  status: string;
   amount: number;
+}
+
+export interface invoiceStatus {
+  status:
+    | 'планируемые'
+    | 'выставить'
+    | 'подготовлен'
+    | 'отправлен'
+    | 'закрыт'
+    | 'транзит';
 }
 
 const cvaStageProgressContainer = cva(
@@ -32,6 +42,25 @@ const cvaStageProgressContainer = cva(
     },
   }
 );
+
+export const translateInvoiceStatus = (status: string | invoiceStatus) => {
+  switch (status) {
+    case 'планируемые':
+      return 'planning';
+    case 'выставить':
+      return 'setting';
+    case 'полготовлен':
+      return 'ready';
+    case 'отправлен':
+      return 'sended';
+    case 'закрыт':
+      return 'closed';
+    case 'транзит':
+      return 'transit';
+    default:
+      return 'planning';
+  }
+};
 
 const cvaTransitPostfix = cva(['text-cOrange']);
 
@@ -58,7 +87,9 @@ const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, amount }) => {
       onMouseLeave={() => {
         setHovered(false);
       }}
-      className={cvaStageProgressContainer({ status: status })}>
+      className={cvaStageProgressContainer({
+        status: translateInvoiceStatus(status),
+      })}>
       <AnimatePresence>
         {hovered && (
           <ToolTip>
@@ -86,7 +117,7 @@ const InvoiceProgress: FC<InvoiceProgressProps> = ({ status, amount }) => {
           />
         </div>
       )}
-      {formatPrice(amount)}
+      {amount ? formatPrice(amount) : formatPrice(0)}
       {status == 'transit' ? (
         <p className={cvaTransitPostfix()}>транзит</p>
       ) : null}

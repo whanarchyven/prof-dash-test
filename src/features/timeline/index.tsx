@@ -3,20 +3,15 @@ import { cva } from 'class-variance-authority';
 import { FC, useEffect, useRef, useState } from 'react';
 import DaySection from '@/shared/ui/day-section/ui';
 import { areIntervalsOverlapping } from 'date-fns';
-import { StageItemProps } from '@/entities/stage-item/ui';
 import { timelineSelectors } from '@/shared/store/timelineSlice';
 import { useAppSelector } from '@/shared/store/hooks/useAppSelector';
 import { useSlider } from '@/features/timeline/hooks/useSlider';
 import CalculatedStageItem from '@/features/timeline/ui/CalculatedStageItem';
 import { calculateDaysQnt } from '@/features/timeline/utils/calculateDaysQnt';
+import { IStage } from '@/features/stage-card/types/IStage';
 
 export interface TimeLineProps {
-  stages: {
-    level?: number;
-    dateStart: Date;
-    dateEnd: Date;
-    stageInfo: StageItemProps;
-  }[];
+  stages: IStage[];
   maxWidth?: number | null;
   startPeriod: Date;
   endPeriod: Date;
@@ -64,21 +59,26 @@ const TimeLine: FC<TimeLineProps> = ({
     const temp = [...fitleredStages];
     let level = 0;
     temp.map((stage, counter) => {
-      if (counter != 0) {
-        if (
-          areIntervalsOverlapping(
-            {
-              start: temp[counter - 1].dateStart,
-              end: temp[counter - 1].dateEnd,
-            },
-            { start: temp[counter].dateStart, end: temp[counter].dateEnd }
-          )
-        ) {
-          level++;
-          stage.level = level;
-        } else {
-          level = 0;
-          stage.level = level;
+      if (stage.end && stage.start) {
+        if (counter != 0) {
+          if (
+            areIntervalsOverlapping(
+              {
+                start: new Date(String(temp[counter - 1].start)),
+                end: new Date(String(temp[counter - 1].end)),
+              },
+              {
+                start: new Date(String(temp[counter].start)),
+                end: new Date(String(temp[counter].end)),
+              }
+            )
+          ) {
+            level++;
+            stage.level = level;
+          } else {
+            level = 0;
+            stage.level = level;
+          }
         }
       }
     });

@@ -1,12 +1,16 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { FC } from 'react';
 
-interface Props extends VariantProps<typeof cvaCategory> {}
+interface categoryProps extends VariantProps<typeof cvaCategory> {}
 
-export type categoryName = Props['category'];
+interface Props {
+  category: string;
+}
+
+export type categoryName = categoryProps['category'];
 
 export const categoriesTitle = () => {
-  const categories: Map<Props['category'], string> = new Map();
+  const categories: Map<categoryProps['category'], string> = new Map();
   categories.set('development', 'Разработка сайта');
   categories.set('oneTimeWorks', 'Разовые работы');
   categories.set('tm', 'T&M');
@@ -16,7 +20,7 @@ export const categoriesTitle = () => {
 };
 
 export const categoriesColor = () => {
-  const categories: Map<Props['category'], string> = new Map();
+  const categories: Map<categoryProps['category'], string> = new Map();
   categories.set('development', 'text-cPurple bg-cPurple');
   categories.set('oneTimeWorks', 'text-cGreenAccent bg-cGreenAccent');
   categories.set('tm', 'text-cRedAccent bg-cRedAccent');
@@ -25,11 +29,30 @@ export const categoriesColor = () => {
   return categories;
 };
 
-export const getCategory = (category: Props['category']) => {
+export const translateCategory: (category: string) => categoryName = (
+  category: string
+) => {
+  switch (category) {
+    case 'Разработка сайта':
+      return 'development';
+    case 'Разовые работы':
+      return 'oneTimeWorks';
+    case 'T&M':
+      return 'tm';
+    case 'Пакет часов':
+      return 'hours';
+    case 'SEO':
+      return 'seo';
+    default:
+      return 'oneTimeWorks';
+  }
+};
+
+export const getCategory = (category: string) => {
   return {
     id: category,
-    title: categoriesTitle().get(category),
-    color: categoriesColor().get(category),
+    title: categoriesTitle().get(translateCategory(category)),
+    color: categoriesColor().get(translateCategory(category)),
   };
 };
 
@@ -56,7 +79,7 @@ const cvaCategory = cva(
 const Category: FC<Props> = ({ category }) => {
   const categoryInfo = getCategory(category);
   return (
-    <div className={cvaCategory({ category: category })}>
+    <div className={cvaCategory({ category: translateCategory(category) })}>
       {categoryInfo.title}
     </div>
   );

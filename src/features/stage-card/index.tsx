@@ -1,8 +1,8 @@
 'use client';
 import { cva } from 'class-variance-authority';
 import { FC, useEffect, useRef, useState } from 'react';
-import CardItem, { CardItemProps } from '@/entities/card-item/ui';
-import TimeLine, { TimeLineProps } from '@/features/timeline';
+import CardItem from '@/entities/card-item/ui';
+import TimeLine from '@/features/timeline';
 import { useAppDispatch } from '@/shared/store/hooks/useAppDispatch';
 import {
   setContainerWidth,
@@ -19,10 +19,15 @@ import {
   calculateStageWidth,
 } from '@/features/timeline/utils/calculateStageParameters';
 import { AnimatePresence } from 'framer-motion';
+import { IStage } from '@/features/stage-card/types/IStage';
+import { isFirstUnfinishedProjectType } from '@/shared/utils/isFirstUnfinishedProjectType';
+import { IProject } from '@/features/stage-card/types/IProject';
+import { differenceInDays } from 'date-fns';
+import { formatDuration } from '@/shared/utils/formatters';
 
 export interface StageCardInterface {
-  task: CardItemProps;
-  stages: TimeLineProps['stages'];
+  project: IProject;
+  stages: IStage[];
   startPeriod: Date;
   endPeriod: Date;
 }
@@ -42,7 +47,7 @@ const cvaStageTimelineNotifications = cva([
 ]);
 
 const StageCard: FC<StageCardInterface> = ({
-  task,
+  project,
   stages,
   startPeriod,
   endPeriod,
@@ -79,18 +84,20 @@ const StageCard: FC<StageCardInterface> = ({
   }> = () => {
     const temp: typeof stagesNotifications = [];
     stages.map((stage) => {
-      if (stage.stageInfo.payment.status != 'closed') {
+      if (stage.end == undefined || stage.start == undefined) return null;
+      const dateEnd = new Date(stage.end);
+      if (stage.invoice && stage.invoice?.status != 'closed') {
         temp.push({
           stage: stage,
-          coordinate: calculateStageMarginLeft(startPeriod, stage.dateEnd),
+          coordinate: calculateStageMarginLeft(startPeriod, dateEnd),
           isDisplay: false,
           type: 'invoice',
         });
       }
-      if (stage.stageInfo.taskProgressStatus == 'pending') {
+      if (stage.status == 'in-progress') {
         temp.push({
           stage: stage,
-          coordinate: calculateStageMarginLeft(startPeriod, stage.dateEnd),
+          coordinate: calculateStageMarginLeft(startPeriod, dateEnd),
           isDisplay: false,
           type: 'task',
         });
@@ -128,17 +135,159 @@ const StageCard: FC<StageCardInterface> = ({
     return (
       notification.coordinate -
       calculateStageWidth(
-        notification.stage.dateStart,
-        notification.stage.dateEnd
+        new Date(String(notification.stage.start)),
+        new Date(String(notification.stage.end))
       ) -
       containerParameters.card
     );
   };
 
+  const calculateAvance = () => {
+    let totalAvance = 0;
+    let totalRemain = 0;
+    if (isFirstUnfinishedProjectType(project.types)) {
+      const firstNotFinished = stages.find((item) => item.status != 'done');
+      if (
+        firstNotFinished?.invoice?.status == 'отправлен' ||
+        firstNotFinished?.invoice?.status == 'закрыт'
+      ) {
+        totalAvance += firstNotFinished?.invoice.amount;
+      } else {
+        totalRemain += firstNotFinished?.invoice?.amount ?? 0;
+      }
+    } else {
+      stages.map((stage) => {
+        if (
+          stage?.invoice?.status == 'отправлен' ||
+          stage?.invoice?.status == 'закрыт'
+        ) {
+          totalAvance += stage.invoice.amount;
+        } else {
+          totalRemain += stage?.invoice?.amount ?? 0;
+        }
+      });
+    }
+    return [totalAvance, totalRemain];
+  };
+
+  const calculateTaskTimerParameters = () => {
+    if (isFirstUnfinishedProjectType(project.types)) {
+      const firstNotFinished = stages.find((item) => item.status != 'done');
+      const fact = firstNotFinished?.timeSpent
+        ? formatDuration(firstNotFinished?.timeSpent)
+        : 0;
+      const plan = firstNotFinished?.estimate
+        ? formatDuration(firstNotFinished?.estimate)
+        : 0;
+      let doneTasks = 0;
+      stages.map((stage) => {
+        if (stage.status == 'done' || stage.status == 'закрыта') doneTasks++;
+      });
+      const status =
+        doneTasks == stages.length
+          ? 'done'
+          : fact > plan
+            ? 'failed'
+            : 'in-progress';
+
+      return { fact: fact, plan: plan, status: status };
+    } else {
+      const fact = project.timeSpent ? formatDuration(project.timeSpent) : 0;
+      const plan = project.estimate ? formatDuration(project.estimate) : 0;
+
+      let doneTasks = 0;
+      stages.map((stage) => {
+        if (stage.status == 'done' || stage.status == 'закрыта') doneTasks++;
+      });
+      const status =
+        doneTasks == stages.length
+          ? 'done'
+          : fact > plan
+            ? 'failed'
+            : 'in-progress';
+
+      return { fact: fact, plan: plan, status: status };
+    }
+  };
+
+  const calculateDateInterval = () => {
+    if (isFirstUnfinishedProjectType(project.types)) {
+      const firstNotFinished = stages.find((item) => item.status != 'done');
+      return {
+        start: firstNotFinished?.start
+          ? new Date(firstNotFinished?.start)
+          : null,
+        end: firstNotFinished?.end ? new Date(firstNotFinished?.end) : null,
+      };
+    } else {
+      return {
+        start: project?.start ? new Date(project?.start) : null,
+        end: project?.end ? new Date(project?.end) : null,
+      };
+    }
+  };
+
+  const calculateDayRemains = () => {
+    const firstNotFinished = stages.find((item) => item.status != 'done');
+    if (firstNotFinished?.end) {
+      return {
+        dayRemains: differenceInDays(
+          new Date(firstNotFinished.end),
+          new Date()
+        ),
+      };
+    } else {
+      return null;
+    }
+  };
+
+  const calculateProfitability = () => {
+    const profits: number[] = [];
+    stages.map((stage) => {
+      if (stage.status == 'done' || stage.status == 'закрыта') {
+        let stageInvoiceAmount = 0;
+        if (stage.invoice) {
+          stageInvoiceAmount += stage.invoice.amount;
+        }
+        if (stageInvoiceAmount != 0) {
+          const profit =
+            ((stageInvoiceAmount - (stage.moneySpent ?? 0)) /
+              stageInvoiceAmount) *
+            100;
+          profits.push(profit);
+        }
+      }
+    });
+
+    if (profits.length == 0) {
+      return null;
+    }
+    let profitsSumm = 0;
+    profits.map((profit) => {
+      profitsSumm += profit;
+    });
+    return Number((profitsSumm / profits.length).toFixed(2));
+  };
+
   return (
     <div ref={containerRef} className={cvaStageCardRoot()}>
       <div ref={cardRef} className={cvaStageTaskCard()}>
-        <CardItem {...task} />
+        <CardItem
+          totalCheck={project.budget}
+          time={calculateTaskTimerParameters()}
+          profit={calculateProfitability()}
+          stageProgress={calculateDayRemains()}
+          dateEnd={calculateDateInterval().end}
+          dateStart={calculateDateInterval().start}
+          categories={project.types}
+          customer={project.customer}
+          projectUrl={project.url}
+          listName={project.name}
+          manager={project.responsible}
+          height={'lg'}
+          prepayment={calculateAvance()[0]}
+          paymentRemains={calculateAvance()[1]}
+        />
       </div>
       <div ref={areaRef} className={cvaStageTimelineBlock()}>
         <div className={cvaStageTimelineNotifications()}>
@@ -150,10 +299,12 @@ const StageCard: FC<StageCardInterface> = ({
                   <StageNotification
                     key={'invoice' + counter}
                     scrollTo={scrollTo}>
-                    <InvoiceProgress
-                      amount={notification.stage.stageInfo.payment.amount}
-                      status={notification.stage.stageInfo.payment.status}
-                    />
+                    {notification.stage.invoice && (
+                      <InvoiceProgress
+                        amount={notification.stage.invoice?.amount}
+                        status={notification.stage.invoice?.status}
+                      />
+                    )}
                   </StageNotification>
                 );
               }
@@ -161,17 +312,21 @@ const StageCard: FC<StageCardInterface> = ({
           </AnimatePresence>
           <AnimatePresence>
             {stagesNotifications.map((notification, counter) => {
+              if (
+                notification.stage.end == undefined ||
+                notification.stage.start == undefined
+              )
+                return null;
+              const dateStart = new Date(notification.stage.start);
+              const dateEnd = new Date(notification.stage.end);
               if (notification.isDisplay && notification.type == 'task') {
                 const scrollTo =
                   notification.coordinate -
-                  calculateStageWidth(
-                    notification.stage.dateStart,
-                    notification.stage.dateEnd
-                  ) -
+                  calculateStageWidth(dateStart, dateEnd) -
                   containerParameters.card;
                 return (
                   <StageNotification key={'task' + counter} scrollTo={scrollTo}>
-                    {notification.stage.stageInfo.task}
+                    {notification.stage.name}
                   </StageNotification>
                 );
               }
